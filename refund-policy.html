@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refund Policy – Built 2 Fly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --red:#AE0001; --dark:#0a0a0a; --surface:#111111; --border:rgba(255,255,255,0.08); --ash:#aaaaaa; --white:#ffffff; }
+  html { scroll-behavior: smooth; }
+  body { background:var(--dark); color:var(--white); font-family:'Barlow',sans-serif; font-size:16px; font-weight:300; line-height:1.8; -webkit-font-smoothing:antialiased; }
+  .top-bar { background:var(--surface); border-bottom:1px solid var(--border); padding:18px 0; position:sticky; top:0; z-index:100; }
+  .top-bar-inner { max-width:860px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; }
+  .brand { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.08em; color:var(--white); text-decoration:none; }
+  .brand span { color:var(--red); }
+  .back-link { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--ash); text-decoration:none; transition:color 0.2s; }
+  .back-link:hover { color:var(--red); }
+  .page-hero { background:var(--surface); border-bottom:3px solid var(--red); padding:60px 32px 48px; text-align:center; }
+  .page-hero .eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--red); margin-bottom:14px; }
+  .page-hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(42px,6vw,68px); letter-spacing:0.04em; color:var(--white); margin-bottom:16px; }
+  .page-hero .meta { font-size:13px; color:var(--ash); font-weight:300; }
+  .doc-wrap { max-width:860px; margin:0 auto; padding:60px 32px 100px; }
+  .toc { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--red); padding:28px 32px; margin-bottom:56px; }
+  .toc-title { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--red); margin-bottom:16px; }
+  .toc ol { list-style:decimal; padding-left:20px; }
+  .toc li { margin-bottom:6px; }
+  .toc a { color:var(--ash); text-decoration:none; font-size:14px; font-weight:400; transition:color 0.2s; }
+  .toc a:hover { color:var(--red); }
+  .doc-section { margin-bottom:52px; padding-bottom:52px; border-bottom:1px solid var(--border); }
+  .doc-section:last-child { border-bottom:none; }
+  .section-num { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--red); margin-bottom:8px; }
+  .doc-section h2 { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:0.04em; color:var(--white); margin-bottom:20px; }
+  .doc-section h3 { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--white); margin:28px 0 10px; }
+  .doc-section p { color:var(--ash); font-size:15px; margin-bottom:14px; }
+  .doc-section ul, .doc-section ol { padding-left:22px; margin-bottom:14px; }
+  .doc-section li { color:var(--ash); font-size:15px; margin-bottom:8px; }
+  .doc-section strong { color:var(--white); font-weight:600; }
+  .callout { background:rgba(230,57,70,0.07); border:1px solid rgba(230,57,70,0.25); border-left:3px solid var(--red); padding:18px 22px; margin:20px 0; font-size:14px; color:#ccc; line-height:1.7; }
+  .callout strong { color:var(--red); }
+  .policy-table { width:100%; border-collapse:collapse; margin:20px 0; }
+  .policy-table th { background:rgba(230,57,70,0.12); font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--white); padding:12px 16px; text-align:left; border:1px solid var(--border); }
+  .policy-table td { padding:12px 16px; font-size:14px; color:var(--ash); border:1px solid var(--border); vertical-align:top; }
+  .policy-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .badge-no { display:inline-block; background:rgba(230,57,70,0.15); color:var(--red); font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; }
+  .badge-yes { display:inline-block; background:rgba(46,204,113,0.1); color:#2ecc71; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; }
+  .contact-box { background:var(--surface); border:1px solid var(--border); padding:28px 32px; margin-top:20px; }
+  .contact-box p { margin-bottom:6px; font-size:14px; }
+  .doc-footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); font-size:13px; color:#555; }
+  .doc-footer span { color:var(--red); }
+  @media (max-width:600px) { .doc-wrap { padding:40px 20px 80px; } .top-bar-inner { padding:0 20px; } .page-hero { padding:40px 20px 32px; } .toc { padding:20px; } .policy-table { font-size:13px; } }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="index.html" class="brand">BUILT 2 <span>FLY</span></a>
+    <a href="index.html" class="back-link">&#8592; Back to Site</a>
+  </div>
+</div>
+
+<div class="page-hero">
+  <div class="eyebrow">Legal Documentation</div>
+  <h1>Refund Policy</h1>
+  <p class="meta">Built 2 Fly &nbsp;|&nbsp; Effective Date: 1 January 2025 &nbsp;|&nbsp; Last Updated: April 2025</p>
+</div>
+
+<div class="doc-wrap">
+
+  <div class="callout">
+    <strong>Please read this policy carefully before enrolling.</strong> By completing payment for any Built 2 Fly program, subscription, or service, you acknowledge that you have read, understood, and agreed to this Refund Policy. Enrolling in a program constitutes acceptance of these terms without reservation.
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#r1">Our Commitment and General Position</a></li>
+      <li><a href="#r2">No-Refund Policy — Core Clause</a></li>
+      <li><a href="#r3">Refund Eligibility Summary</a></li>
+      <li><a href="#r4">Group Training</a></li>
+      <li><a href="#r5">Personal Training</a></li>
+      <li><a href="#r6">Online Coaching</a></li>
+      <li><a href="#r7">Missed Sessions Policy</a></li>
+      <li><a href="#r8">Cancellation Terms</a></li>
+      <li><a href="#r9">Subscription Renewals</a></li>
+      <li><a href="#r10">Exceptional Circumstances</a></li>
+      <li><a href="#r11">How to Submit a Request</a></li>
+      <li><a href="#r12">Chargebacks and Payment Disputes</a></li>
+    </ol>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="doc-section" id="r1">
+    <div class="section-num">Section 01</div>
+    <h2>Our Commitment and General Position</h2>
+    <p>Built 2 Fly provides premium, results-driven coaching services. Our programs are designed and delivered with significant investment of time, expertise, and resources. Every enrollment is treated as a committed partnership between the client and the coaching team.</p>
+    <p>We operate a strict but fair refund policy that reflects the premium nature of our services, the costs incurred at the point of onboarding, and the value of the coach's time allocated to each client. This policy is designed to protect both the business and our clients.</p>
+    <p>We strongly encourage all prospective clients to review program details, ask questions, and attend a trial session where applicable before committing to a full enrollment. Once payment is made, you are confirming your commitment to the program.</p>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="doc-section" id="r2">
+    <div class="section-num">Section 02</div>
+    <h2>No-Refund Policy — Core Clause</h2>
+    <div class="callout">
+      <strong>All payments made to Built 2 Fly are non-refundable as a general rule.</strong> This applies to all programs, subscriptions, session packs, and coaching engagements, except as explicitly outlined in Section 3 (Refund Eligibility Summary) and Section 10 (Exceptional Circumstances).
+    </div>
+    <p>Specifically, the following will not qualify for a refund under any circumstances:</p>
+    <ul>
+      <li>Change of mind after payment</li>
+      <li>Failure to attend sessions without valid advance notice</li>
+      <li>Dissatisfaction with results where the client has not adhered to the prescribed program</li>
+      <li>Personal scheduling conflicts or work commitments arising after enrollment</li>
+      <li>Relocation to a different city (for in-person programs; transfer to online coaching may be considered)</li>
+      <li>Partial use of a subscription period</li>
+      <li>Failure to complete the mandatory consent form or onboarding process</li>
+    </ul>
+    <p>By enrolling, you understand and accept that a significant portion of the value of any coaching program is delivered at or before the first session — including program design, assessment, scheduling, and coach allocation — and this investment is not recoverable.</p>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="doc-section" id="r3">
+    <div class="section-num">Section 03</div>
+    <h2>Refund Eligibility Summary</h2>
+    <table class="policy-table">
+      <tr>
+        <th>Scenario</th>
+        <th>Refund Eligible</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>Change of mind within 24 hours of payment (before onboarding begins)</td>
+        <td><span class="badge-yes">Partial</span></td>
+        <td>50% refund only. Admin and gateway fees non-recoverable.</td>
+      </tr>
+      <tr>
+        <td>Program cancelled by Built 2 Fly</td>
+        <td><span class="badge-yes">Full</span></td>
+        <td>Full refund of the unused portion.</td>
+      </tr>
+      <tr>
+        <td>Verified medical emergency preventing all training</td>
+        <td><span class="badge-yes">Partial</span></td>
+        <td>Prorated credit or refund at our discretion. Medical documentation required.</td>
+      </tr>
+      <tr>
+        <td>Missed sessions (client)</td>
+        <td><span class="badge-no">No</span></td>
+        <td>Sessions are forfeited. See Section 7.</td>
+      </tr>
+      <tr>
+        <td>Dissatisfaction with results</td>
+        <td><span class="badge-no">No</span></td>
+        <td>Results depend on client adherence. No guarantees are made.</td>
+      </tr>
+      <tr>
+        <td>Failure to attend trial session</td>
+        <td><span class="badge-no">No</span></td>
+        <td>Trial session fee is non-refundable if not attended with notice.</td>
+      </tr>
+      <tr>
+        <td>Online coaching — plan not started within 7 days</td>
+        <td><span class="badge-yes">Partial</span></td>
+        <td>Assessed case by case. Contact us promptly.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="doc-section" id="r4">
+    <div class="section-num">Section 04</div>
+    <h2>Group Training</h2>
+    <p>Group training is sold as a monthly subscription or a fixed-duration session pack. The following terms apply:</p>
+    <ul>
+      <li>Monthly subscriptions are non-refundable once the billing period commences</li>
+      <li>Unused sessions within a paid month do not carry over to the following month unless otherwise agreed in writing</li>
+      <li>Early termination of a subscription does not entitle the client to a prorated refund</li>
+      <li>If you are unable to attend due to a verified medical emergency, sessions may be frozen for up to 30 days per calendar year, at our discretion</li>
+    </ul>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="doc-section" id="r5">
+    <div class="section-num">Section 05</div>
+    <h2>Personal Training</h2>
+    <p>Personal training is sold as a fixed monthly package (12 sessions per month or as otherwise specified). The following terms apply:</p>
+    <ul>
+      <li>The full monthly package fee is charged at the start of each month and is non-refundable</li>
+      <li>Sessions missed by the client without 24 hours' advance notice are forfeited</li>
+      <li>Sessions missed by the trainer will be rescheduled at no cost to the client</li>
+      <li>If a client wishes to pause a personal training plan due to verified injury or emergency, a maximum of one (1) billing cycle may be paused per 6-month period, subject to approval</li>
+      <li>Session packs have a fixed validity period. Sessions not used within the validity period are forfeited.</li>
+    </ul>
+  </div>
+
+  <!-- Section 6 -->
+  <div class="doc-section" id="r6">
+    <div class="section-num">Section 06</div>
+    <h2>Online Coaching</h2>
+    <p>Online coaching is delivered as a monthly subscription including custom workout plans, nutrition guidance, form check reviews, and coach communication. The following terms apply:</p>
+    <ul>
+      <li>The monthly coaching fee is due in advance and is non-refundable once the coaching cycle begins</li>
+      <li>A coaching cycle begins on the date your personalised program is delivered or on the 3rd day after payment, whichever is earlier</li>
+      <li>Clients are responsible for engaging with their plan. Inactivity does not entitle a client to an extended cycle or refund.</li>
+      <li>If the client cancels online coaching mid-month, no partial refund is issued</li>
+      <li>If you have not received any program delivery within 7 days of payment, contact us immediately — this will be reviewed</li>
+    </ul>
+  </div>
+
+  <!-- Section 7 -->
+  <div class="doc-section" id="r7">
+    <div class="section-num">Section 07</div>
+    <h2>Missed Sessions Policy</h2>
+    <p>Sessions are a valuable and time-limited resource. The following rules govern missed or cancelled sessions by the client:</p>
+    <h3>Advance Cancellation</h3>
+    <ul>
+      <li>Sessions cancelled with at least <strong>24 hours' advance notice</strong> may be rescheduled, subject to coach availability</li>
+      <li>Each client is entitled to a maximum of <strong>two (2) reschedules per month</strong></li>
+      <li>Rescheduled sessions must be completed within the same billing cycle where possible</li>
+    </ul>
+    <h3>Late Cancellation and No-Shows</h3>
+    <ul>
+      <li>Sessions cancelled with less than 24 hours' notice are forfeited and non-refundable</li>
+      <li>Clients who fail to attend a session without notice (no-show) forfeit that session entirely</li>
+      <li>Repeated no-shows (3 or more in a month) may result in suspension of scheduling privileges</li>
+    </ul>
+    <h3>Trainer-Side Cancellations</h3>
+    <ul>
+      <li>If a session is cancelled by Built 2 Fly or your assigned trainer, it will be rescheduled at no cost to you</li>
+      <li>In cases where rescheduling is not possible within the billing cycle, a session credit will be issued</li>
+    </ul>
+  </div>
+
+  <!-- Section 8 -->
+  <div class="doc-section" id="r8">
+    <div class="section-num">Section 08</div>
+    <h2>Cancellation Terms</h2>
+    <p>If you wish to cancel your enrollment or subscription:</p>
+    <ul>
+      <li>Written notice of cancellation must be submitted to us by email at least <strong>7 days before the next billing date</strong></li>
+      <li>Cancellation requests submitted after the next billing date has been charged will apply to the following billing cycle</li>
+      <li>Cancellations do not entitle the client to a refund of fees already paid</li>
+      <li>Your program access remains active until the end of the current billing period</li>
+    </ul>
+    <p>To initiate a cancellation, email us at <strong>support@built2fly.com</strong> with your full name, phone number, and the subject line "Cancellation Request."</p>
+  </div>
+
+  <!-- Section 9 -->
+  <div class="doc-section" id="r9">
+    <div class="section-num">Section 09</div>
+    <h2>Subscription Renewals</h2>
+    <p>All subscriptions renew automatically on their respective billing dates unless cancelled in accordance with Section 8. By enrolling in a subscription:</p>
+    <ul>
+      <li>You authorise Built 2 Fly and/or Razorpay to charge the applicable fee to your chosen payment method on each renewal date</li>
+      <li>You are responsible for ensuring your payment method remains valid and funded</li>
+      <li>Failed payments may result in suspension of service access</li>
+      <li>Fees are subject to change with 14 days' prior written notice to the client. Continued enrollment after the effective date of a fee change constitutes acceptance.</li>
+    </ul>
+  </div>
+
+  <!-- Section 10 -->
+  <div class="doc-section" id="r10">
+    <div class="section-num">Section 10</div>
+    <h2>Exceptional Circumstances</h2>
+    <p>We recognise that genuine exceptional circumstances may arise. Built 2 Fly may, at its sole discretion, consider partial refunds, session credits, or program pauses in the following situations:</p>
+    <ul>
+      <li>Serious illness or hospitalisation, supported by a medical certificate from a registered practitioner</li>
+      <li>Death of an immediate family member</li>
+      <li>A program delivery failure on our part that is material, documented, and unresolved after a reasonable notice period</li>
+    </ul>
+    <div class="callout">
+      All exceptional requests must be submitted in writing within <strong>7 days</strong> of the event. Requests submitted after this period will not be considered. Supporting documentation must accompany all requests. Built 2 Fly's decision in these matters is final and binding.
+    </div>
+  </div>
+
+  <!-- Section 11 -->
+  <div class="doc-section" id="r11">
+    <div class="section-num">Section 11</div>
+    <h2>How to Submit a Refund Request</h2>
+    <p>If you believe you are entitled to a refund under the terms outlined above, please submit a request by:</p>
+    <ol>
+      <li>Emailing <strong>support@built2fly.com</strong> with the subject line "Refund Request"</li>
+      <li>Including your full name, registered phone number, program enrolled in, date of payment, and Razorpay transaction ID</li>
+      <li>Clearly stating the reason for your request and attaching any supporting documents</li>
+    </ol>
+    <p>We will acknowledge your request within 3 business days and issue a decision within 10 business days. If approved, refunds will be credited to your original payment method within 5–7 business days via Razorpay.</p>
+  </div>
+
+  <!-- Section 12 -->
+  <div class="doc-section" id="r12">
+    <div class="section-num">Section 12</div>
+    <h2>Chargebacks and Payment Disputes</h2>
+    <p>Initiating a chargeback or payment dispute with your bank or card provider without first attempting to resolve the matter directly with Built 2 Fly is considered a breach of this policy and our Terms of Service.</p>
+    <p>In the event of an unjustified chargeback, we reserve the right to:</p>
+    <ul>
+      <li>Immediately suspend or terminate your access to all Built 2 Fly programs and services</li>
+      <li>Submit evidence to the payment processor and/or bank to contest the dispute</li>
+      <li>Pursue recovery of the disputed amount through appropriate legal channels</li>
+      <li>Permanently ban the individual from future enrollment in any Built 2 Fly program</li>
+    </ul>
+    <p>We encourage all clients to contact us directly before escalating any payment concern. Most issues can be resolved promptly through direct communication.</p>
+  </div>
+
+</div>
+
+<div class="doc-footer">
+  &copy; 2025 <span>Built 2 Fly</span>. All rights reserved. &nbsp;|&nbsp; This policy forms part of the Terms of Service and is legally binding upon enrollment.
+</div>
+
+</body>
+</html>

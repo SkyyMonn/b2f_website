@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" style="cursor: none !important;">
+<head>
+<meta charset="UTF-8">
+<script src="js/cursor.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trainer Dashboard – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { overflow-x: hidden; background: #000; }
+.db-wrap { display: flex; min-height: 100vh; }
+
+/* ─── SIDEBAR ─── */
+.sidebar { width:240px; min-height:100vh; background:#080808; border-right:1px solid var(--border); position:fixed; top:0; left:0; bottom:0; z-index:100; display:flex; flex-direction:column; }
+.sidebar-logo { padding:28px 24px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; }
+.sidebar-logo img { height:36px; width:auto; }
+.sidebar-logo-text { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:2px; color:var(--white); line-height:1; }
+.sidebar-logo-sub  { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#60a5fa; }
+.sidebar-role { padding:14px 24px; border-bottom:1px solid var(--border); }
+.role-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); padding:4px 10px; border-radius:2px; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#60a5fa; }
+.role-dot { width:6px; height:6px; border-radius:50%; background:#60a5fa; animation:pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.sidebar-nav { flex:1; padding:16px 0; overflow-y:auto; }
+.nav-section-label { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--ash); padding:12px 24px 6px; }
+.sidebar-link { display:flex; align-items:center; gap:12px; padding:11px 24px; font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--ash); text-decoration:none; transition:all 0.2s; border-left:2px solid transparent; cursor:pointer; }
+.sidebar-link:hover { color:var(--white); background:rgba(247,246,246,0.03); }
+.sidebar-link.active { color:var(--white); background:rgba(59,130,246,0.06); border-left-color:#60a5fa; }
+.sidebar-link .s-icon { font-size:15px; width:18px; text-align:center; }
+.sidebar-bottom { padding:16px 24px; border-top:1px solid var(--border); }
+.sidebar-user { display:flex; align-items:center; gap:10px; }
+.sidebar-avatar { width:32px; height:32px; border-radius:2px; background:#3b82f6; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:14px; color:var(--white); flex-shrink:0; }
+.sidebar-user-name { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; color:var(--white); }
+.sidebar-user-role { font-size:11px; color:var(--ash); }
+.sidebar-logout { margin-left:auto; background:none; border:none; color:var(--ash); font-size:16px; padding:4px; transition:color 0.2s; cursor:pointer; }
+.sidebar-logout:hover { color:var(--red); }
+
+/* ─── MAIN ─── */
+.db-main { margin-left:240px; flex:1; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { height:64px; background:rgba(0,0,0,0.9); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 32px; position:sticky; top:0; z-index:50; backdrop-filter:blur(12px); }
+.topbar-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--white); }
+.topbar-right { display:flex; align-items:center; gap:16px; }
+.topbar-date { font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:1px; color:var(--ash); text-transform:uppercase; }
+
+.db-section { display:none; padding:32px; }
+.db-section.active { display:block; }
+.section-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; }
+.section-head h2 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:1px; line-height:1; }
+.section-head h2 span { color:var(--red); }
+
+/* ─── STATS ─── */
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+.stat-card { background:var(--card-bg); border:1px solid var(--border); padding:24px 20px; position:relative; overflow:hidden; transition:border-color 0.2s,transform 0.2s; }
+.stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:#3b82f6; transform:scaleX(0); transition:transform 0.3s; }
+.stat-card:hover { border-color:rgba(59,130,246,0.3); transform:translateY(-2px); }
+.stat-card:hover::before { transform:scaleX(1); }
+.stat-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ash); margin-bottom:10px; }
+.stat-value { font-family:'Bebas Neue',sans-serif; font-size:42px; color:var(--white); line-height:1; }
+.stat-value span { color:#60a5fa; font-size:28px; }
+.stat-sub { font-size:12px; color:var(--ash); margin-top:6px; font-weight:300; }
+.stat-icon { position:absolute; top:20px; right:20px; font-size:28px; opacity:0.12; }
+
+/* ─── CARDS ─── */
+.db-card { background:var(--card-bg); border:1px solid var(--border); margin-bottom:24px; }
+.db-card-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.db-card-title { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; color:var(--white); }
+
+.btn-sm { padding:7px 16px; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border-radius:2px; border:none; transition:all 0.2s; cursor:pointer; }
+.btn-sm-red { background:var(--red); color:var(--white); }
+.btn-sm-red:hover { background:var(--red-dark); }
+.btn-sm-outline { background:transparent; color:var(--ash); border:1px solid var(--border); }
+.btn-sm-outline:hover { border-color:var(--white); color:var(--white); }
+.btn-sm-blue { background:#3b82f6; color:var(--white); }
+.btn-sm-blue:hover { background:#2563eb; }
+.btn-sm-green { background:#22c55e; color:var(--white); }
+
+/* ─── CLIENT CARDS ─── */
+.client-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.client-card { background:var(--card-bg); border:1px solid var(--border); padding:28px 24px; transition:border-color 0.2s,transform 0.2s; position:relative; }
+.client-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:#3b82f6; transform:scaleX(0); transition:transform 0.3s; }
+.client-card:hover { border-color:rgba(59,130,246,0.3); transform:translateY(-2px); }
+.client-card:hover::before { transform:scaleX(1); }
+.client-card-top { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+.client-avatar-lg { width:48px; height:48px; border-radius:2px; background:#3b82f6; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--white); flex-shrink:0; }
+.client-name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:700; color:var(--white); }
+.client-plan { font-size:12px; color:var(--ash); }
+.client-meta { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+.client-meta-row { display:flex; justify-content:space-between; align-items:center; }
+.client-meta-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ash); }
+.client-meta-val { font-size:13px; color:var(--white); font-weight:500; }
+.progress-bar-wrap { background:#1a1a1a; border-radius:2px; height:4px; width:100%; overflow:hidden; margin-top:4px; }
+.progress-bar-fill { height:100%; background:#3b82f6; border-radius:2px; transition:width 0.8s ease; }
+.client-card-actions { display:flex; gap:8px; padding-top:20px; border-top:1px solid var(--border); }
+
+/* ─── NOTES ─── */
+.notes-area { width:100%; padding:12px 16px; background:#111; border:1px solid var(--border); border-radius:2px; color:var(--white); font-family:'Barlow',sans-serif; font-size:13px; line-height:1.6; resize:vertical; min-height:80px; outline:none; transition:border-color 0.2s; }
+.notes-area:focus { border-color:#3b82f6; }
+
+/* ─── TABLE ─── */
+.db-table { width:100%; border-collapse:collapse; }
+.db-table th { padding:12px 20px; text-align:left; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ash); border-bottom:1px solid var(--border); }
+.db-table td { padding:14px 20px; font-size:14px; color:var(--white); border-bottom:1px solid rgba(145,136,136,0.08); vertical-align:middle; }
+.db-table tr:last-child td { border-bottom:none; }
+.db-table tr:hover td { background:rgba(247,246,246,0.02); }
+
+.badge { display:inline-block; padding:3px 10px; border-radius:2px; font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
+.badge-active { background:rgba(34,197,94,0.15); color:#4ade80; border:1px solid rgba(34,197,94,0.3); }
+.badge-paused { background:rgba(234,179,8,0.15); color:#fbbf24; border:1px solid rgba(234,179,8,0.3); }
+.badge-cancelled { background:rgba(239,68,68,0.15); color:#f87171; border:1px solid rgba(239,68,68,0.3); }
+
+.att-toggle { display:flex; gap:6px; }
+.att-btn { padding:5px 12px; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--border); background:transparent; color:var(--ash); border-radius:2px; transition:all 0.2s; cursor:pointer; }
+.att-btn.present { background:rgba(34,197,94,0.15); color:#4ade80; border-color:rgba(34,197,94,0.3); }
+.att-btn.absent  { background:rgba(239,68,68,0.15); color:#f87171; border-color:rgba(239,68,68,0.3); }
+
+.inline-avatar { display:inline-flex; align-items:center; gap:10px; }
+.avatar-circle { width:30px; height:30px; border-radius:2px; background:#3b82f6; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:13px; color:var(--white); flex-shrink:0; }
+
+.empty-state { text-align:center; padding:48px 20px; color:var(--ash); font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:1px; }
+.empty-state .empty-icon { font-size:36px; margin-bottom:12px; opacity:0.4; display:block; }
+
+/* ─── MODAL ─── */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px); z-index:1000; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.25s ease; }
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal-card { background:#0d0d0d; border:1px solid rgba(59,130,246,0.25); border-top:2px solid #3b82f6; width:100%; max-width:540px; max-height:90vh; display:flex; flex-direction:column; transform:scale(0.93) translateY(16px); transition:transform 0.25s ease; overflow-y:auto; }
+.modal-overlay.open .modal-card { transform:scale(1) translateY(0); }
+.modal-header { padding:22px 28px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.modal-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--white); }
+.modal-close { background:none; border:none; color:var(--ash); font-size:20px; line-height:1; padding:4px 8px; cursor:pointer; transition:color 0.2s; }
+.modal-close:hover { color:var(--red); }
+.modal-body { padding:24px 28px; overflow-y:auto; }
+.modal-footer { padding:18px 28px; border-top:1px solid var(--border); display:flex; gap:12px; justify-content:flex-end; flex-shrink:0; }
+.mf-row { margin-bottom:16px; }
+.mf-row label { display:block; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ash); margin-bottom:6px; }
+.mf-row input, .mf-row select, .mf-row textarea { width:100%; padding:10px 12px; background:#111; border:1px solid var(--border); border-radius:2px; color:var(--white); font-family:'Barlow',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; box-sizing:border-box; }
+.mf-row input:focus, .mf-row select:focus, .mf-row textarea:focus { border-color:#3b82f6; }
+.mf-row select option { background:#111; }
+.mf-row textarea { resize:vertical; min-height:80px; }
+.mf-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+
+/* Toast */
+#t-toast-container { position:fixed; top:20px; right:24px; z-index:9999; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
+.t-toast { display:flex; align-items:center; gap:12px; padding:14px 20px; background:#111; border:1px solid var(--border); border-left-width:3px; font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.5px; color:var(--white); min-width:280px; box-shadow:0 8px 32px rgba(0,0,0,0.6); animation:tToastIn 0.3s ease forwards; pointer-events:all; }
+.t-toast.success { border-left-color:#4ade80; }
+.t-toast.error { border-left-color:#f87171; }
+@keyframes tToastIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+
+@media (max-width:1200px) { .client-grid { grid-template-columns:repeat(2,1fr); } .stat-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:900px) {
+  .sidebar { width:60px; }
+  .sidebar-logo-text,.sidebar-logo-sub,.sidebar-role,.nav-section-label,.sidebar-user-name,.sidebar-user-role { display:none; }
+  .sidebar-link span:not(.s-icon) { display:none; }
+  .db-main { margin-left:60px; }
+  .sidebar-link { padding:14px; justify-content:center; }
+  .sidebar-logo { padding:16px; justify-content:center; }
+  .client-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="t-toast-container"></div>
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-card" id="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Modal</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<div class="db-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="Assets/Logo/B2F_logo.png" alt="B2F">
+      <div>
+        <div class="sidebar-logo-text">B2F</div>
+        <div class="sidebar-logo-sub">Trainer Panel</div>
+      </div>
+    </div>
+    <div class="sidebar-role">
+      <div class="role-badge"><div class="role-dot"></div> Trainer</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">My Panel</div>
+      <a class="sidebar-link active" onclick="showSection('overview',this)"><span class="s-icon">⚡</span><span>Overview</span></a>
+      <a class="sidebar-link" onclick="showSection('clients',this)"><span class="s-icon">👥</span><span>My Clients</span></a>
+      <a class="sidebar-link" onclick="showSection('attendance',this)"><span class="s-icon">📅</span><span>Attendance</span></a>
+      <a class="sidebar-link" onclick="showSection('notes',this)"><span class="s-icon">📝</span><span>Session Notes</span></a>
+      <a class="sidebar-link" onclick="showSection('plans',this)"><span class="s-icon">💪</span><span>Assign Plans</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="t-sidebar-avatar">--</div>
+        <div>
+          <div class="sidebar-user-name" id="t-sidebar-name">Loading...</div>
+          <div class="sidebar-user-role">Trainer</div>
+        </div>
+        <button class="sidebar-logout" onclick="logout()" title="Logout">↩</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="db-main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Overview</div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="topbar-date"></div>
+      </div>
+    </div>
+
+    <!-- ══ OVERVIEW ══ -->
+    <div class="db-section active" id="sec-overview">
+      <div class="section-head">
+        <h2>MY <span>OVERVIEW</span></h2>
+        <div class="tag" style="font-family:'Barlow Condensed';font-size:11px" id="trainer-name-header">—</div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-label">My Clients</div>
+          <div class="stat-value" id="t-stat-clients">—</div>
+          <div class="stat-sub">Active only</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-label">Sessions This Month</div>
+          <div class="stat-value" id="t-stat-sessions">—</div>
+          <div class="stat-sub">Total across clients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-label">Avg Attendance</div>
+          <div class="stat-value" id="t-stat-att">—<span>%</span></div>
+          <div class="stat-sub">This month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Marked Today</div>
+          <div class="stat-value" id="t-stat-today">—</div>
+          <div class="stat-sub">Attendance marked</div>
+        </div>
+      </div>
+
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">My Clients — Quick View</div>
+          <button class="btn-sm btn-sm-blue" onclick="showSection('clients',document.querySelectorAll('.sidebar-link')[1])">View All</button>
+        </div>
+        <table class="db-table">
+          <thead><tr><th>Client</th><th>Plan</th><th>Progress</th><th>Status</th><th>Next Session</th></tr></thead>
+          <tbody id="overview-clients-tbody">
+            <tr><td colspan="5" style="text-align:center;color:var(--ash);padding:28px">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ CLIENTS ══ -->
+    <div class="db-section" id="sec-clients">
+      <div class="section-head"><h2>MY <span>CLIENTS</span></h2></div>
+      <div class="client-grid" id="clients-grid">
+        <div class="empty-state" style="grid-column:1/-1"><span class="empty-icon">⏳</span>Loading clients...</div>
+      </div>
+    </div>
+
+    <!-- ══ ATTENDANCE ══ -->
+    <div class="db-section" id="sec-attendance">
+      <div class="section-head">
+        <h2>MARK <span>ATTENDANCE</span></h2>
+        <div class="topbar-date" id="att-date-t"></div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">Today's Session</div>
+          <button class="btn-sm btn-sm-blue" onclick="saveAllAttendance()">Save Attendance</button>
+        </div>
+        <div id="att-body">
+          <div class="empty-state"><span class="empty-icon">⏳</span>Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ NOTES ══ -->
+    <div class="db-section" id="sec-notes">
+      <div class="section-head"><h2>SESSION <span>NOTES</span></h2></div>
+      <div class="client-grid" id="notes-grid">
+        <div class="empty-state" style="grid-column:1/-1"><span class="empty-icon">⏳</span>Loading...</div>
+      </div>
+    </div>
+
+    <!-- ══ ASSIGN PLANS ══ -->
+    <div class="db-section" id="sec-plans">
+      <div class="section-head">
+        <h2>ASSIGN <span>PLANS</span></h2>
+        <div style="display:flex;gap:10px">
+          <button class="btn-sm btn-sm-blue" onclick="openWorkoutModal()">+ Workout Plan</button>
+          <button class="btn-sm btn-sm-green" onclick="openDietModal()">+ Diet Plan</button>
+        </div>
+      </div>
+
+      <div class="db-card">
+        <div class="db-card-header"><div class="db-card-title">Existing Plans</div></div>
+        <div id="plans-body">
+          <div class="empty-state"><span class="empty-icon">⏳</span>Loading plans...</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// SUPABASE INIT
+// ─────────────────────────────────────────────────────────────
+const SUPABASE_URL = "https://bxlsgweqeomejjxeisai.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bHNnd2VxZW9tZWpqeGVpc2FpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyODM2MDYsImV4cCI6MjA5MDg1OTYwNn0.PXs3MZkmrIZ-aMRmZyy0C4Eh_bKOx0Q1J1E0FZqF_EM";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentTrainerId = null;
+let trainerProfile = null;
+let myClients = [];
+const todayStr = new Date().toISOString().split("T")[0];
+
+// ─────────────────────────────────────────────────────────────
+// AUTH GUARD + BOOT
+// ─────────────────────────────────────────────────────────────
+async function init() {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) { window.location.href = "login.html"; return; }
+
+  currentTrainerId = session.user.id;
+
+  setDate();
+  await loadTrainerProfile();
+  await loadMyClients();
+}
+
+async function loadTrainerProfile() {
+  const { data, error } = await db
+    .from("profiles")
+    .select("full_name, role, trainer_spec")
+    .eq("id", currentTrainerId)
+    .single();
+
+  if (error || !data) return;
+  if (data.role !== "trainer") { window.location.href = "login.html"; return; }
+
+  trainerProfile = data;
+  const name = data.full_name || "Trainer";
+  const initials = name.substring(0, 2).toUpperCase();
+
+  document.getElementById("t-sidebar-name").textContent = name;
+  document.getElementById("t-sidebar-avatar").textContent = initials;
+  document.getElementById("trainer-name-header").textContent = name;
+}
+
+// ─────────────────────────────────────────────────────────────
+// LOAD MY CLIENTS (via trainer_clients table OR profiles.trainer_id)
+// ─────────────────────────────────────────────────────────────
+async function loadMyClients() {
+  // Get client IDs mapped to this trainer
+  const { data: mappings, error: mapErr } = await db
+    .from("trainer_clients")
+    .select("client_id, status")
+    .eq("trainer_id", currentTrainerId)
+    .eq("status", "active");
+
+  let clientIds = [];
+  if (!mapErr && mappings && mappings.length) {
+    clientIds = mappings.map(m => m.client_id);
+  } else {
+    // Fallback: check profiles.trainer_id
+    const { data: profs } = await db
+      .from("profiles")
+      .select("id")
+      .eq("trainer_id", currentTrainerId);
+    clientIds = (profs || []).map(p => p.id);
+  }
+
+  if (!clientIds.length) {
+    myClients = [];
+    renderOverviewClients();
+    renderClients();
+    renderAttendance();
+    renderNotes();
+    renderPlans();
+    updateStats();
+    return;
+  }
+
+  const { data: clients, error } = await db
+    .from("profiles")
+    .select("id, full_name, email, plan, status, goal_progress, next_session, sessions_done, attendance_rate, joined_at, trainer_notes")
+    .in("id", clientIds);
+
+  if (error) { showToast("Failed to load clients", "error"); return; }
+
+  myClients = clients || [];
+  renderOverviewClients();
+  renderClients();
+  renderAttendance();
+  renderNotes();
+  await renderPlans();
+  updateStats();
+}
+
+// ─────────────────────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────────────────────
+async function updateStats() {
+  const activeClients = myClients.filter(c => c.status === "active").length;
+  document.getElementById("t-stat-clients").textContent = activeClients;
+
+  const totalSessions = myClients.reduce((sum, c) => sum + (c.sessions_done || 0), 0);
+  document.getElementById("t-stat-sessions").textContent = totalSessions;
+
+  const avgAtt = myClients.length
+    ? Math.round(myClients.reduce((sum, c) => sum + (c.attendance_rate || 0), 0) / myClients.length)
+    : 0;
+  document.getElementById("t-stat-att").innerHTML = avgAtt + '<span>%</span>';
+
+  // Today's attendance count
+  const { count } = await db
+    .from("attendance")
+    .select("*", { count: "exact", head: true })
+    .eq("trainer_id", currentTrainerId)
+    .eq("date", todayStr);
+  document.getElementById("t-stat-today").textContent = count ?? 0;
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER: OVERVIEW TABLE
+// ─────────────────────────────────────────────────────────────
+function renderOverviewClients() {
+  const tbody = document.getElementById("overview-clients-tbody");
+  if (!myClients.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">👥</div>No clients assigned yet</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = myClients.slice(0, 5).map(c => `
+    <tr>
+      <td>${avatar(c.full_name || c.email)}</td>
+      <td>${capitalize(c.plan || "—")}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="progress-bar-wrap" style="width:100px">
+            <div class="progress-bar-fill" style="width:${c.goal_progress || 0}%"></div>
+          </div>
+          <span style="font-size:12px;color:var(--ash)">${c.goal_progress || 0}%</span>
+        </div>
+      </td>
+      <td><span class="badge badge-${c.status || 'active'}">${c.status || 'active'}</span></td>
+      <td style="font-size:12px;color:var(--ash)">${c.next_session || '—'}</td>
+    </tr>
+  `).join("");
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER: CLIENT CARDS
+// ─────────────────────────────────────────────────────────────
+function renderClients() {
+  const grid = document.getElementById("clients-grid");
+  if (!myClients.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="empty-icon">👥</span>No clients assigned yet.<br>Ask admin to assign clients to you.</div>`;
+    return;
+  }
+  grid.innerHTML = myClients.map(c => `
+    <div class="client-card">
+      <div class="client-card-top">
+        <div class="client-avatar-lg">${initials(c.full_name || c.email || "?")}</div>
+        <div>
+          <div class="client-name">${c.full_name || c.email || "Unknown"}</div>
+          <div class="client-plan">${capitalize(c.plan || "—")}</div>
+        </div>
+      </div>
+      <div class="client-meta">
+        <div class="client-meta-row">
+          <span class="client-meta-label">Status</span>
+          <span class="badge badge-${c.status || 'active'}">${c.status || 'active'}</span>
+        </div>
+        <div class="client-meta-row">
+          <span class="client-meta-label">Next Session</span>
+          <span class="client-meta-val">${c.next_session || "—"}</span>
+        </div>
+        <div class="client-meta-row">
+          <span class="client-meta-label">Sessions Done</span>
+          <span class="client-meta-val">${c.sessions_done || 0}</span>
+        </div>
+        <div>
+          <div class="client-meta-row" style="margin-bottom:4px">
+            <span class="client-meta-label">Progress</span>
+            <span class="client-meta-val">${c.goal_progress || 0}%</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" style="width:${c.goal_progress || 0}%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="client-card-actions">
+        <button class="btn-sm btn-sm-blue" style="flex:1" onclick="openUpdateClientModal('${c.id}', '${(c.full_name||'').replace(/'/g,"\\'")}', ${c.goal_progress||0}, ${c.sessions_done||0}, '${c.next_session||''}')">Update Stats</button>
+        <button class="btn-sm btn-sm-outline" onclick="showSection('notes', document.querySelectorAll('.sidebar-link')[3])">Notes</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ─────────────────────────────────────────────────────────────
+// UPDATE CLIENT STATS MODAL
+// ─────────────────────────────────────────────────────────────
+function openUpdateClientModal(clientId, name, progress, sessions, nextSession) {
+  const body = `
+    <div class="mf-row">
+      <label>Goal Progress (%)</label>
+      <input id="uc-progress" type="number" min="0" max="100" value="${progress}">
+    </div>
+    <div class="mf-row">
+      <label>Sessions Done</label>
+      <input id="uc-sessions" type="number" min="0" value="${sessions}">
+    </div>
+    <div class="mf-row">
+      <label>Next Session Date/Text</label>
+      <input id="uc-next" type="text" value="${nextSession}" placeholder="e.g. Monday 6 PM or 2026-04-15">
+    </div>
+    <div class="mf-row">
+      <label>Trainer Notes for Client</label>
+      <textarea id="uc-notes" placeholder="Notes visible to client in their dashboard...">${getClientNotes(clientId)}</textarea>
+    </div>
+    <div class="mf-row">
+      <label>Weight Lost (kg)</label>
+      <input id="uc-weight" type="number" min="0" step="0.1" placeholder="e.g. 4.5">
+    </div>
+  `;
+  const footer = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-blue" onclick="saveClientStats('${clientId}')">Save Changes</button>
+  `;
+  openModal({ title: `Update: ${name}`, body, footer });
+}
+
+function getClientNotes(id) {
+  const c = myClients.find(x => x.id === id);
+  return (c && c.trainer_notes) ? c.trainer_notes : "";
+}
+
+async function saveClientStats(clientId) {
+  const progress  = parseInt(document.getElementById("uc-progress").value) || 0;
+  const sessions  = parseInt(document.getElementById("uc-sessions").value) || 0;
+  const nextSess  = document.getElementById("uc-next").value.trim();
+  const notes     = document.getElementById("uc-notes").value.trim();
+  const weightLost= parseFloat(document.getElementById("uc-weight").value) || 0;
+
+  // Compute attendance_rate (sessions_present / total_days * 100)
+  // For simplicity we use sessions_present from the attendance table
+  const { count: presentCount } = await db
+    .from("attendance")
+    .select("*", { count: "exact", head: true })
+    .eq("client_id", clientId)
+    .eq("status", "present");
+
+  const { count: totalCount } = await db
+    .from("attendance")
+    .select("*", { count: "exact", head: true })
+    .eq("client_id", clientId);
+
+  const attRate = totalCount > 0 ? Math.round((presentCount / totalCount) * 100) : 0;
+
+  const { error } = await db
+    .from("profiles")
+    .update({
+      goal_progress: progress,
+      sessions_done: sessions,
+      sessions_present: presentCount || 0,
+      attendance_rate: attRate,
+      next_session: nextSess,
+      trainer_notes: notes,
+      weight_lost: weightLost
+    })
+    .eq("id", clientId);
+
+  if (error) { showToast("Failed to save", "error"); return; }
+
+  closeModal();
+  showToast("Client stats updated ✓", "success");
+  await loadMyClients();
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER: ATTENDANCE
+// ─────────────────────────────────────────────────────────────
+async function renderAttendance() {
+  const attBody = document.getElementById("att-body");
+
+  const activeClients = myClients.filter(c => c.status === "active");
+  if (!activeClients.length) {
+    attBody.innerHTML = `<div class="empty-state"><span class="empty-icon">📅</span>No active clients to mark attendance for</div>`;
+    return;
+  }
+
+  // Get existing attendance for today
+  const clientIds = activeClients.map(c => c.id);
+  const { data: existing } = await db
+    .from("attendance")
+    .select("client_id, status")
+    .eq("date", todayStr)
+    .in("client_id", clientIds);
+
+  const existingMap = {};
+  (existing || []).forEach(r => { existingMap[r.client_id] = r.status; });
+
+  attBody.innerHTML = `
+    <table class="db-table">
+      <thead><tr><th>Client</th><th>Plan</th><th>Mark</th></tr></thead>
+      <tbody>
+        ${activeClients.map(c => `
+          <tr>
+            <td>${avatar(c.full_name || c.email)}</td>
+            <td>${capitalize(c.plan || "—")}</td>
+            <td>
+              <div class="att-toggle" id="att-toggle-${c.id}">
+                <button class="att-btn ${existingMap[c.id] === 'present' ? 'present' : ''}"
+                  onclick="markAtt('${c.id}', 'present', this)">✓ Present</button>
+                <button class="att-btn ${existingMap[c.id] === 'absent' ? 'absent' : ''}"
+                  onclick="markAtt('${c.id}', 'absent', this)">✗ Absent</button>
+              </div>
+            </td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+// Pending attendance changes
+const pendingAttendance = {};
+
+function markAtt(clientId, type, btn) {
+  const toggle = document.getElementById(`att-toggle-${clientId}`);
+  toggle.querySelectorAll(".att-btn").forEach(b => b.classList.remove("present", "absent"));
+  btn.classList.add(type);
+  pendingAttendance[clientId] = type;
+}
+
+async function saveAllAttendance() {
+  const entries = Object.entries(pendingAttendance);
+  if (!entries.length) { showToast("No changes to save", "error"); return; }
+
+  for (const [clientId, status] of entries) {
+    await db.from("attendance").upsert(
+      [{ client_id: clientId, trainer_id: currentTrainerId, date: todayStr, status }],
+      { onConflict: "client_id,date" }
+    );
+  }
+
+  showToast(`Attendance saved for ${entries.length} client(s) ✓`, "success");
+  Object.keys(pendingAttendance).forEach(k => delete pendingAttendance[k]);
+  updateStats();
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER: NOTES
+// ─────────────────────────────────────────────────────────────
+function renderNotes() {
+  const grid = document.getElementById("notes-grid");
+  if (!myClients.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="empty-icon">📝</span>No clients to add notes for</div>`;
+    return;
+  }
+  grid.innerHTML = myClients.map(c => `
+    <div class="client-card">
+      <div class="client-card-top">
+        <div class="client-avatar-lg" style="width:40px;height:40px;font-size:16px">${initials(c.full_name || c.email || "?")}</div>
+        <div>
+          <div class="client-name">${c.full_name || c.email || "Unknown"}</div>
+          <div class="client-plan">${capitalize(c.plan || "—")}</div>
+        </div>
+      </div>
+      <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ash);margin-bottom:8px">Trainer Notes (visible to client)</div>
+      <textarea class="notes-area" id="notes-${c.id}" placeholder="Add session notes for this client...">${c.trainer_notes || ""}</textarea>
+      <div style="margin-top:10px">
+        <button class="btn-sm btn-sm-blue" style="width:100%" onclick="saveNotes('${c.id}')">Save Notes</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function saveNotes(clientId) {
+  const notes = document.getElementById(`notes-${clientId}`).value.trim();
+  const { error } = await db
+    .from("profiles")
+    .update({ trainer_notes: notes })
+    .eq("id", clientId);
+  if (error) { showToast("Failed to save notes", "error"); return; }
+
+  // Update local
+  const c = myClients.find(x => x.id === clientId);
+  if (c) c.trainer_notes = notes;
+  showToast("Notes saved ✓", "success");
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER: PLANS
+// ─────────────────────────────────────────────────────────────
+async function renderPlans() {
+  const plansBody = document.getElementById("plans-body");
+  if (!myClients.length) {
+    plansBody.innerHTML = `<div class="empty-state"><span class="empty-icon">💪</span>No clients assigned yet</div>`;
+    return;
+  }
+
+  const clientIds = myClients.map(c => c.id);
+
+  const { data: workouts } = await db
+    .from("workouts")
+    .select("id, client_id, week_number, total_weeks, created_at")
+    .in("client_id", clientIds);
+
+  const { data: diets } = await db
+    .from("diet_plans")
+    .select("id, client_id, target_calories, created_at")
+    .in("client_id", clientIds);
+
+  const workoutMap = {};
+  (workouts || []).forEach(w => { workoutMap[w.client_id] = w; });
+
+  const dietMap = {};
+  (diets || []).forEach(d => { dietMap[d.client_id] = d; });
+
+  plansBody.innerHTML = `
+    <table class="db-table">
+      <thead><tr><th>Client</th><th>Workout Plan</th><th>Diet Plan</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${myClients.map(c => `
+          <tr>
+            <td>${avatar(c.full_name || c.email)}</td>
+            <td>${workoutMap[c.id] ? `Week ${workoutMap[c.id].week_number}/${workoutMap[c.id].total_weeks}` : '<span style="color:var(--ash)">Not assigned</span>'}</td>
+            <td>${dietMap[c.id] ? `${dietMap[c.id].target_calories} kcal` : '<span style="color:var(--ash)">Not assigned</span>'}</td>
+            <td style="display:flex;gap:8px">
+              <button class="btn-sm btn-sm-blue" onclick="openWorkoutModal('${c.id}', '${(c.full_name||'').replace(/'/g,"\\'")}')">💪 Workout</button>
+              <button class="btn-sm btn-sm-green" onclick="openDietModal('${c.id}', '${(c.full_name||'').replace(/'/g,"\\'")}')">🥗 Diet</button>
+            </td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+// ─────────────────────────────────────────────────────────────
+// WORKOUT PLAN MODAL
+// ─────────────────────────────────────────────────────────────
+function openWorkoutModal(preClientId = "", preClientName = "") {
+  const clientOptions = myClients.map(c =>
+    `<option value="${c.id}" ${c.id === preClientId ? "selected" : ""}>${c.full_name || c.email}</option>`
+  ).join("");
+
+  const body = `
+    <div class="mf-row">
+      <label>Select Client *</label>
+      <select id="wp-client">${clientOptions}</select>
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Current Week</label>
+        <input id="wp-week" type="number" min="1" value="1">
+      </div>
+      <div class="mf-row">
+        <label>Total Weeks</label>
+        <input id="wp-total" type="number" min="1" value="12">
+      </div>
+    </div>
+    <hr style="border-color:var(--border);margin:16px 0">
+    <div style="font-family:'Barlow Condensed';font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:12px">Daily Schedule (7 days)</div>
+    ${["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].map((day, i) => `
+      <div style="background:#0a0a0a;border:1px solid var(--border);padding:14px;margin-bottom:8px;border-radius:2px">
+        <div style="font-family:'Barlow Condensed';font-size:13px;font-weight:700;color:var(--white);margin-bottom:10px">${day}</div>
+        <div class="mf-grid">
+          <div class="mf-row">
+            <label>Focus</label>
+            <input type="text" id="day-focus-${i}" placeholder="e.g. Upper Body Push">
+          </div>
+          <div class="mf-row">
+            <label>Duration (min)</label>
+            <input type="number" id="day-dur-${i}" value="45" min="0">
+          </div>
+        </div>
+        <div class="mf-row">
+          <label>Exercises</label>
+          <input type="text" id="day-ex-${i}" placeholder="Bench Press, Dips, Push-ups...">
+        </div>
+        <div class="mf-row">
+          <label>Status</label>
+          <select id="day-status-${i}">
+            <option value="upcoming">Upcoming</option>
+            <option value="today">Today</option>
+            <option value="done">Done</option>
+            <option value="rest">Rest Day</option>
+          </select>
+        </div>
+      </div>
+    `).join("")}
+  `;
+  const footer = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-blue" onclick="saveWorkoutPlan()">Save Workout Plan</button>
+  `;
+  openModal({ title: `Assign Workout Plan${preClientName ? ': ' + preClientName : ""}`, body, footer });
+}
+
+async function saveWorkoutPlan() {
+  const clientId  = document.getElementById("wp-client").value;
+  const weekNum   = parseInt(document.getElementById("wp-week").value) || 1;
+  const totalWeeks= parseInt(document.getElementById("wp-total").value) || 12;
+
+  if (!clientId) { showToast("Select a client", "error"); return; }
+
+  // Upsert workout (delete existing for this client, then insert)
+  const { data: existing } = await db
+    .from("workouts")
+    .select("id")
+    .eq("client_id", clientId)
+    .limit(1);
+
+  let workoutId;
+
+  if (existing && existing.length) {
+    workoutId = existing[0].id;
+    await db.from("workouts").update({ week_number: weekNum, total_weeks: totalWeeks, updated_at: new Date().toISOString() }).eq("id", workoutId);
+    await db.from("workout_days").delete().eq("workout_id", workoutId);
+  } else {
+    const { data: newW, error } = await db
+      .from("workouts")
+      .insert([{ client_id: clientId, trainer_id: currentTrainerId, week_number: weekNum, total_weeks: totalWeeks }])
+      .select()
+      .single();
+    if (error) { showToast("Failed to create plan", "error"); return; }
+    workoutId = newW.id;
+  }
+
+  const dayNames = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  const dayRows = dayNames.map((day, i) => ({
+    workout_id: workoutId,
+    day_name: day,
+    focus: document.getElementById(`day-focus-${i}`).value.trim() || "Rest",
+    exercises: document.getElementById(`day-ex-${i}`).value.trim() || "—",
+    duration_minutes: parseInt(document.getElementById(`day-dur-${i}`).value) || 0,
+    status: document.getElementById(`day-status-${i}`).value,
+    day_order: i + 1
+  }));
+
+  const { error: dErr } = await db.from("workout_days").insert(dayRows);
+  if (dErr) { showToast("Failed to save days", "error"); return; }
+
+  closeModal();
+  showToast("Workout plan saved ✓", "success");
+  await renderPlans();
+}
+
+// ─────────────────────────────────────────────────────────────
+// DIET PLAN MODAL
+// ─────────────────────────────────────────────────────────────
+function openDietModal(preClientId = "", preClientName = "") {
+  const clientOptions = myClients.map(c =>
+    `<option value="${c.id}" ${c.id === preClientId ? "selected" : ""}>${c.full_name || c.email}</option>`
+  ).join("");
+
+  const body = `
+    <div class="mf-row">
+      <label>Select Client *</label>
+      <select id="dp-client">${clientOptions}</select>
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Target Calories</label>
+        <input id="dp-cal" type="number" value="1800">
+      </div>
+      <div class="mf-row">
+        <label>Protein (g)</label>
+        <input id="dp-protein" type="number" value="150">
+      </div>
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Carbs (g)</label>
+        <input id="dp-carbs" type="number" value="180">
+      </div>
+      <div class="mf-row">
+        <label>Fats (g)</label>
+        <input id="dp-fats" type="number" value="55">
+      </div>
+    </div>
+    <div class="mf-row">
+      <label>Notes / Diet Type</label>
+      <input id="dp-notes" type="text" placeholder="e.g. High Protein, Low Carb">
+    </div>
+    <hr style="border-color:var(--border);margin:16px 0">
+    <div style="font-family:'Barlow Condensed';font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:12px">Meals (Add up to 6)</div>
+    ${[1,2,3,4].map(i => `
+      <div style="background:#0a0a0a;border:1px solid var(--border);padding:14px;margin-bottom:8px;border-radius:2px">
+        <div style="font-family:'Barlow Condensed';font-size:13px;font-weight:700;color:var(--red);margin-bottom:10px">Meal ${i}</div>
+        <div class="mf-row"><label>Time / Label</label><input type="text" id="m-time-${i}" placeholder="Breakfast · 7:30 AM"></div>
+        <div class="mf-row"><label>Meal Name</label><input type="text" id="m-name-${i}" placeholder="High Protein Start"></div>
+        <div class="mf-row"><label>Description</label><input type="text" id="m-desc-${i}" placeholder="Eggs, toast, coffee..."></div>
+        <div class="mf-grid">
+          <div class="mf-row"><label>Calories</label><input type="number" id="m-cal-${i}" value="0"></div>
+          <div class="mf-row"><label>Protein (g)</label><input type="number" id="m-protein-${i}" value="0"></div>
+        </div>
+        <div class="mf-grid">
+          <div class="mf-row"><label>Carbs (g)</label><input type="number" id="m-carbs-${i}" value="0"></div>
+          <div class="mf-row"><label>Fats (g)</label><input type="number" id="m-fats-${i}" value="0"></div>
+        </div>
+      </div>
+    `).join("")}
+  `;
+  const footer = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-green" onclick="saveDietPlan()">Save Diet Plan</button>
+  `;
+  openModal({ title: `Assign Diet Plan${preClientName ? ': ' + preClientName : ""}`, body, footer });
+}
+
+async function saveDietPlan() {
+  const clientId = document.getElementById("dp-client").value;
+  if (!clientId) { showToast("Select a client", "error"); return; }
+
+  const planData = {
+    client_id: clientId,
+    trainer_id: currentTrainerId,
+    target_calories: parseInt(document.getElementById("dp-cal").value) || 0,
+    target_protein:  parseInt(document.getElementById("dp-protein").value) || 0,
+    target_carbs:    parseInt(document.getElementById("dp-carbs").value) || 0,
+    target_fats:     parseInt(document.getElementById("dp-fats").value) || 0,
+    notes:           document.getElementById("dp-notes").value.trim(),
+    updated_at:      new Date().toISOString()
+  };
+
+  // Delete existing plan for this client
+  const { data: existingPlan } = await db.from("diet_plans").select("id").eq("client_id", clientId).limit(1);
+  if (existingPlan && existingPlan.length) {
+    await db.from("diet_meals").delete().eq("diet_plan_id", existingPlan[0].id);
+    await db.from("diet_plans").delete().eq("id", existingPlan[0].id);
+  }
+
+  const { data: newPlan, error } = await db.from("diet_plans").insert([planData]).select().single();
+  if (error) { showToast("Failed to save diet plan", "error"); return; }
+
+  const meals = [];
+  for (let i = 1; i <= 4; i++) {
+    const name = document.getElementById(`m-name-${i}`).value.trim();
+    if (!name) continue;
+    meals.push({
+      diet_plan_id: newPlan.id,
+      meal_time:    document.getElementById(`m-time-${i}`).value.trim(),
+      meal_name:    name,
+      description:  document.getElementById(`m-desc-${i}`).value.trim(),
+      calories:     parseInt(document.getElementById(`m-cal-${i}`).value) || 0,
+      protein:      parseInt(document.getElementById(`m-protein-${i}`).value) || 0,
+      carbs:        parseInt(document.getElementById(`m-carbs-${i}`).value) || 0,
+      fats:         parseInt(document.getElementById(`m-fats-${i}`).value) || 0,
+      meal_order:   i
+    });
+  }
+
+  if (meals.length) {
+    await db.from("diet_meals").insert(meals);
+  }
+
+  closeModal();
+  showToast("Diet plan saved ✓", "success");
+  await renderPlans();
+}
+
+// ─────────────────────────────────────────────────────────────
+// MODAL SYSTEM
+// ─────────────────────────────────────────────────────────────
+function openModal({ title, body, footer }) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").innerHTML = body;
+  document.getElementById("modal-footer").innerHTML = footer;
+  document.getElementById("modal-overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  document.getElementById("modal-overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById("modal-overlay")) closeModal();
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+// ─────────────────────────────────────────────────────────────
+// NAV + UTILS
+// ─────────────────────────────────────────────────────────────
+function showSection(id, linkEl) {
+  document.querySelectorAll(".db-section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+  document.getElementById("sec-" + id).classList.add("active");
+  if (linkEl) linkEl.classList.add("active");
+  const titles = { overview:"Overview", clients:"My Clients", attendance:"Attendance", notes:"Session Notes", plans:"Assign Plans" };
+  document.getElementById("topbar-title").textContent = titles[id] || id;
+}
+
+function initials(n) {
+  return (n || "?").split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+}
+
+function avatar(n) {
+  return `<div class="inline-avatar"><div class="avatar-circle">${initials(n)}</div>${n}</div>`;
+}
+
+function capitalize(s) {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : "—";
+}
+
+function setDate() {
+  const d = new Date();
+  const str = d.toLocaleDateString("en-IN", { weekday:"short", day:"numeric", month:"short", year:"numeric" });
+  document.getElementById("topbar-date").textContent = str;
+  const a = document.getElementById("att-date-t");
+  if (a) a.textContent = str;
+}
+
+function showToast(message, type = "success") {
+  const container = document.getElementById("t-toast-container");
+  const toast = document.createElement("div");
+  toast.className = `t-toast ${type}`;
+  toast.innerHTML = `<span>${type === "success" ? "✓" : "✕"}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+async function logout() {
+  await supabaseClient.auth.signOut();
+  localStorage.removeItem("userId");
+  window.location.href = "login.html";
+}
+
+// BOOT
+init();
+</script>
+</body>
+</html>

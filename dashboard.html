@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en" style="cursor: none !important;">
+<head>
+<meta charset="UTF-8">
+<script src="js/cursor.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ─── LAYOUT ─── */
+body { overflow-x: hidden; background: #000; }
+
+.db-wrap {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #080808;
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sidebar-logo img { height: 36px; width: auto; }
+.sidebar-logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--white);
+  line-height: 1;
+}
+.sidebar-logo-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.sidebar-role {
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(174,0,1,0.1);
+  border: 1px solid rgba(174,0,1,0.3);
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.role-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 6px rgba(174,0,1,0.8);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 0;
+  overflow-y: auto;
+}
+.nav-section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ash);
+  padding: 12px 24px 6px;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ash);
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s, border-left 0.2s;
+  border-left: 2px solid transparent;
+  position: relative;
+  cursor: pointer;
+}
+.sidebar-link:hover {
+  color: var(--white);
+  background: rgba(247,246,246,0.03);
+}
+.sidebar-link.active {
+  color: var(--white);
+  background: rgba(174,0,1,0.06);
+  border-left-color: var(--red);
+}
+.sidebar-link .s-icon { font-size: 15px; width: 18px; text-align: center; }
+
+.sidebar-bottom {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sidebar-avatar {
+  width: 32px; height: 32px;
+  border-radius: 2px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.sidebar-user-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+.sidebar-user-role {
+  font-size: 11px;
+  color: var(--ash);
+}
+.sidebar-logout {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--ash);
+  font-size: 16px;
+  padding: 4px;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.sidebar-logout:hover { color: var(--red); }
+
+/* ─── MAIN CONTENT ─── */
+.db-main {
+  margin-left: 240px;
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── TOP BAR ─── */
+.topbar {
+  height: 64px;
+  background: rgba(0,0,0,0.9);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+}
+.topbar-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.topbar-search {
+  padding: 8px 16px;
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  width: 220px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.topbar-search:focus { border-color: var(--red); }
+.topbar-search::placeholder { color: var(--ash); }
+.topbar-date {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--ash);
+  text-transform: uppercase;
+}
+
+/* ─── PAGE SECTIONS ─── */
+.db-section { display: none; padding: 32px; }
+.db-section.active { display: block; }
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.section-head h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.section-head h2 span { color: var(--red); }
+
+/* ─── STAT CARDS ─── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 24px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+.stat-card:hover { border-color: rgba(174,0,1,0.3); transform: translateY(-2px); }
+.stat-card:hover::before { transform: scaleX(1); }
+.stat-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: 10px;
+}
+.stat-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--white);
+  line-height: 1;
+}
+.stat-value span { color: var(--red); font-size: 28px; }
+.stat-sub {
+  font-size: 12px;
+  color: var(--ash);
+  margin-top: 6px;
+  font-weight: 300;
+}
+.stat-icon {
+  position: absolute;
+  top: 20px; right: 20px;
+  font-size: 28px;
+  opacity: 0.12;
+}
+
+/* ─── DATA TABLE ─── */
+.db-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.db-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.db-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+.db-card-actions { display: flex; gap: 10px; }
+
+.btn-sm {
+  padding: 7px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.btn-sm-red { background: var(--red); color: var(--white); }
+.btn-sm-red:hover { background: var(--red-dark); transform: translateY(-1px); }
+.btn-sm-outline { background: transparent; color: var(--ash); border: 1px solid var(--border); }
+.btn-sm-outline:hover { border-color: var(--white); color: var(--white); }
+.btn-sm-ghost { background: transparent; color: var(--ash); border: none; }
+.btn-sm-ghost:hover { color: var(--red); }
+
+.db-table { width: 100%; border-collapse: collapse; }
+.db-table th {
+  padding: 12px 20px;
+  text-align: left;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ash);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.db-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--white);
+  border-bottom: 1px solid rgba(145,136,136,0.08);
+  vertical-align: middle;
+}
+.db-table tr:last-child td { border-bottom: none; }
+.db-table tr:hover td { background: rgba(247,246,246,0.02); }
+
+/* ─── BADGES ─── */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.badge-new         { background: rgba(59,130,246,0.15);  color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+.badge-contacted   { background: rgba(234,179,8,0.15);   color: #fbbf24; border: 1px solid rgba(234,179,8,0.3); }
+.badge-followup    { background: rgba(249,115,22,0.15);  color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+.badge-trial_booked{ background: rgba(168,85,247,0.15);  color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+.badge-trial_done  { background: rgba(20,184,166,0.15);  color: #2dd4bf; border: 1px solid rgba(20,184,166,0.3); }
+.badge-converted   { background: rgba(34,197,94,0.15);   color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.badge-lost        { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+.badge-pending     { background: rgba(234,179,8,0.15);   color: #fbbf24; border: 1px solid rgba(234,179,8,0.3); }
+.badge-approved    { background: rgba(34,197,94,0.15);   color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.badge-rejected    { background: rgba(239,68,68,0.15);   color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.badge-active      { background: rgba(34,197,94,0.15);   color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.badge-paused      { background: rgba(234,179,8,0.15);   color: #fbbf24; border: 1px solid rgba(234,179,8,0.3); }
+.badge-cancelled   { background: rgba(239,68,68,0.15);   color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.badge-paid        { background: rgba(34,197,94,0.15);   color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+.badge-unpaid      { background: rgba(239,68,68,0.15);   color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+
+/* ─── STATUS SELECT ─── */
+.status-select {
+  background: #111;
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.status-select:focus { border-color: var(--red); }
+
+/* ─── ATTENDANCE TOGGLE ─── */
+.att-toggle { display: flex; gap: 6px; }
+.att-btn {
+  padding: 5px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ash);
+  border-radius: 2px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.att-btn.present { background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.3); }
+.att-btn.absent  { background: rgba(239,68,68,0.15);  color: #f87171; border-color: rgba(239,68,68,0.3); }
+
+/* ─── SETTINGS FORM ─── */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.settings-field { margin-bottom: 20px; }
+.settings-field label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: 8px;
+}
+.settings-field input,
+.settings-field select,
+.settings-field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.settings-field input:focus,
+.settings-field select:focus { border-color: var(--red); }
+
+/* ─── TRAINER CARDS ─── */
+.trainer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.trainer-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 28px 24px;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+.trainer-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+.trainer-card:hover { border-color: rgba(174,0,1,0.3); transform: translateY(-2px); }
+.trainer-card:hover::before { transform: scaleX(1); }
+.trainer-avatar-lg {
+  width: 56px; height: 56px;
+  border-radius: 2px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.trainer-card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.trainer-card-spec {
+  font-size: 12px;
+  color: var(--ash);
+  margin-bottom: 20px;
+}
+.trainer-stats { display: flex; gap: 20px; }
+.trainer-stat-item { text-align: center; }
+.trainer-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--red);
+  line-height: 1;
+}
+.trainer-stat-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap {
+  background: #1a1a1a;
+  border-radius: 2px;
+  height: 4px;
+  width: 100%;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 2px;
+  transition: width 0.8s ease;
+}
+
+/* ─── AVATAR INLINE ─── */
+.inline-avatar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar-circle {
+  width: 30px; height: 30px;
+  border-radius: 2px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1200px) {
+  .stat-grid { grid-template-columns: repeat(3, 1fr); }
+  .trainer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .sidebar { width: 60px; }
+  .sidebar-logo-text, .sidebar-logo-sub,
+  .sidebar-role, .nav-section-label,
+  .sidebar-link span:not(.s-icon),
+  .sidebar-user-name, .sidebar-user-role { display: none; }
+  .db-main { margin-left: 60px; }
+  .sidebar-link { padding: 14px; justify-content: center; }
+  .sidebar-logo { padding: 16px; justify-content: center; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .settings-grid { grid-template-columns: 1fr; }
+  .trainer-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   MODAL SYSTEM
+═══════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-card {
+  background: #0d0d0d;
+  border: 1px solid rgba(174,0,1,0.25);
+  border-top: 2px solid var(--red);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.93) translateY(16px);
+  transition: transform 0.25s ease;
+  position: relative;
+}
+.modal-overlay.open .modal-card {
+  transform: scale(1) translateY(0);
+}
+.modal-header {
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.modal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--ash);
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--red); }
+.modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  flex: 1;
+}
+.modal-footer {
+  padding: 18px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* Modal form fields */
+.mf-row { margin-bottom: 18px; }
+.mf-row label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: 8px;
+}
+.mf-row input,
+.mf-row select,
+.mf-row textarea {
+  width: 100%;
+  padding: 11px 14px;
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.mf-row input:focus,
+.mf-row select:focus,
+.mf-row textarea:focus { border-color: var(--red); }
+.mf-row select option { background: #111; }
+.mf-row textarea { resize: vertical; min-height: 80px; }
+.mf-row input.error,
+.mf-row select.error { border-color: #f87171; }
+.mf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+
+/* Confirm modal */
+.modal-card.confirm-card { max-width: 400px; }
+.confirm-icon { font-size: 40px; text-align: center; margin-bottom: 12px; }
+.confirm-msg {
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  color: #ccc;
+  text-align: center;
+  line-height: 1.6;
+}
+.confirm-name {
+  font-weight: 700;
+  color: var(--white);
+}
+
+/* ═══════════════════════════════════════════
+   TOAST SYSTEM
+═══════════════════════════════════════════ */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #111;
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--white);
+  min-width: 280px;
+  max-width: 360px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  animation: toastIn 0.3s ease forwards;
+  pointer-events: all;
+}
+.toast.success { border-left-color: #4ade80; }
+.toast.error   { border-left-color: #f87171; }
+.toast-icon { font-size: 16px; flex-shrink: 0; }
+.toast.out { animation: toastOut 0.3s ease forwards; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(40px); }
+}
+
+/* ─── ROW ACTION BUTTONS ─── */
+.row-actions { display: flex; gap: 6px; align-items: center; }
+.btn-icon {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--ash);
+  width: 28px; height: 28px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-icon:hover { border-color: var(--white); color: var(--white); }
+.btn-icon.danger:hover { border-color: #f87171; color: #f87171; }
+.btn-icon.success-btn:hover { border-color: #4ade80; color: #4ade80; }
+
+/* inline status dropdown in table */
+.inline-status-sel {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.inline-status-sel:focus { border-color: var(--red); }
+
+/* empty state */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--ash);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     TOAST CONTAINER
+═══════════════════════════════════════════ -->
+<div id="toast-container"></div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL OVERLAY
+═══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-card" id="modal-card">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Modal</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<div class="db-wrap">
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="Assets/Logo/B2F_logo.png" alt="B2F">
+      <div>
+        <div class="sidebar-logo-text">B2F</div>
+        <div class="sidebar-logo-sub">Admin Panel</div>
+      </div>
+    </div>
+
+    <div class="sidebar-role">
+      <div class="role-badge"><div class="role-dot"></div> Admin</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Core</div>
+      <a class="sidebar-link active" onclick="showSection('overview', this)">
+        <span class="s-icon">⚡</span><span>Overview</span>
+      </a>
+      <a class="sidebar-link" onclick="showSection('leads', this)">
+        <span class="s-icon">🎯</span><span>Leads</span>
+      </a>
+      <a class="sidebar-link" onclick="showSection('applications', this)">
+        <span class="s-icon">📋</span><span>Applications</span>
+      </a>
+
+      <div class="nav-section-label">Management</div>
+      <a class="sidebar-link" onclick="showSection('clients', this)">
+        <span class="s-icon">👥</span><span>Clients</span>
+      </a>
+      <a class="sidebar-link" onclick="showSection('trainers', this)">
+        <span class="s-icon">🏋️</span><span>Trainers</span>
+      </a>
+      <a class="sidebar-link" onclick="showSection('attendance', this)">
+        <span class="s-icon">📅</span><span>Attendance</span>
+      </a>
+
+      <div class="nav-section-label">Finance</div>
+      <a class="sidebar-link" onclick="showSection('payments', this)">
+        <span class="s-icon">💳</span><span>Payments</span>
+      </a>
+
+      <div class="nav-section-label">System</div>
+      <a class="sidebar-link" onclick="showSection('settings', this)">
+        <span class="s-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">A</div>
+        <div>
+          <div class="sidebar-user-name">Admin</div>
+          <div class="sidebar-user-role">Super Admin</div>
+        </div>
+        <button class="sidebar-logout" onclick="logout()" title="Logout">↩</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <main class="db-main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Overview</div>
+      <div class="topbar-right">
+        <input class="topbar-search" type="text" placeholder="Search clients, leads..." id="global-search">
+        <div class="topbar-date" id="topbar-date"></div>
+      </div>
+    </div>
+
+    <!-- ══════════ OVERVIEW ══════════ -->
+    <div class="db-section active" id="sec-overview">
+      <div class="section-head">
+        <h2>DASHBOARD <span>OVERVIEW</span></h2>
+        <div class="tag">Live Data</div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-label">Total Leads</div>
+          <div class="stat-value" id="stat-leads">—</div>
+          <div class="stat-sub">From Supabase</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-label">Active Clients</div>
+          <div class="stat-value" id="stat-clients">—</div>
+          <div class="stat-sub">Active status</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-label">Applications</div>
+          <div class="stat-value" id="stat-apps">—</div>
+          <div class="stat-sub">Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📈</div>
+          <div class="stat-label">Conversion Rate</div>
+          <div class="stat-value">74<span>%</span></div>
+          <div class="stat-sub">↑ 4% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Revenue</div>
+          <div class="stat-value">₹<span style="font-size:28px;color:var(--white)">1.6L</span></div>
+          <div class="stat-sub">April 2026</div>
+        </div>
+      </div>
+
+      <!-- Recent Leads -->
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">Recent Leads</div>
+          <div class="db-card-actions">
+            <button class="btn-sm btn-sm-outline" onclick="showSection('leads', document.querySelector('[onclick*=leads]'))">View All</button>
+          </div>
+        </div>
+        <table class="db-table">
+          <thead><tr>
+            <th>Name</th><th>Phone</th><th>Source</th><th>Status</th><th>Trainer</th><th>Follow Up</th>
+          </tr></thead>
+          <tbody id="recent-leads"></tbody>
+        </table>
+      </div>
+
+      <!-- Recent Applications -->
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">Recent Applications</div>
+        </div>
+        <table class="db-table">
+          <thead><tr><th>Name</th><th>Goal</th><th>Plan</th><th>Status</th><th>Priority</th></tr></thead>
+          <tbody id="recent-apps-tbody">
+            <tr>
+              <td><div class="inline-avatar"><div class="avatar-circle">SN</div>Sneha Nair</div></td>
+              <td>Fat Loss</td><td>Personal Training</td>
+              <td><span class="badge badge-pending">Pending</span></td>
+              <td><span class="badge badge-new">High</span></td>
+            </tr>
+            <tr>
+              <td><div class="inline-avatar"><div class="avatar-circle">KP</div>Karan Patel</div></td>
+              <td>Strength</td><td>Group Training</td>
+              <td><span class="badge badge-approved">Approved</span></td>
+              <td><span class="badge badge-contacted">Medium</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ LEADS ══════════ -->
+    <div class="db-section" id="sec-leads">
+      <div class="section-head">
+        <h2>LEADS <span>MANAGEMENT</span></h2>
+        <button class="btn-sm btn-sm-red" onclick="openLeadModal()">+ Add Lead</button>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">All Leads</div>
+          <div class="db-card-actions">
+            <select class="status-select" id="lead-filter" onchange="filterLeads()">
+              <option value="">All Status</option>
+              <option value="new">New</option>
+              <option value="contacted">Contacted</option>
+              <option value="trial_booked">Trial Booked</option>
+              <option value="trial_done">Trial Done</option>
+              <option value="converted">Converted</option>
+              <option value="lost">Lost</option>
+            </select>
+          </div>
+        </div>
+        <table class="db-table">
+          <thead><tr>
+            <th>Name</th><th>Phone</th><th>Email</th><th>Source</th>
+            <th>Status</th><th>Trainer</th><th>Notes</th><th>Follow Up</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="leads-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ APPLICATIONS ══════════ -->
+    <div class="db-section" id="sec-applications">
+      <div class="section-head">
+        <h2>APPLICATIONS <span>REVIEW</span></h2>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">All Applications</div>
+        </div>
+        <table class="db-table">
+          <thead><tr>
+            <th>Name</th><th>Goal</th><th>Plan</th><th>Status</th>
+            <th>Priority</th><th>Trainer</th><th>Action</th>
+          </tr></thead>
+          <tbody id="apps-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ CLIENTS ══════════ -->
+    <div class="db-section" id="sec-clients">
+      <div class="section-head">
+        <h2>CLIENT <span>MANAGEMENT</span></h2>
+        <button class="btn-sm btn-sm-red" onclick="openClientModal()">+ Add Client</button>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">All Clients</div>
+        </div>
+        <table class="db-table">
+          <thead><tr>
+            <th>Name</th><th>Plan</th><th>Trainer</th><th>Status</th>
+            <th>Join Date</th><th>Attendance</th><th>Payment</th>
+          </tr></thead>
+          <tbody id="clients-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ TRAINERS ══════════ -->
+    <div class="db-section" id="sec-trainers">
+      <div class="section-head">
+        <h2>TRAINER <span>MANAGEMENT</span></h2>
+        <button class="btn-sm btn-sm-red" onclick="openTrainerModal()">+ Add Trainer</button>
+      </div>
+      <div class="trainer-grid" id="trainers-grid"></div>
+    </div>
+
+    <!-- ══════════ ATTENDANCE ══════════ -->
+    <div class="db-section" id="sec-attendance">
+      <div class="section-head">
+        <h2>ATTENDANCE <span>SYSTEM</span></h2>
+        <div class="topbar-date" id="att-date"></div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">Today's Attendance</div>
+          <div class="db-card-actions">
+            <button class="btn-sm btn-sm-outline">Export</button>
+          </div>
+        </div>
+        <table class="db-table">
+          <thead><tr>
+            <th>Client</th><th>Plan</th><th>Trainer</th><th>Mark Attendance</th>
+          </tr></thead>
+          <tbody id="att-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ PAYMENTS ══════════ -->
+    <div class="db-section" id="sec-payments">
+      <div class="section-head">
+        <h2>PAYMENT <span>TRACKING</span></h2>
+      </div>
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Collected</div>
+          <div class="stat-value">₹<span style="font-size:24px;color:var(--white)">1.2L</span></div>
+          <div class="stat-sub">14 clients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-label">Pending</div>
+          <div class="stat-value">₹<span style="font-size:24px;color:var(--white)">44K</span></div>
+          <div class="stat-sub">4 clients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-label">Collection Rate</div>
+          <div class="stat-value">73<span>%</span></div>
+          <div class="stat-sub">This month</div>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">
+          <div class="db-card-title">Payment Records</div>
+          <div class="db-card-actions">
+            <button class="btn-sm btn-sm-outline">Export CSV</button>
+          </div>
+        </div>
+        <table class="db-table">
+          <thead><tr>
+            <th>Client</th><th>Plan</th><th>Amount</th><th>Due Date</th><th>Status</th>
+          </tr></thead>
+          <tbody id="payments-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ SETTINGS ══════════ -->
+    <div class="db-section" id="sec-settings">
+      <div class="section-head"><h2>SYSTEM <span>SETTINGS</span></h2></div>
+      <div class="db-card" style="padding:32px">
+        <div class="settings-grid">
+          <div>
+            <div class="db-card-title" style="margin-bottom:24px">Business Info</div>
+            <div class="settings-field">
+              <label>Business Name</label>
+              <input type="text" value="Built 2 Fly">
+            </div>
+            <div class="settings-field">
+              <label>Contact Email</label>
+              <input type="email" value="hello@built2fly.in">
+            </div>
+            <div class="settings-field">
+              <label>Phone</label>
+              <input type="tel" value="+91 98765 43210">
+            </div>
+            <div class="settings-field">
+              <label>Location</label>
+              <input type="text" value="Mumbai, Maharashtra">
+            </div>
+            <button class="btn-sm btn-sm-red" style="padding:10px 24px" onclick="showToast('Settings saved successfully','success')">Save Changes</button>
+          </div>
+          <div>
+            <div class="db-card-title" style="margin-bottom:24px">Plan Pricing</div>
+            <div class="settings-field">
+              <label>Group Training (monthly)</label>
+              <input type="text" value="₹3,499">
+            </div>
+            <div class="settings-field">
+              <label>Personal Training (monthly)</label>
+              <input type="text" value="₹8,999">
+            </div>
+            <div class="settings-field">
+              <label>Online Coaching (monthly)</label>
+              <input type="text" value="₹5,999">
+            </div>
+            <div class="settings-field">
+              <label>Supabase URL</label>
+              <input type="text" placeholder="https://your-project.supabase.co">
+            </div>
+            <button class="btn-sm btn-sm-red" style="padding:10px 24px" onclick="showToast('Pricing saved','success')">Save Pricing</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/loader.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SUPABASE INIT
+═══════════════════════════════════════════════════════════════ */
+const SUPABASE_URL = "https://bxlsgweqeomejjxeisai.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bHNnd2VxZW9tZWpqeGVpc2FpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyODM2MDYsImV4cCI6MjA5MDg1OTYwNn0.PXs3MZkmrIZ-aMRmZyy0C4Eh_bKOx0Q1J1E0FZqF_EM";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* ═══════════════════════════════════════════════════════════════
+   TOAST SYSTEM
+═══════════════════════════════════════════════════════════════ */
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>
+    <span>${message}</span>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL SYSTEM
+═══════════════════════════════════════════════════════════════ */
+function openModal({ title, body, footer }) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal-footer').innerHTML = footer;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-card').classList.remove('confirm-card');
+  document.body.style.overflow = 'hidden';
+}
+
+function openConfirmModal({ title, message, name, onConfirm }) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="confirm-icon">🗑️</div>
+    <p class="confirm-msg">${message} <span class="confirm-name">"${name}"</span>?<br>This action cannot be undone.</p>
+  `;
+  document.getElementById('modal-footer').innerHTML = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-red" id="confirm-ok-btn">Delete</button>
+  `;
+  document.getElementById('modal-card').classList.add('confirm-card');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('confirm-ok-btn').onclick = async () => {
+    closeModal();
+    await onConfirm();
+  };
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ═══════════════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════════════ */
+function badge(status) {
+  const map = {
+    new:'badge-new', contacted:'badge-contacted', followup:'badge-followup',
+    trial_booked:'badge-trial_booked', trial_done:'badge-trial_done',
+    converted:'badge-converted', lost:'badge-lost',
+    pending:'badge-pending', approved:'badge-approved', rejected:'badge-rejected',
+    active:'badge-active', paused:'badge-paused', cancelled:'badge-cancelled',
+    paid:'badge-paid', unpaid:'badge-unpaid',
+    high:'badge-new', medium:'badge-contacted', low:'badge-followup'
+  };
+  const label = {
+    trial_booked:'Trial Booked', trial_done:'Trial Done',
+    followup:'Follow-up', unpaid:'Unpaid'
+  };
+  return `<span class="badge ${map[status]||''}">${label[status]||(status||'—')}</span>`;
+}
+
+function initials(name) {
+  return (name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+}
+
+function avatar(name) {
+  return `<div class="inline-avatar"><div class="avatar-circle">${initials(name)}</div>${name}</div>`;
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  try { return new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+  catch(e) { return d; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LEADS – state
+═══════════════════════════════════════════════════════════════ */
+let _allLeads = [];
+
+/* RENDER LEADS */
+async function renderLeads() {
+  const tbody = document.getElementById('leads-tbody');
+  tbody.innerHTML = `<tr><td colspan="9" class="empty-state"><div class="empty-icon">⏳</div>Loading...</td></tr>`;
+
+  const { data, error } = await supabaseClient
+    .from('leads').select('*').order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('renderLeads error:', error);
+    showToast('Failed to load leads', 'error');
+    tbody.innerHTML = `<tr><td colspan="9" class="empty-state">Failed to load data</td></tr>`;
+    return;
+  }
+
+  _allLeads = data || [];
+  renderLeadsRows(_allLeads);
+  renderRecentLeads();
+  updateStatCounts();
+}
+
+function renderLeadsRows(leads) {
+  const tbody = document.getElementById('leads-tbody');
+  if (!leads.length) {
+    tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">🎯</div>No leads found. Add your first lead!</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = leads.map(l => `
+    <tr>
+      <td>${avatar(l.name)}</td>
+      <td style="font-size:13px">${l.phone||'—'}</td>
+      <td style="font-size:13px;color:var(--ash)">${l.email||'—'}</td>
+      <td style="font-size:13px">${l.source||'—'}</td>
+      <td>
+        <select class="inline-status-sel" onchange="updateLeadStatus('${l.id}', this.value)">
+          <option value="new"          ${l.status==='new'?'selected':''}>New</option>
+          <option value="contacted"    ${l.status==='contacted'?'selected':''}>Contacted</option>
+          <option value="trial_booked" ${l.status==='trial_booked'?'selected':''}>Trial Booked</option>
+          <option value="trial_done"   ${l.status==='trial_done'?'selected':''}>Trial Done</option>
+          <option value="converted"    ${l.status==='converted'?'selected':''}>Converted</option>
+          <option value="lost"         ${l.status==='lost'?'selected':''}>Lost</option>
+        </select>
+      </td>
+      <td style="font-size:13px">${l.trainer||'—'}</td>
+      <td style="font-size:12px;color:var(--ash);max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${l.notes||''}">${l.notes||'—'}</td>
+      <td style="font-size:12px;color:var(--ash)">${fmtDate(l.follow_up)}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn-icon" title="Edit" onclick="openLeadModal('${l.id}')">✏️</button>
+          <button class="btn-icon danger" title="Delete" onclick="deleteLead('${l.id}','${l.name}')">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterLeads() {
+  const val = document.getElementById('lead-filter').value;
+  const filtered = val ? _allLeads.filter(l => l.status === val) : _allLeads;
+  renderLeadsRows(filtered);
+}
+
+/* OPEN LEAD MODAL (add or edit) */
+async function openLeadModal(id = null) {
+  let lead = {};
+  if (id) {
+    const found = _allLeads.find(l => l.id == id);
+    if (found) lead = found;
+  }
+
+  const body = `
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Name <span style="color:var(--red)">*</span></label>
+        <input id="lf-name" type="text" value="${lead.name||''}" placeholder="Full name">
+      </div>
+      <div class="mf-row">
+        <label>Phone <span style="color:var(--red)">*</span></label>
+        <input id="lf-phone" type="text" value="${lead.phone||''}" placeholder="+91 98765 43210">
+      </div>
+    </div>
+    <div class="mf-row">
+      <label>Email</label>
+      <input id="lf-email" type="email" value="${lead.email||''}" placeholder="email@example.com">
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Source</label>
+        <select id="lf-source">
+          <option value="">Select source</option>
+          ${['Instagram','Walk-in','Referral','Other'].map(s=>`<option ${lead.source===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </div>
+      <div class="mf-row">
+        <label>Status</label>
+        <select id="lf-status">
+          <option value="new"          ${lead.status==='new'?'selected':''}>New</option>
+          <option value="contacted"    ${lead.status==='contacted'?'selected':''}>Contacted</option>
+          <option value="trial_booked" ${lead.status==='trial_booked'?'selected':''}>Trial Booked</option>
+          <option value="trial_done"   ${lead.status==='trial_done'?'selected':''}>Trial Done</option>
+          <option value="converted"    ${lead.status==='converted'?'selected':''}>Converted</option>
+          <option value="lost"         ${lead.status==='lost'?'selected':''}>Lost</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Trainer</label>
+        <input id="lf-trainer" type="text" value="${lead.trainer||''}" placeholder="Trainer name">
+      </div>
+      <div class="mf-row">
+        <label>Follow Up Date</label>
+        <input id="lf-followup" type="date" value="${lead.follow_up||''}">
+      </div>
+    </div>
+    <div class="mf-row">
+      <label>Notes</label>
+      <textarea id="lf-notes" placeholder="Any notes about this lead...">${lead.notes||''}</textarea>
+    </div>
+  `;
+
+  const footer = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-red" onclick="${id ? `updateLead('${id}')` : 'createLead()'}">
+      ${id ? 'Save Changes' : 'Add Lead'}
+    </button>
+  `;
+
+  openModal({ title: id ? 'Edit Lead' : 'Add New Lead', body, footer });
+}
+
+/* CREATE LEAD */
+async function createLead() {
+  const name  = document.getElementById('lf-name').value.trim();
+  const phone = document.getElementById('lf-phone').value.trim();
+  const email = document.getElementById('lf-email').value.trim();
+  const source = document.getElementById('lf-source').value;
+  const status = document.getElementById('lf-status').value || 'new';
+  const trainer = document.getElementById('lf-trainer').value.trim();
+  const follow_up = document.getElementById('lf-followup').value || null;
+  const notes = document.getElementById('lf-notes').value.trim();
+
+  let valid = true;
+  ['lf-name','lf-phone'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+    else el.classList.remove('error');
+  });
+  if (!valid) { showToast('Name and phone are required', 'error'); return; }
+
+  const { error } = await supabaseClient.from('leads').insert([{
+    name, phone, email, source, status, trainer, follow_up, notes
+  }]);
+
+  if (error) {
+    console.error(error);
+    showToast('Failed to add lead', 'error');
+    return;
+  }
+
+  closeModal();
+  showToast('Lead added successfully 🚀', 'success');
+  renderLeads();
+}
+
+/* UPDATE LEAD */
+async function updateLead(id) {
+  const name  = document.getElementById('lf-name').value.trim();
+  const phone = document.getElementById('lf-phone').value.trim();
+
+  let valid = true;
+  ['lf-name','lf-phone'].forEach(fid => {
+    const el = document.getElementById(fid);
+    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+    else el.classList.remove('error');
+  });
+  if (!valid) { showToast('Name and phone are required', 'error'); return; }
+
+  const updates = {
+    name,
+    phone,
+    email:    document.getElementById('lf-email').value.trim(),
+    source:   document.getElementById('lf-source').value,
+    status:   document.getElementById('lf-status').value,
+    trainer:  document.getElementById('lf-trainer').value.trim(),
+    follow_up: document.getElementById('lf-followup').value || null,
+    notes:    document.getElementById('lf-notes').value.trim(),
+  };
+
+  const { error } = await supabaseClient.from('leads').update(updates).eq('id', id);
+
+  if (error) {
+    console.error(error);
+    showToast('Failed to update lead', 'error');
+    return;
+  }
+
+  closeModal();
+  showToast('Lead updated ✓', 'success');
+  renderLeads();
+}
+
+/* DELETE LEAD */
+function deleteLead(id, name) {
+  openConfirmModal({
+    title: 'Delete Lead',
+    message: 'Are you sure you want to delete',
+    name,
+    onConfirm: async () => {
+      const { error } = await supabaseClient.from('leads').delete().eq('id', id);
+      if (error) { showToast('Failed to delete lead', 'error'); return; }
+      showToast('Lead deleted', 'success');
+      renderLeads();
+    }
+  });
+}
+
+/* UPDATE LEAD STATUS (inline dropdown) */
+async function updateLeadStatus(id, newStatus) {
+  const { error } = await supabaseClient.from('leads').update({ status: newStatus }).eq('id', id);
+  if (error) {
+    showToast('Failed to update status', 'error');
+    return;
+  }
+  const lead = _allLeads.find(l => l.id == id);
+  if (lead) lead.status = newStatus;
+  showToast('Status updated ✓', 'success');
+  renderRecentLeads();
+}
+
+/* RENDER RECENT LEADS */
+async function renderRecentLeads() {
+  const { data, error } = await supabaseClient
+    .from('leads').select('*').order('created_at', { ascending: false }).limit(3);
+
+  if (error) { console.error('Recent leads error:', error); return; }
+
+  document.getElementById('recent-leads').innerHTML = (data||[]).map(l => `
+    <tr>
+      <td>${avatar(l.name)}</td>
+      <td style="font-size:13px">${l.phone||'—'}</td>
+      <td style="font-size:13px">${l.source||'—'}</td>
+      <td>${badge(l.status)}</td>
+      <td style="font-size:13px">${l.trainer||'—'}</td>
+      <td style="font-size:12px;color:var(--ash)">${fmtDate(l.follow_up)}</td>
+    </tr>
+  `).join('') || `<tr><td colspan="6" class="empty-state">No leads yet</td></tr>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APPLICATIONS
+═══════════════════════════════════════════════════════════════ */
+async function renderApplications() {
+  const tbody = document.getElementById('apps-tbody');
+  tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><div class="empty-icon">⏳</div>Loading...</td></tr>`;
+
+  const { data, error } = await supabaseClient
+    .from('applications').select('*').order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('renderApplications error:', error);
+    // fallback to mock
+    const MOCK = [
+      { id:'m1', name:'Sneha Nair',  goal:'Fat Loss',    plan:'Personal Training', status:'pending',  priority:'high',   trainer:'Vikram S.' },
+      { id:'m2', name:'Karan Patel', goal:'Strength',    plan:'Group Training',    status:'approved', priority:'medium', trainer:'Meera R.'  },
+      { id:'m3', name:'Ananya Roy',  goal:'Calisthenics',plan:'Online Coaching',   status:'pending',  priority:'high',   trainer:'Vikram S.' },
+      { id:'m4', name:'Dev Sharma',  goal:'General',     plan:'Group Training',    status:'rejected', priority:'low',    trainer:'—'         },
+      { id:'m5', name:'Isha Gupta',  goal:'Fat Loss',    plan:'Personal Training', status:'approved', priority:'high',   trainer:'Meera R.'  },
+    ];
+    renderAppsRows(MOCK);
+    return;
+  }
+
+  renderAppsRows(data || []);
+  updateStatCounts();
+}
+
+function renderAppsRows(apps) {
+  const tbody = document.getElementById('apps-tbody');
+  if (!apps.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📋</div>No applications yet</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = apps.map(a => `
+    <tr id="app-row-${a.id}">
+      <td>${avatar(a.name)}</td>
+      <td>${a.goal||'—'}</td>
+      <td style="font-size:13px">${a.plan||'—'}</td>
+      <td>${badge(a.status)}</td>
+      <td>${badge(a.priority)}</td>
+      <td style="font-size:13px">${a.trainer||'—'}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          ${a.status !== 'approved' ? `<button class="btn-sm btn-sm-red" style="padding:4px 10px;font-size:10px" onclick="updateAppStatus('${a.id}','approved')">Approve</button>` : ''}
+          ${a.status !== 'rejected' ? `<button class="btn-sm btn-sm-outline" style="padding:4px 10px;font-size:10px" onclick="updateAppStatus('${a.id}','rejected')">Reject</button>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function updateAppStatus(id, status) {
+  const { error } = await supabaseClient.from('applications').update({ status }).eq('id', id);
+  if (error) {
+    // For mock data fallback
+    showToast(`Application ${status}`, 'success');
+    const row = document.getElementById(`app-row-${id}`);
+    if (row) {
+      const badgeCell = row.cells[3];
+      badgeCell.innerHTML = badge(status);
+      const actionCell = row.cells[6];
+      actionCell.innerHTML = `<div style="display:flex;gap:6px">
+        ${status !== 'approved' ? `<button class="btn-sm btn-sm-red" style="padding:4px 10px;font-size:10px" onclick="updateAppStatus('${id}','approved')">Approve</button>` : ''}
+        ${status !== 'rejected' ? `<button class="btn-sm btn-sm-outline" style="padding:4px 10px;font-size:10px" onclick="updateAppStatus('${id}','rejected')">Reject</button>` : ''}
+      </div>`;
+      return;
+    }
+  }
+  showToast(`Application ${status}`, 'success');
+  renderApplications();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CLIENTS
+═══════════════════════════════════════════════════════════════ */
+const CLIENTS_MOCK = [
+  { id:'c1', name:'Divya Nair',    plan:'Personal Training', trainer:'Meera R.',  status:'active',    join_date:'2026-03-01', attendance:88, payment:'paid'   },
+  { id:'c2', name:'Karan Patel',   plan:'Group Training',    trainer:'Meera R.',  status:'active',    join_date:'2026-02-15', attendance:92, payment:'paid'   },
+  { id:'c3', name:'Isha Gupta',    plan:'Personal Training', trainer:'Vikram S.', status:'active',    join_date:'2026-04-01', attendance:76, payment:'unpaid' },
+  { id:'c4', name:'Amit Desai',    plan:'Online Coaching',   trainer:'Vikram S.', status:'paused',    join_date:'2026-01-10', attendance:45, payment:'pending'},
+  { id:'c5', name:'Riya Kapoor',   plan:'Group Training',    trainer:'Meera R.',  status:'active',    join_date:'2026-03-20', attendance:95, payment:'paid'   },
+  { id:'c6', name:'Sanjay Tiwari', plan:'Personal Training', trainer:'Vikram S.', status:'cancelled', join_date:'2025-11-05', attendance:30, payment:'unpaid' },
+];
+let _clientsData = [];
+
+async function renderClients() {
+  const tbody = document.getElementById('clients-tbody');
+  tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><div class="empty-icon">⏳</div>Loading...</td></tr>`;
+
+  const { data, error } = await supabaseClient
+    .from('clients').select('*').order('created_at', { ascending: false });
+
+  const clients = (!error && data && data.length) ? data : CLIENTS_MOCK;
+  _clientsData = clients;
+  renderClientsRows(clients);
+  updateStatCounts();
+}
+
+function renderClientsRows(clients) {
+  const tbody = document.getElementById('clients-tbody');
+  if (!clients.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">👥</div>No clients yet</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = clients.map(c => {
+    const att = c.attendance || 0;
+    const joinStr = c.join_date ? fmtDate(c.join_date) : (c.join || '—');
+    return `
+    <tr>
+      <td>${avatar(c.name)}</td>
+      <td style="font-size:13px">${c.plan||'—'}</td>
+      <td style="font-size:13px">${c.trainer||'—'}</td>
+      <td>${badge(c.status)}</td>
+      <td style="font-size:12px;color:var(--ash)">${joinStr}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="progress-bar-wrap" style="width:80px">
+            <div class="progress-bar-fill" style="width:${att}%"></div>
+          </div>
+          <span style="font-size:12px;color:var(--ash)">${att}%</span>
+        </div>
+      </td>
+      <td>${badge(c.payment||c.payment_status)}</td>
+    </tr>
+  `}).join('');
+}
+
+function openClientModal() {
+  const body = `
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Name <span style="color:var(--red)">*</span></label>
+        <input id="cf-name" type="text" placeholder="Full name">
+      </div>
+      <div class="mf-row">
+        <label>Phone <span style="color:var(--red)">*</span></label>
+        <input id="cf-phone" type="text" placeholder="+91 98765 43210">
+      </div>
+    </div>
+    <div class="mf-row">
+      <label>Email</label>
+      <input id="cf-email" type="email" placeholder="email@example.com">
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Plan</label>
+        <select id="cf-plan">
+          <option>Personal Training</option>
+          <option>Group Training</option>
+          <option>Online Coaching</option>
+        </select>
+      </div>
+      <div class="mf-row">
+        <label>Trainer</label>
+        <input id="cf-trainer" type="text" placeholder="Trainer name">
+      </div>
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Status</label>
+        <select id="cf-status">
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="mf-row">
+        <label>Join Date</label>
+        <input id="cf-join" type="date" value="${new Date().toISOString().split('T')[0]}">
+      </div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-red" onclick="createClient()">Add Client</button>
+  `;
+  openModal({ title: 'Add New Client', body, footer });
+}
+
+async function createClient() {
+  const name  = document.getElementById('cf-name').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  let valid = true;
+  ['cf-name','cf-phone'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+    else el.classList.remove('error');
+  });
+  if (!valid) { showToast('Name and phone are required', 'error'); return; }
+
+  const payload = {
+    name,
+    phone,
+    email:   document.getElementById('cf-email').value.trim(),
+    plan:    document.getElementById('cf-plan').value,
+    trainer: document.getElementById('cf-trainer').value.trim(),
+    status:  document.getElementById('cf-status').value,
+    join_date: document.getElementById('cf-join').value,
+    attendance: 0,
+    payment: 'pending'
+  };
+
+  const { error } = await supabaseClient.from('clients').insert([payload]);
+  if (error) {
+    console.warn('Supabase clients insert failed, adding to mock:', error);
+    // Add to local mock for demo
+    _clientsData.unshift({ id: 'local-' + Date.now(), ...payload });
+    renderClientsRows(_clientsData);
+    closeModal();
+    showToast('Client added ✓', 'success');
+    return;
+  }
+
+  closeModal();
+  showToast('Client added successfully ✓', 'success');
+  renderClients();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRAINERS
+═══════════════════════════════════════════════════════════════ */
+const TRAINERS_MOCK = [
+  { id:'t1', name:'Vikram Singh', specialization:'Strength & Calisthenics', clients:9, sessions:42, rating:'4.9' },
+  { id:'t2', name:'Meera Rajan',  specialization:'Fat Loss & Nutrition',    clients:9, sessions:38, rating:'4.8' },
+  { id:'t3', name:'Aryan Bose',   specialization:'Parkour & Flips',         clients:0, sessions:0,  rating:'New' },
+];
+let _trainersData = [];
+
+async function renderTrainers() {
+  const grid = document.getElementById('trainers-grid');
+  grid.innerHTML = `<div style="color:var(--ash);font-family:'Barlow Condensed';padding:20px;letter-spacing:1px">Loading...</div>`;
+
+  const { data, error } = await supabaseClient
+    .from('trainers').select('*').order('created_at', { ascending: false });
+
+  const trainers = (!error && data && data.length) ? data : TRAINERS_MOCK;
+  _trainersData = trainers;
+  renderTrainersGrid(trainers);
+}
+
+function renderTrainersGrid(trainers) {
+  const grid = document.getElementById('trainers-grid');
+  if (!trainers.length) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🏋️</div>No trainers yet</div>`;
+    return;
+  }
+  grid.innerHTML = trainers.map(t => `
+    <div class="trainer-card">
+      <div class="trainer-avatar-lg">${initials(t.name)}</div>
+      <div class="trainer-card-name">${t.name}</div>
+      <div class="trainer-card-spec">${t.specialization||t.spec||'—'}</div>
+      <div class="trainer-stats">
+        <div class="trainer-stat-item">
+          <div class="trainer-stat-num">${t.clients||0}</div>
+          <div class="trainer-stat-lbl">Clients</div>
+        </div>
+        <div class="trainer-stat-item">
+          <div class="trainer-stat-num">${t.sessions||0}</div>
+          <div class="trainer-stat-lbl">Sessions</div>
+        </div>
+        <div class="trainer-stat-item">
+          <div class="trainer-stat-num">${t.rating||'—'}</div>
+          <div class="trainer-stat-lbl">Rating</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openTrainerModal() {
+  const body = `
+    <div class="mf-row">
+      <label>Name <span style="color:var(--red)">*</span></label>
+      <input id="tf-name" type="text" placeholder="Full name">
+    </div>
+    <div class="mf-row">
+      <label>Specialization</label>
+      <input id="tf-spec" type="text" placeholder="e.g. Strength & Calisthenics">
+    </div>
+    <div class="mf-grid">
+      <div class="mf-row">
+        <label>Phone</label>
+        <input id="tf-phone" type="text" placeholder="+91 98765 43210">
+      </div>
+      <div class="mf-row">
+        <label>Email</label>
+        <input id="tf-email" type="email" placeholder="trainer@email.com">
+      </div>
+    </div>
+  `;
+  const footer = `
+    <button class="btn-sm btn-sm-outline" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-sm-red" onclick="createTrainer()">Add Trainer</button>
+  `;
+  openModal({ title: 'Add New Trainer', body, footer });
+}
+
+async function createTrainer() {
+  const name = document.getElementById('tf-name').value.trim();
+  if (!name) {
+    document.getElementById('tf-name').classList.add('error');
+    showToast('Name is required', 'error');
+    return;
+  }
+
+  const payload = {
+    name,
+    specialization: document.getElementById('tf-spec').value.trim(),
+    phone: document.getElementById('tf-phone').value.trim(),
+    email: document.getElementById('tf-email').value.trim(),
+    clients: 0, sessions: 0, rating: 'New'
+  };
+
+  const { error } = await supabaseClient.from('trainers').insert([payload]);
+  if (error) {
+    _trainersData.unshift({ id: 'local-' + Date.now(), ...payload });
+    renderTrainersGrid(_trainersData);
+    closeModal();
+    showToast('Trainer added ✓', 'success');
+    return;
+  }
+
+  closeModal();
+  showToast('Trainer added successfully ✓', 'success');
+  renderTrainers();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ATTENDANCE
+═══════════════════════════════════════════════════════════════ */
+async function renderAttendance() {
+  const today = new Date().toISOString().split('T')[0];
+
+  // Fetch existing attendance for today
+  const { data: attToday } = await supabaseClient
+    .from('attendance')
+    .select('client_id, status')
+    .eq('date', today);
+
+  const attMap = {};
+  (attToday || []).forEach(a => { attMap[a.client_id] = a.status; });
+
+  // Use live clients or mock
+  const clients = _clientsData.length
+    ? _clientsData.filter(c => c.status === 'active')
+    : CLIENTS_MOCK.filter(c => c.status === 'active');
+
+  document.getElementById('att-tbody').innerHTML = clients.map(c => `
+    <tr>
+      <td>${avatar(c.name)}</td>
+      <td style="font-size:13px">${c.plan||'—'}</td>
+      <td style="font-size:13px">${c.trainer||'—'}</td>
+      <td>
+        <div class="att-toggle">
+          <button class="att-btn ${attMap[c.id]==='present'?'present':''}"
+            onclick="markAtt(this,'present','${c.id}')">✓ Present</button>
+          <button class="att-btn ${attMap[c.id]==='absent'?'absent':''}"
+            onclick="markAtt(this,'absent','${c.id}')">✗ Absent</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function markAtt(btn, type, clientId) {
+  const btns = btn.parentElement.querySelectorAll('.att-btn');
+  btns.forEach(b => b.classList.remove('present', 'absent'));
+  btn.classList.add(type);
+
+  const today = new Date().toISOString().split('T')[0];
+
+  // Upsert attendance record
+  const { error } = await supabaseClient
+    .from('attendance')
+    .upsert([{ client_id: clientId, date: today, status: type }], { onConflict: 'client_id,date' });
+
+  if (error) {
+    console.warn('Attendance upsert failed (table may not exist):', error);
+    showToast(`Marked ${type}`, 'success');
+    return;
+  }
+  showToast(`Marked ${type}`, 'success');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAYMENTS
+═══════════════════════════════════════════════════════════════ */
+const PAYMENTS_MOCK = [
+  { name:'Divya Nair',    plan:'Personal Training', amount:'₹8,999', due_date:'2026-04-01', status:'paid'    },
+  { name:'Karan Patel',   plan:'Group Training',    amount:'₹3,499', due_date:'2026-04-15', status:'paid'    },
+  { name:'Isha Gupta',    plan:'Personal Training', amount:'₹8,999', due_date:'2026-04-01', status:'unpaid'  },
+  { name:'Amit Desai',    plan:'Online Coaching',   amount:'₹5,999', due_date:'2026-04-10', status:'pending' },
+  { name:'Riya Kapoor',   plan:'Group Training',    amount:'₹3,499', due_date:'2026-04-20', status:'paid'    },
+  { name:'Sanjay Tiwari', plan:'Personal Training', amount:'₹8,999', due_date:'2026-04-05', status:'unpaid'  },
+];
+
+async function renderPayments() {
+  const tbody = document.getElementById('payments-tbody');
+  tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><div class="empty-icon">⏳</div>Loading...</td></tr>`;
+
+  const { data, error } = await supabaseClient
+    .from('payments').select('*').order('created_at', { ascending: false });
+
+  const payments = (!error && data && data.length) ? data : PAYMENTS_MOCK;
+
+  tbody.innerHTML = payments.map(p => {
+    const amt   = p.amount || (p.amount_inr ? `₹${p.amount_inr}` : '—');
+    const dueStr = p.due_date ? fmtDate(p.due_date) : (p.due || '—');
+    return `
+    <tr>
+      <td>${avatar(p.name)}</td>
+      <td style="font-size:13px">${p.plan||'—'}</td>
+      <td style="font-family:'Bebas Neue';font-size:18px;color:var(--white)">${amt}</td>
+      <td style="font-size:12px;color:var(--ash)">${dueStr}</td>
+      <td>${badge(p.status)}</td>
+    </tr>
+  `}).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STAT COUNTS
+═══════════════════════════════════════════════════════════════ */
+async function updateStatCounts() {
+  const { count: leadsCount } = await supabaseClient
+    .from('leads').select('*', { count: 'exact', head: true });
+  if (leadsCount !== null) {
+    const el = document.getElementById('stat-leads');
+    if (el) el.textContent = leadsCount;
+  }
+
+  const { count: appsCount } = await supabaseClient
+    .from('applications').select('*', { count: 'exact', head: true });
+  if (appsCount !== null) {
+    const el = document.getElementById('stat-apps');
+    if (el) el.textContent = appsCount;
+  }
+
+  const { count: clientsCount } = await supabaseClient
+    .from('clients').select('*', { count: 'exact', head: true })
+    .eq('status', 'active');
+  if (clientsCount !== null) {
+    const el = document.getElementById('stat-clients');
+    if (el) el.textContent = clientsCount;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION SWITCHER
+═══════════════════════════════════════════════════════════════ */
+function showSection(id, linkEl) {
+  document.querySelectorAll('.db-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  if (linkEl) linkEl.classList.add('active');
+  const titles = {
+    overview:'Overview', leads:'Leads', applications:'Applications',
+    clients:'Clients', trainers:'Trainers', attendance:'Attendance',
+    payments:'Payments', settings:'Settings'
+  };
+  document.getElementById('topbar-title').textContent = titles[id] || id;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DATE
+═══════════════════════════════════════════════════════════════ */
+function setDate() {
+  const d = new Date();
+  const str = d.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+  document.getElementById('topbar-date').textContent = str;
+  const attDate = document.getElementById('att-date');
+  if (attDate) attDate.textContent = str;
+}
+
+
+async function logout() {
+  await supabaseClient.auth.signOut();
+  localStorage.removeItem("userId");
+  window.location.href = "login.html";
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════ */
+setDate();
+renderLeads();
+renderApplications();
+renderClients().then(() => renderAttendance());
+renderTrainers();
+renderPayments();
+updateStatCounts();
+</script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>Group Training – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── PAGE-SPECIFIC OVERRIDES ── */
+  .inner-hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+  .inner-hero .hero-bg {
+    background: radial-gradient(ellipse 80% 60% at 30% 50%, #1a0000 0%, #000 70%);
+  }
+  .inner-hero .hero-content {
+    grid-template-columns: 1fr;
+    max-width: 860px;
+  }
+  .inner-hero .hero-eyebrow { margin-bottom: 24px; }
+
+  /* content sections */
+  .prog-section {
+    padding: 100px 0;
+  }
+  .prog-section:nth-child(even) { background: #050505; }
+  .prog-section:nth-child(odd)  { background: #000; }
+
+  .prog-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .prog-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .prog-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .prog-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 36px 30px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .prog-card:hover { border-color: var(--red-dark); }
+  .prog-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .prog-card:hover::after { transform: scaleX(1); }
+
+  .prog-card-icon { font-size: 32px; margin-bottom: 18px; display: block; }
+  .prog-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .prog-card p {
+    font-size: 14px;
+    color: var(--ash);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .prog-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 0.9;
+    margin-bottom: 24px;
+  }
+  .prog-text p {
+    font-size: 15px;
+    color: var(--ash);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 18px;
+  }
+  .prog-text p strong { color: var(--white); font-weight: 500; }
+
+  .prog-visual {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 44px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .prog-stat {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .prog-stat:last-child { border-bottom: none; padding-bottom: 0; }
+  .prog-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .prog-stat-label { font-size: 13px; color: var(--ash); line-height: 1.5; }
+  .prog-stat-label strong { display: block; color: var(--white); font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+
+  /* session timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 56px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding-bottom: 32px;
+    position: relative;
+  }
+  .timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 39px;
+    top: 40px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .timeline-time {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    padding-top: 2px;
+    text-align: right;
+  }
+  .timeline-circle {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    margin-top: 5px;
+    margin-left: -6px;
+    box-shadow: 0 0 12px rgba(174,0,1,0.5);
+  }
+  .timeline-body {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 18px 22px;
+  }
+  .timeline-body h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .timeline-body p { font-size: 13px; color: var(--ash); line-height: 1.6; font-weight: 300; }
+
+  /* who it's for checklist */
+  .for-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .for-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 15px;
+    color: var(--ash);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .for-list li::before {
+    content: '✦';
+    color: var(--red);
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 11px;
+  }
+  .for-list li strong { color: var(--white); font-weight: 500; }
+
+  /* other programs strip */
+  .other-programs {
+    padding: 80px 0;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+  }
+  .other-programs-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .other-programs-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+  }
+  .other-programs-header p { font-size: 14px; color: var(--ash); margin-top: 8px; }
+  .other-prog-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .other-prog-card {
+    background: #000;
+    border: 1px solid var(--border);
+    padding: 30px 28px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .other-prog-card:hover { border-color: var(--red-dark); transform: translateX(4px); }
+  /*.other-prog-card-text {}*/
+  .other-prog-card-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .other-prog-card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+  .other-prog-card-arrow { color: var(--red); font-size: 20px; flex-shrink: 0; }
+
+  /* CTA band */
+  .prog-cta {
+    padding: 100px 0;
+    background: var(--red-dark);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .prog-cta::before {
+    content: 'B2F';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 300px;
+    color: rgba(0,0,0,0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: 10px;
+  }
+  .prog-cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .prog-cta-sub {
+    font-size: 17px;
+    color: rgba(247,246,246,0.7);
+    font-weight: 300;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  @media (max-width: 900px) {
+    .prog-grid-2 { grid-template-columns: 1fr; gap: 40px; }
+    .prog-grid-3 { grid-template-columns: 1fr; }
+    .prog-grid-4 { grid-template-columns: 1fr 1fr; }
+    .other-prog-cards { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .prog-grid-4 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <img id="loaderLogo" src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<div id="navbar"></div>
+<div class="nav-overlay"></div>
+
+<!-- ─── HERO ─── -->
+<section id="hero" class="inner-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content reveal">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Group Training</div>
+      <h1 class="hero-heading">
+        <span class="line1">TRAIN TOGETHER.</span><br>
+        <span class="line2">DOMINATE</span><br>
+        <span class="line2">TOGETHER.</span>
+      </h1>
+      <p class="hero-sub">
+        High-energy, structured training built for serious individuals. The group doesn't carry you — it <strong>pushes you beyond what you'd do alone.</strong>
+      </p>
+      <div class="hero-cta">
+        <a href="apply.html" class="btn-primary">Join the Group ↗</a>
+        <a href="#what-is" class="btn-outline">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">15<span>–20</span></div>
+          <div class="hero-stat-label">Max Per Session</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">6<span>x</span></div>
+          <div class="hero-stat-label">Weekly Sessions</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">60<span>min</span></div>
+          <div class="hero-stat-label">Session Duration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-bar reveal">
+  <div class="marquee-track">
+    <span class="marquee-item">STRUCTURED SESSIONS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">COACHED EVERY REP</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">REAL ACCOUNTABILITY</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">HIGH INTENSITY</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">COMMUNITY DRIVEN</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PROVEN RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">STRUCTURED SESSIONS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">COACHED EVERY REP</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">REAL ACCOUNTABILITY</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">HIGH INTENSITY</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">COMMUNITY DRIVEN</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PROVEN RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ─── WHAT IS GROUP TRAINING ─── -->
+<section id="what-is" class="prog-section">
+  <div class="container">
+    <div class="prog-grid-2">
+      <div class="prog-text reveal">
+        <div class="tag">What It Is</div>
+        <h2>NOT A CLASS.<br><span class="red">A SYSTEM.</span></h2>
+        <p>Group Training at B2F is <strong>nothing like a gym class.</strong> Every session is coach-led, structurally programmed, and intentionally sequenced to produce measurable results over time.</p>
+        <p>Small groups. Maximum intensity. Zero wasted reps. Each session builds on the last — your coach tracks your progress and adjusts the load as you grow stronger.</p>
+        <p>This is <strong>collective discipline</strong> in action. The energy of a room full of serious people doing serious work — focused entirely on performance.</p>
+        <a href="apply.html" class="btn-primary" style="margin-top: 8px;">Apply Now ↗</a>
+      </div>
+      <div class="prog-visual reveal" style="transition-delay:0.12s;">
+        <div class="prog-stat">
+          <div class="prog-stat-num">500+</div>
+          <div class="prog-stat-label"><strong>Group Sessions Delivered</strong>Every session tracked, every result measured.</div>
+        </div>
+        <div class="prog-stat">
+          <div class="prog-stat-num">98%</div>
+          <div class="prog-stat-label"><strong>Client Retention Rate</strong>People don't leave because they keep getting results.</div>
+        </div>
+        <div class="prog-stat">
+          <div class="prog-stat-num">8yr</div>
+          <div class="prog-stat-label"><strong>Coaching Experience</strong>Every drill refined over thousands of hours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY IT WORKS ─── -->
+<section class="prog-section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 56px;" class="reveal">
+      <div class="tag">The Advantage</div>
+      <h2 class="section-title">WHY IT<br><span class="red">WORKS.</span></h2>
+    </div>
+    <div class="prog-grid-3">
+      <div class="prog-card reveal">
+        <span class="prog-card-icon">⚡</span>
+        <h3>Competitive Energy</h3>
+        <p>When the person next to you is pushing hard, you push harder. The group environment creates a natural performance ceiling that solo training simply cannot replicate.</p>
+      </div>
+      <div class="prog-card reveal" style="transition-delay:0.1s;">
+        <span class="prog-card-icon">🎯</span>
+        <h3>Built-In Accountability</h3>
+        <p>Skipping a session means letting people down — including your coach, your group, and yourself. That friction is powerful. It's what keeps attendance high and consistency real.</p>
+      </div>
+      <div class="prog-card reveal" style="transition-delay:0.2s;">
+        <span class="prog-card-icon">📈</span>
+        <h3>Progressive Programming</h3>
+        <p>Every session is part of a larger system. Loads increase, patterns evolve, and your body adapts over months — not weeks. You don't plateau because we don't let you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHO IT'S FOR ─── -->
+<section class="prog-section">
+  <div class="container">
+    <div class="prog-grid-2">
+      <div class="prog-text reveal">
+        <div class="tag">Who It's For</div>
+        <h2>IS THIS<br><span class="red">YOU?</span></h2>
+        <p>Group Training isn't for everyone. It's built for people who are ready to work — and ready to be held to a standard.</p>
+        <ul class="for-list">
+          <li>You've been training inconsistently and want <strong>structure that sticks.</strong></li>
+          <li>You're motivated by <strong>others around you</strong> pushing hard.</li>
+          <li>You want expert coaching <strong>without the cost of personal 1-on-1.</strong></li>
+          <li>You're starting out and need <strong>a proven system</strong>, not guesswork.</li>
+          <li>You want results that are <strong>measurable and tracked.</strong></li>
+          <li>You're serious about fat loss, strength, or athletic performance.</li>
+        </ul>
+        <a href="apply.html" class="btn-primary" style="margin-top:32px;">I'm Ready. Apply Now ↗</a>
+      </div>
+      <div class="reveal" style="transition-delay:0.12s;">
+        <div class="prog-card" style="height:100%; display:flex; flex-direction:column; gap:20px; justify-content:center;">
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--red); letter-spacing:2px;">NOT SUITED FOR:</div>
+          <ul class="for-list" style="margin-top:0;">
+            <li>Those who want to train <strong>on their own terms</strong> with no structure.</li>
+            <li>Those not willing to <strong>show up consistently.</strong></li>
+            <li>Those looking for a casual, low-effort experience.</li>
+          </ul>
+          <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:20px; font-size:13px; color:var(--ash); line-height:1.7;">
+            If that's you, <a href="online-coaching.html" style="color:var(--red); text-decoration:none;">Online Coaching</a> or <a href="personal-training.html" style="color:var(--red); text-decoration:none;">Personal Training</a> may be a better fit.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SESSION STRUCTURE ─── -->
+<section class="prog-section">
+  <div class="container">
+    <div style="text-align:center;" class="reveal">
+      <div class="tag">Session Breakdown</div>
+      <h2 class="section-title">WHAT HAPPENS<br><span class="red">IN 60 MINUTES.</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-time">0–10<br>min</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <div class="timeline-circle"></div>
+          </div>
+          <div class="timeline-body">
+            <h4>Dynamic Warm-Up</h4>
+            <p>Joints primed. Nervous system activated. No wasted time — the warm-up is purposeful and directly linked to the session's focus.</p>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item reveal" style="transition-delay:0.08s;">
+        <div class="timeline-time">10–20<br>min</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <div class="timeline-circle"></div>
+          </div>
+          <div class="timeline-body">
+            <h4>Skill / Strength Block</h4>
+            <p>Technique-first loading. Whether it's a calisthenics skill, compound lift, or movement pattern — your coach ensures execution is flawless before intensity climbs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item reveal" style="transition-delay:0.16s;">
+        <div class="timeline-time">20–50<br>min</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <div class="timeline-circle"></div>
+          </div>
+          <div class="timeline-body">
+            <h4>Main Training Block</h4>
+            <p>High-output work. Structured circuits, supersets, or AMRAP blocks designed around the session's goal. This is where results are forged.</p>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item reveal" style="transition-delay:0.24s;">
+        <div class="timeline-time">50–60<br>min</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <div class="timeline-circle"></div>
+          </div>
+          <div class="timeline-body">
+            <h4>Cool-Down + Debrief</h4>
+            <p>Active recovery, mobility work, and a brief debrief with your coach. Progress noted. Next session previewed. You leave better than you arrived.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="prog-cta">
+  <div class="container reveal" style="position:relative; z-index:1;">
+    <h2 class="prog-cta-title">STOP TRAINING<br>ALONE.</h2>
+    <p class="prog-cta-sub">The group that trains together, transforms together. Your spot is limited.</p>
+    <a href="apply.html" class="btn-primary" style="font-size:15px; padding:18px 44px; background:var(--black);">Apply for Group Training ↗</a>
+  </div>
+</section>
+
+<!-- ─── OTHER PROGRAMS ─── -->
+<section class="other-programs">
+  <div class="container">
+    <div class="other-programs-header reveal">
+      <div class="tag">Explore More</div>
+      <h2>OTHER PROGRAMS</h2>
+      <p>Not sure group training is right for you? Explore what else B2F offers.</p>
+    </div>
+    <div class="other-prog-cards reveal" style="transition-delay:0.1s;">
+      <a href="personal-training.html" class="other-prog-card">
+        <div class="other-prog-card-text">
+          <div class="other-prog-card-label">1-on-1 Coaching</div>
+          <div class="other-prog-card-name">Personal Training</div>
+        </div>
+        <div class="other-prog-card-arrow">↗</div>
+      </a>
+      <a href="online-coaching.html" class="other-prog-card">
+        <div class="other-prog-card-text">
+          <div class="other-prog-card-label">Train Anywhere</div>
+          <div class="other-prog-card-name">Online Coaching</div>
+        </div>
+        <div class="other-prog-card-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly"></div>
+      <p class="footer-desc">Premium coaching system built for real transformation. Group training, personal coaching, and online programs — all under one powerful brand.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">in</a>
+        <a href="#" class="social-icon">ig</a>
+        <a href="#" class="social-icon">yt</a>
+        <a href="#" class="social-icon">wa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="group-training.html">Group Training</a></li>
+        <li><a href="personal-training.html">Personal Training</a></li>
+        <li><a href="online-coaching.html">Online Coaching</a></li>
+        <li><a href="#">Kids Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About B2F</a></li>
+        <li><a href="index.html#proof">Transformations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+        <li><a href="consent-form.html">Consent Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.</div>
+    <div class="footer-copy">Powered by passion. Backed by results.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/loader.js"></script>
+
+</body>
+</html>

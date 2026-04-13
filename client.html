@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en" style="cursor: none !important;">
+<head>
+<meta charset="UTF-8">
+<script src="js/cursor.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { overflow-x: hidden; background: #000; }
+.db-wrap { display: flex; min-height: 100vh; }
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width: 240px; min-height: 100vh; background: #080808;
+  border-right: 1px solid var(--border); position: fixed;
+  top:0; left:0; bottom:0; z-index:100; display:flex; flex-direction:column;
+}
+.sidebar-logo { padding:28px 24px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; }
+.sidebar-logo img { height:36px; width:auto; }
+.sidebar-logo-text { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:2px; color:var(--white); line-height:1; }
+.sidebar-logo-sub  { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--red); }
+
+.sidebar-role { padding:14px 24px; border-bottom:1px solid var(--border); }
+.role-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3);
+  padding:4px 10px; border-radius:2px;
+  font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; color:#4ade80;
+}
+.role-dot { width:6px; height:6px; border-radius:50%; background:#4ade80; animation:pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.sidebar-nav { flex:1; padding:16px 0; overflow-y:auto; }
+.nav-section-label { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--ash); padding:12px 24px 6px; }
+.sidebar-link { display:flex; align-items:center; gap:12px; padding:11px 24px; font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--ash); text-decoration:none; transition:all 0.2s; border-left:2px solid transparent; cursor:pointer; }
+.sidebar-link:hover { color:var(--white); background:rgba(247,246,246,0.03); }
+.sidebar-link.active { color:var(--white); background:rgba(34,197,94,0.06); border-left-color:#4ade80; }
+.sidebar-link .s-icon { font-size:15px; width:18px; text-align:center; }
+
+.sidebar-bottom { padding:16px 24px; border-top:1px solid var(--border); }
+.sidebar-user { display:flex; align-items:center; gap:10px; }
+.sidebar-avatar { width:32px; height:32px; border-radius:2px; background:#22c55e; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:14px; color:var(--white); flex-shrink:0; }
+.sidebar-user-name { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; color:var(--white); }
+.sidebar-user-role { font-size:11px; color:var(--ash); }
+.sidebar-logout { margin-left:auto; background:none; border:none; color:var(--ash); font-size:16px; padding:4px; transition:color 0.2s; cursor:pointer; }
+.sidebar-logout:hover { color:var(--red); }
+
+/* ─── MAIN ─── */
+.db-main { margin-left:240px; flex:1; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { height:64px; background:rgba(0,0,0,0.9); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 32px; position:sticky; top:0; z-index:50; backdrop-filter:blur(12px); }
+.topbar-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--white); }
+.topbar-right { display:flex; align-items:center; gap:16px; }
+.topbar-date { font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:1px; color:var(--ash); text-transform:uppercase; }
+
+.db-section { display:none; padding:32px; }
+.db-section.active { display:block; }
+.section-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; }
+.section-head h2 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:1px; line-height:1; }
+.section-head h2 span { color:var(--red); }
+
+/* ─── WELCOME HERO ─── */
+.welcome-hero {
+  background: var(--card-bg); border: 1px solid var(--border);
+  padding: 40px; margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.welcome-hero::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, var(--red), transparent);
+}
+.welcome-hero::after {
+  content: 'B2F'; position: absolute; right: 40px; top: 50%;
+  transform: translateY(-50%); font-family: 'Bebas Neue', sans-serif;
+  font-size: 120px; color: rgba(174,0,1,0.05); line-height: 1; letter-spacing: 4px;
+}
+.welcome-greeting { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:8px; }
+.welcome-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,5vw,56px); line-height:0.9; color:var(--white); margin-bottom:16px; letter-spacing:1px; }
+.welcome-sub { font-size:15px; color:var(--ash); font-weight:300; line-height:1.7; max-width:480px; margin-bottom:28px; }
+.welcome-badges { display:flex; gap:12px; flex-wrap:wrap; }
+.welcome-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border:1px solid var(--border); font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ash); }
+.welcome-badge .wb-icon { font-size:16px; }
+.welcome-badge.highlight { border-color:rgba(174,0,1,0.4); color:var(--white); background:rgba(174,0,1,0.08); }
+
+/* ─── STAT CARDS ─── */
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+.stat-card { background:var(--card-bg); border:1px solid var(--border); padding:24px 20px; position:relative; overflow:hidden; transition:border-color 0.2s,transform 0.2s; }
+.stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--red); transform:scaleX(0); transition:transform 0.3s; }
+.stat-card:hover { border-color:rgba(174,0,1,0.3); transform:translateY(-2px); }
+.stat-card:hover::before { transform:scaleX(1); }
+.stat-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ash); margin-bottom:10px; }
+.stat-value { font-family:'Bebas Neue',sans-serif; font-size:42px; color:var(--white); line-height:1; }
+.stat-value span { color:var(--red); font-size:28px; }
+.stat-sub { font-size:12px; color:var(--ash); margin-top:6px; font-weight:300; }
+.stat-icon { position:absolute; top:20px; right:20px; font-size:28px; opacity:0.12; }
+
+/* ─── DB CARD ─── */
+.db-card { background:var(--card-bg); border:1px solid var(--border); margin-bottom:24px; }
+.db-card-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.db-card-title { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; color:var(--white); }
+.db-card-body { padding:24px; }
+
+/* ─── WORKOUT TABLE ─── */
+.db-table { width:100%; border-collapse:collapse; }
+.db-table th { padding:12px 20px; text-align:left; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ash); border-bottom:1px solid var(--border); }
+.db-table td { padding:14px 20px; font-size:14px; color:var(--white); border-bottom:1px solid rgba(145,136,136,0.08); vertical-align:middle; }
+.db-table tr:last-child td { border-bottom:none; }
+.db-table tr:hover td { background:rgba(247,246,246,0.02); }
+
+.badge { display:inline-block; padding:3px 10px; border-radius:2px; font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
+.badge-done  { background:rgba(34,197,94,0.15);  color:#4ade80; border:1px solid rgba(34,197,94,0.3); }
+.badge-today { background:rgba(174,0,1,0.15);    color:var(--red); border:1px solid rgba(174,0,1,0.3); }
+.badge-rest  { background:rgba(145,136,136,0.1); color:var(--ash); border:1px solid var(--border); }
+
+/* ─── MEAL GRID ─── */
+.meal-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.meal-card { background:#0a0a0a; border:1px solid var(--border); padding:20px; transition:border-color 0.2s; }
+.meal-card:hover { border-color:rgba(174,0,1,0.3); }
+.meal-time { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--red); margin-bottom:10px; }
+.meal-name { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; color:var(--white); margin-bottom:6px; }
+.meal-desc { font-size:12px; color:var(--ash); line-height:1.6; margin-bottom:12px; }
+.meal-macros { display:flex; gap:16px; }
+.macro { text-align:center; }
+.macro-val { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--white); line-height:1; }
+.macro-lbl { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ash); }
+
+/* ─── ATTENDANCE ─── */
+.att-week { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:16px; }
+.att-day { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:2px; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--ash); gap:4px; }
+.att-day .day-num { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--white); line-height:1; }
+.att-day.present { border-color:rgba(34,197,94,0.4); background:rgba(34,197,94,0.08); }
+.att-day.present .day-num { color:#4ade80; }
+.att-day.absent  { border-color:rgba(239,68,68,0.3);  background:rgba(239,68,68,0.05); }
+.att-day.absent .day-num  { color:#f87171; }
+.att-day.today   { border-color:rgba(174,0,1,0.5);    background:rgba(174,0,1,0.1); }
+.att-day.today .day-num { color:var(--red); }
+.att-day.rest    { background:rgba(145,136,136,0.05); }
+
+/* ─── PROGRESS ─── */
+.progress-bar-wrap { background:#1a1a1a; border-radius:2px; height:6px; width:100%; overflow:hidden; }
+.progress-bar-fill { height:100%; background:var(--red); border-radius:2px; transition:width 0.8s ease; }
+.chart-placeholder { background:#0a0a0a; border:1px solid var(--border); border-radius:2px; height:200px; display:flex; align-items:flex-end; padding:20px; gap:8px; position:relative; overflow:hidden; }
+.chart-placeholder::before { content:'PROGRESS GRAPH'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:3px; color:rgba(145,136,136,0.2); }
+.chart-bar { flex:1; border-radius:2px 2px 0 0; background:linear-gradient(to top, var(--red), rgba(174,0,1,0.3)); }
+
+/* ─── TRAINER ─── */
+.trainer-info-card { background:#0a0a0a; border:1px solid var(--border); padding:24px; display:flex; align-items:center; gap:20px; }
+.trainer-avatar-lg { width:56px; height:56px; border-radius:2px; background:var(--red); display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--white); flex-shrink:0; }
+.trainer-info-name { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; color:var(--white); letter-spacing:0.5px; margin-bottom:4px; }
+.trainer-info-spec { font-size:12px; color:var(--ash); margin-bottom:10px; }
+.trainer-contact-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:#25D366; color:#fff; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:none; border-radius:2px; text-decoration:none; transition:background 0.2s; cursor:pointer; }
+.trainer-contact-btn:hover { background:#1ebe5d; }
+
+/* ─── EMPTY STATE ─── */
+.empty-state { text-align:center; padding:48px 20px; color:var(--ash); font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:1px; }
+.empty-state .empty-icon { font-size:36px; margin-bottom:12px; opacity:0.4; display:block; }
+
+/* ─── LOADING ─── */
+.loading-pulse { animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+@media (max-width:1200px) { .stat-grid { grid-template-columns:repeat(2,1fr); } .meal-grid { grid-template-columns:1fr; } }
+@media (max-width:900px) {
+  .sidebar { width:60px; }
+  .sidebar-logo-text,.sidebar-logo-sub,.sidebar-role,.nav-section-label,.sidebar-user-name,.sidebar-user-role { display:none; }
+  .sidebar-link span:not(.s-icon) { display:none; }
+  .db-main { margin-left:60px; }
+  .sidebar-link { padding:14px; justify-content:center; }
+  .sidebar-logo  { padding:16px; justify-content:center; }
+  .welcome-hero  { padding:28px 24px; }
+  .att-week { grid-template-columns:repeat(4,1fr); }
+}
+</style>
+</head>
+<body>
+<div class="db-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="Assets/Logo/B2F_logo.png" alt="B2F">
+      <div>
+        <div class="sidebar-logo-text">B2F</div>
+        <div class="sidebar-logo-sub">My Dashboard</div>
+      </div>
+    </div>
+    <div class="sidebar-role">
+      <div class="role-badge"><div class="role-dot"></div> Client</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">My Journey</div>
+      <a class="sidebar-link active" onclick="showSection('home',this)"><span class="s-icon">🏠</span><span>Home</span></a>
+      <a class="sidebar-link" onclick="showSection('progress',this)"><span class="s-icon">📈</span><span>Progress</span></a>
+      <a class="sidebar-link" onclick="showSection('workout',this)"><span class="s-icon">💪</span><span>Workout Plan</span></a>
+      <a class="sidebar-link" onclick="showSection('diet',this)"><span class="s-icon">🥗</span><span>Diet Plan</span></a>
+      <a class="sidebar-link" onclick="showSection('attendance',this)"><span class="s-icon">📅</span><span>Attendance</span></a>
+      <div class="nav-section-label">Support</div>
+      <a class="sidebar-link" onclick="showSection('trainer',this)"><span class="s-icon">🏋️</span><span>My Trainer</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">--</div>
+        <div>
+          <div class="sidebar-user-name" id="sidebar-name">Loading...</div>
+          <div class="sidebar-user-role" id="sidebar-plan">—</div>
+        </div>
+        <button class="sidebar-logout" onclick="logout()" title="Logout">↩</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="db-main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Home</div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="topbar-date"></div>
+      </div>
+    </div>
+
+    <!-- ══ HOME ══ -->
+    <div class="db-section active" id="sec-home">
+      <div class="welcome-hero">
+        <div class="welcome-greeting">Welcome Back</div>
+        <div class="welcome-name" id="user-name">Loading...</div>
+        <div class="welcome-sub">
+          You're on <strong style="color:var(--white)" id="welcome-day">Day —</strong> of your transformation. Every rep counts. Keep pushing.
+        </div>
+        <div class="welcome-badges">
+          <div class="welcome-badge highlight"><span class="wb-icon">🔥</span> <span id="badge-streak">—</span> Day Streak</div>
+          <div class="welcome-badge"><span class="wb-icon">🏋️</span> <span id="badge-plan">—</span></div>
+          <div class="welcome-badge"><span class="wb-icon">👤</span> Trainer: <span id="badge-trainer">—</span></div>
+          <div class="welcome-badge"><span class="wb-icon">📅</span> Since <span id="badge-since">—</span></div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-label">Sessions Done</div>
+          <div class="stat-value" id="stat-sessions">—</div>
+          <div class="stat-sub">This month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Attendance</div>
+          <div class="stat-value" id="stat-attendance">—<span>%</span></div>
+          <div class="stat-sub">↑ Your commitment</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📉</div>
+          <div class="stat-label">Weight Lost</div>
+          <div class="stat-value" id="stat-weight">—<span>kg</span></div>
+          <div class="stat-sub">Since joining</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-label">Goal Progress</div>
+          <div class="stat-value" id="stat-goal">—<span>%</span></div>
+          <div class="stat-sub">Keep going!</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div class="db-card" style="padding:24px;cursor:pointer" onclick="showSection('workout',document.querySelectorAll('.sidebar-link')[2])">
+          <div style="font-size:32px;margin-bottom:12px">💪</div>
+          <div class="db-card-title" style="font-size:16px;margin-bottom:6px">Today's Workout</div>
+          <div style="font-size:13px;color:var(--ash)" id="ql-workout">—</div>
+        </div>
+        <div class="db-card" style="padding:24px;cursor:pointer" onclick="showSection('diet',document.querySelectorAll('.sidebar-link')[3])">
+          <div style="font-size:32px;margin-bottom:12px">🥗</div>
+          <div class="db-card-title" style="font-size:16px;margin-bottom:6px">Today's Meals</div>
+          <div style="font-size:13px;color:var(--ash)" id="ql-diet">—</div>
+        </div>
+        <div class="db-card" style="padding:24px;cursor:pointer" onclick="showSection('trainer',document.querySelectorAll('.sidebar-link')[5])">
+          <div style="font-size:32px;margin-bottom:12px">🏋️</div>
+          <div class="db-card-title" style="font-size:16px;margin-bottom:6px">My Trainer</div>
+          <div style="font-size:13px;color:var(--ash)">
+            <span id="ql-trainer-name">—</span> · Next: <span id="ql-next-session">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PROGRESS ══ -->
+    <div class="db-section" id="sec-progress">
+      <div class="section-head"><h2>MY <span>PROGRESS</span></h2></div>
+      <div class="db-card">
+        <div class="db-card-header"><div class="db-card-title">Weight Progress — Last 8 Weeks</div></div>
+        <div class="db-card-body">
+          <div class="chart-placeholder" id="chart-bars"></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ash)">
+            <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span>
+            <span>Week 5</span><span>Week 6</span><span>Week 7</span><span>Week 8</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div class="db-card">
+          <div class="db-card-header"><div class="db-card-title">Body Metrics</div></div>
+          <div class="db-card-body" id="metrics-body">
+            <div class="empty-state"><span class="empty-icon">📊</span>No metrics recorded yet</div>
+          </div>
+        </div>
+        <div class="db-card">
+          <div class="db-card-header"><div class="db-card-title">Milestones</div></div>
+          <div class="db-card-body" id="milestones-body">
+            <div class="empty-state"><span class="empty-icon">🎯</span>No milestones yet — keep going!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ WORKOUT ══ -->
+    <div class="db-section" id="sec-workout">
+      <div class="section-head"><h2>WORKOUT <span>PLAN</span></h2></div>
+      <div class="db-card" id="workout-card">
+        <div class="db-card-header">
+          <div class="db-card-title">Weekly Schedule</div>
+          <span id="workout-week-label" style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">—</span>
+        </div>
+        <div id="workout-body">
+          <div class="empty-state"><span class="empty-icon loading-pulse">💪</span>Loading your workout plan...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ DIET ══ -->
+    <div class="db-section" id="sec-diet">
+      <div class="section-head">
+        <h2>DIET <span>PLAN</span></h2>
+        <span id="diet-summary" style="font-family:'Barlow Condensed';font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">—</span>
+      </div>
+      <div class="meal-grid" id="meal-grid">
+        <div class="empty-state" style="grid-column:1/-1"><span class="empty-icon loading-pulse">🥗</span>Loading your diet plan...</div>
+      </div>
+      <div class="db-card" style="margin-top:16px">
+        <div class="db-card-header"><div class="db-card-title">Daily Macro Targets</div></div>
+        <div class="db-card-body" id="macro-targets" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center">
+          <div>
+            <div style="font-family:'Bebas Neue';font-size:48px;color:var(--white);line-height:1" id="macro-cal">—</div>
+            <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Calories</div>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue';font-size:48px;color:var(--red);line-height:1" id="macro-protein">—</div>
+            <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Protein</div>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue';font-size:48px;color:var(--white);line-height:1" id="macro-carbs">—</div>
+            <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Carbs</div>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue';font-size:48px;color:var(--white);line-height:1" id="macro-fats">—</div>
+            <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Fats</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ATTENDANCE ══ -->
+    <div class="db-section" id="sec-attendance">
+      <div class="section-head"><h2>MY <span>ATTENDANCE</span></h2></div>
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Sessions Present</div>
+          <div class="stat-value" id="att-present">—</div>
+          <div class="stat-sub">This month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">❌</div>
+          <div class="stat-label">Sessions Missed</div>
+          <div class="stat-value" id="att-missed">—</div>
+          <div class="stat-sub">Keep it low!</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-label">Attendance Rate</div>
+          <div class="stat-value" id="att-rate">—<span>%</span></div>
+          <div class="stat-sub">↑ Great effort</div>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header"><div class="db-card-title" id="att-month-label">This Week</div></div>
+        <div class="db-card-body">
+          <div class="att-week" id="att-week"></div>
+          <div style="display:flex;gap:16px;margin-top:16px">
+            <div style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ash)"><div style="width:12px;height:12px;background:rgba(34,197,94,0.3);border:1px solid rgba(34,197,94,0.4)"></div>Present</div>
+            <div style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ash)"><div style="width:12px;height:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3)"></div>Absent</div>
+            <div style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ash)"><div style="width:12px;height:12px;background:rgba(174,0,1,0.1);border:1px solid rgba(174,0,1,0.5)"></div>Today</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ TRAINER ══ -->
+    <div class="db-section" id="sec-trainer">
+      <div class="section-head"><h2>MY <span>TRAINER</span></h2></div>
+      <div class="db-card">
+        <div class="db-card-header"><div class="db-card-title">Assigned Trainer</div></div>
+        <div class="db-card-body">
+          <div class="trainer-info-card" style="margin-bottom:24px">
+            <div class="trainer-avatar-lg" id="trainer-avatar">--</div>
+            <div style="flex:1">
+              <div class="trainer-info-name" id="trainer-name">—</div>
+              <div class="trainer-info-spec" id="trainer-spec">—</div>
+              <a href="#" id="trainer-whatsapp" target="_blank" class="trainer-contact-btn">
+                <span>💬</span> WhatsApp Trainer
+              </a>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div style="background:#0a0a0a;border:1px solid var(--border);padding:20px;text-align:center">
+              <div style="font-family:'Bebas Neue';font-size:36px;color:var(--white)" id="trainer-sessions">—</div>
+              <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Sessions Together</div>
+            </div>
+            <div style="background:#0a0a0a;border:1px solid var(--border);padding:20px;text-align:center">
+              <div style="font-family:'Bebas Neue';font-size:36px;color:var(--white)" id="trainer-days">—</div>
+              <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Days Training</div>
+            </div>
+            <div style="background:#0a0a0a;border:1px solid var(--border);padding:20px;text-align:center">
+              <div style="font-family:'Bebas Neue';font-size:36px;color:var(--red)" id="trainer-next">—</div>
+              <div style="font-family:'Barlow Condensed';font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ash)">Next Session</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header"><div class="db-card-title">Trainer Notes for You</div></div>
+        <div class="db-card-body" style="font-size:15px;color:var(--ash);line-height:1.8" id="trainer-notes">
+          <div class="empty-state"><span class="empty-icon">📝</span>No trainer notes yet. Check back after your next session.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// SUPABASE INIT
+// ─────────────────────────────────────────────────────────────
+const SUPABASE_URL = "https://bxlsgweqeomejjxeisai.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bHNnd2VxZW9tZWpqeGVpc2FpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyODM2MDYsImV4cCI6MjA5MDg1OTYwNn0.PXs3MZkmrIZ-aMRmZyy0C4Eh_bKOx0Q1J1E0FZqF_EM";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ─────────────────────────────────────────────────────────────
+// AUTH GUARD
+// ─────────────────────────────────────────────────────────────
+let currentUserId = null;
+
+async function init() {
+  // Verify active session via Supabase auth (not just localStorage)
+  const { data: { session }, error } = await db.auth.getSession();
+
+  if (error || !session) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  currentUserId = session.user.id;
+  localStorage.setItem("userId", currentUserId);
+
+  // Kick off all data loads
+  setDate();
+  await loadProfile();
+  await loadWorkout();
+  await loadDiet();
+  await loadAttendance();
+}
+
+// ─────────────────────────────────────────────────────────────
+// PROFILE
+// ─────────────────────────────────────────────────────────────
+async function loadProfile() {
+  const { data: profile, error } = await db
+    .from("profiles")
+    .select("*")
+    .eq("id", currentUserId)
+    .single();
+
+  if (error || !profile) {
+    showToast("Failed to load profile data");
+    return;
+  }
+
+  const name = profile.full_name || profile.email || "Athlete";
+  const initials = name.substring(0, 2).toUpperCase();
+
+  // Name / Avatar
+  setText("user-name", name);
+  setText("sidebar-name", name);
+  setText("sidebar-plan", profile.plan || "Client");
+  document.getElementById("sidebar-avatar").textContent = initials;
+
+  // Day calculation
+  if (profile.joined_at) {
+    const days = Math.floor((Date.now() - new Date(profile.joined_at)) / 86400000);
+    setText("welcome-day", `Day ${days}`);
+    setText("badge-streak", days);
+    setText("badge-since", new Date(profile.joined_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }));
+  }
+
+  setText("badge-plan", profile.plan || "—");
+  setText("badge-trainer", profile.trainer_name || "Not assigned");
+
+  // Stats
+  setText("stat-sessions", profile.sessions_done ?? "0");
+  document.getElementById("stat-attendance").innerHTML = (profile.attendance_rate ?? "0") + '<span>%</span>';
+  document.getElementById("stat-weight").innerHTML = (profile.weight_lost ?? "0") + '<span>kg</span>';
+  document.getElementById("stat-goal").innerHTML = (profile.goal_progress ?? "0") + '<span>%</span>';
+
+  // Attendance section stats
+  setText("att-present", profile.sessions_present ?? "0");
+  setText("att-missed", profile.sessions_missed ?? "0");
+  document.getElementById("att-rate").innerHTML = (profile.attendance_rate ?? "0") + '<span>%</span>';
+
+  // Trainer section
+  setText("trainer-name", profile.trainer_name || "Not assigned");
+  setText("trainer-spec", profile.trainer_spec || "—");
+  setText("trainer-sessions", profile.sessions_done ?? "—");
+  setText("trainer-days", profile.sessions_present ?? "—");
+  setText("trainer-next", profile.next_session || "—");
+  setText("ql-trainer-name", profile.trainer_name || "—");
+  setText("ql-next-session", profile.next_session || "—");
+  document.getElementById("trainer-avatar").textContent = (profile.trainer_name || "--").substring(0, 2).toUpperCase();
+
+  if (profile.trainer_notes && profile.trainer_notes.trim()) {
+    document.getElementById("trainer-notes").innerHTML =
+      `<p style="margin-bottom:12px">${profile.trainer_notes}</p>`;
+  }
+
+  if (profile.trainer_phone) {
+    document.getElementById("trainer-whatsapp").href = `https://wa.me/${profile.trainer_phone}`;
+  }
+
+  // Progress metrics
+  await loadProgressMetrics(profile);
+}
+
+async function loadProgressMetrics(profile) {
+  // Load progress entries for chart
+  const { data: entries } = await db
+    .from("progress_entries")
+    .select("*")
+    .eq("client_id", currentUserId)
+    .order("recorded_at", { ascending: false })
+    .limit(8);
+
+  const chart = document.getElementById("chart-bars");
+  chart.innerHTML = "";
+
+  if (entries && entries.length > 0) {
+    const weights = entries.reverse().map(e => e.weight_kg || 50);
+    const minW = Math.min(...weights);
+    const maxW = Math.max(...weights);
+    const range = (maxW - minW) || 1;
+    weights.forEach((w, i) => {
+      const heightPct = 20 + ((w - minW) / range) * 70;
+      const bar = document.createElement("div");
+      bar.className = "chart-bar";
+      bar.style.height = heightPct + "%";
+      bar.style.opacity = 0.5 + i * 0.07;
+      chart.appendChild(bar);
+    });
+  } else {
+    // Show placeholder bars if no data
+    [55, 52, 48, 50, 46, 44, 40, 38].forEach((h, i) => {
+      const bar = document.createElement("div");
+      bar.className = "chart-bar";
+      bar.style.height = h + "%";
+      bar.style.opacity = 0.5 + i * 0.07;
+      chart.appendChild(bar);
+    });
+  }
+
+  // Metrics section
+  const metricsBody = document.getElementById("metrics-body");
+  const weightLost = profile.weight_lost || 0;
+  const goalProgress = profile.goal_progress || 0;
+
+  metricsBody.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <span style="font-family:'Barlow Condensed';font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ash)">Weight Lost</span>
+          <span style="font-size:13px;color:var(--white)">${weightLost} kg lost</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${Math.min(goalProgress,100)}%"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <span style="font-family:'Barlow Condensed';font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ash)">Overall Goal</span>
+          <span style="font-size:13px;color:var(--white)">${goalProgress}%</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${goalProgress}%"></div></div>
+      </div>
+    </div>
+  `;
+
+  // Milestones based on profile data
+  const milestonesBody = document.getElementById("milestones-body");
+  const milestones = [];
+  if (profile.sessions_done >= 1)  milestones.push({ done: true, label: "First session completed", sub: "Week 1" });
+  if (profile.sessions_done >= 10) milestones.push({ done: true, label: "10 sessions completed", sub: `${profile.sessions_done} total sessions` });
+  if (weightLost >= 2)             milestones.push({ done: true, label: "First 2kg lost", sub: `${weightLost}kg total` });
+  if (weightLost < 5)              milestones.push({ done: false, label: "5kg lost", sub: `${weightLost}/5kg — keep going!` });
+  if (goalProgress < 100)          milestones.push({ done: false, label: "Full transformation", sub: `${goalProgress}% complete` });
+
+  if (milestones.length === 0) {
+    milestonesBody.innerHTML = `<div class="empty-state"><span class="empty-icon">🎯</span>Complete your first session to unlock milestones!</div>`;
+    return;
+  }
+
+  milestonesBody.innerHTML = milestones.map(m => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#0a0a0a;border:1px solid ${m.done ? 'rgba(34,197,94,0.2)' : 'var(--border)'};margin-bottom:8px">
+      <span style="font-size:20px">${m.done ? '✅' : '🎯'}</span>
+      <div>
+        <div style="font-family:'Barlow Condensed';font-size:13px;font-weight:700;color:${m.done ? 'var(--white)' : 'var(--ash)'}">${m.label}</div>
+        <div style="font-size:11px;color:var(--ash)">${m.sub}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ─────────────────────────────────────────────────────────────
+// WORKOUT PLAN
+// ─────────────────────────────────────────────────────────────
+async function loadWorkout() {
+  const { data: workout, error } = await db
+    .from("workouts")
+    .select("*, workout_days(*)")
+    .eq("client_id", currentUserId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  const workoutBody = document.getElementById("workout-body");
+  const weekLabel = document.getElementById("workout-week-label");
+
+  if (error || !workout) {
+    workoutBody.innerHTML = `<div class="empty-state"><span class="empty-icon">💪</span>Your trainer hasn't assigned a workout plan yet.<br>Check back soon!</div>`;
+    document.getElementById("ql-workout").textContent = "No plan assigned yet";
+    return;
+  }
+
+  const days = (workout.workout_days || []).sort((a, b) => a.day_order - b.day_order);
+  weekLabel.textContent = `Week ${workout.week_number} of ${workout.total_weeks}`;
+
+  if (!days.length) {
+    workoutBody.innerHTML = `<div class="empty-state"><span class="empty-icon">💪</span>Workout days not yet configured</div>`;
+    return;
+  }
+
+  // Find today's workout for quick link
+  const todayDay = days.find(d => d.status === "today");
+  if (todayDay) {
+    document.getElementById("ql-workout").textContent = `${todayDay.focus} — ${todayDay.duration_minutes} min`;
+  } else {
+    document.getElementById("ql-workout").textContent = `${days.length} days scheduled`;
+  }
+
+  workoutBody.innerHTML = `
+    <table class="db-table">
+      <thead><tr>
+        <th>Day</th><th>Focus</th><th>Exercises</th><th>Duration</th><th>Status</th>
+      </tr></thead>
+      <tbody>
+        ${days.map(d => `
+          <tr>
+            <td style="font-family:'Bebas Neue';font-size:16px;${d.status==='today'?'color:var(--red)':''}">${d.day_name}</td>
+            <td>${d.focus || "—"}</td>
+            <td style="font-size:13px;color:var(--ash)">${d.exercises || "—"}</td>
+            <td>${d.duration_minutes || "—"} min</td>
+            <td><span class="badge badge-${d.status || 'rest'}">${capitalize(d.status || 'upcoming')}</span></td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+// ─────────────────────────────────────────────────────────────
+// DIET PLAN
+// ─────────────────────────────────────────────────────────────
+async function loadDiet() {
+  const { data: diet, error } = await db
+    .from("diet_plans")
+    .select("*, diet_meals(*)")
+    .eq("client_id", currentUserId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  const mealGrid = document.getElementById("meal-grid");
+
+  if (error || !diet) {
+    mealGrid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="empty-icon">🥗</span>Your trainer hasn't assigned a diet plan yet.</div>`;
+    document.getElementById("ql-diet").textContent = "No diet plan yet";
+    return;
+  }
+
+  // Macros
+  document.getElementById("macro-cal").textContent = diet.target_calories || "—";
+  document.getElementById("macro-protein").innerHTML = (diet.target_protein || "—") + '<span style="font-size:28px;color:var(--ash)">g</span>';
+  document.getElementById("macro-carbs").innerHTML = (diet.target_carbs || "—") + '<span style="font-size:28px;color:var(--ash)">g</span>';
+  document.getElementById("macro-fats").innerHTML = (diet.target_fats || "—") + '<span style="font-size:28px;color:var(--ash)">g</span>';
+  document.getElementById("diet-summary").textContent = `Target: ${diet.target_calories || "—"} kcal · ${diet.notes || "High Protein"}`;
+
+  const meals = (diet.diet_meals || []).sort((a, b) => a.meal_order - b.meal_order);
+
+  if (!meals.length) {
+    mealGrid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="empty-icon">🥗</span>Meals not yet added to your plan</div>`;
+    document.getElementById("ql-diet").textContent = `${diet.target_calories || "—"} kcal target`;
+    return;
+  }
+
+  document.getElementById("ql-diet").textContent = `${meals.length} meals · ${diet.target_calories || "—"} kcal target`;
+
+  mealGrid.innerHTML = meals.map(m => `
+    <div class="meal-card">
+      <div class="meal-time">${m.meal_time || "—"}</div>
+      <div class="meal-name">${m.meal_name || "—"}</div>
+      <div class="meal-desc">${m.description || "—"}</div>
+      <div class="meal-macros">
+        <div class="macro">
+          <div class="macro-val">${m.calories || 0}</div>
+          <div class="macro-lbl">kcal</div>
+        </div>
+        <div class="macro">
+          <div class="macro-val" style="color:var(--red)">${m.protein || 0}g</div>
+          <div class="macro-lbl">Protein</div>
+        </div>
+        <div class="macro">
+          <div class="macro-val">${m.carbs || 0}g</div>
+          <div class="macro-lbl">Carbs</div>
+        </div>
+        <div class="macro">
+          <div class="macro-val">${m.fats || 0}g</div>
+          <div class="macro-lbl">Fats</div>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ─────────────────────────────────────────────────────────────
+// ATTENDANCE
+// ─────────────────────────────────────────────────────────────
+async function loadAttendance() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  // Get current week (Mon-Sun)
+  const dayOfWeek = today.getDay(); // 0=Sun
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+
+  const weekDays = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    weekDays.push(d);
+  }
+
+  const startDate = weekDays[0].toISOString().split("T")[0];
+  const endDate = weekDays[6].toISOString().split("T")[0];
+
+  const { data: records } = await db
+    .from("attendance")
+    .select("date, status")
+    .eq("client_id", currentUserId)
+    .gte("date", startDate)
+    .lte("date", endDate);
+
+  const recordMap = {};
+  (records || []).forEach(r => { recordMap[r.date] = r.status; });
+
+  const todayStr = today.toISOString().split("T")[0];
+  const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  const attWeek = document.getElementById("att-week");
+  attWeek.innerHTML = weekDays.map((d, i) => {
+    const dateStr = d.toISOString().split("T")[0];
+    const isToday = dateStr === todayStr;
+    const status = recordMap[dateStr];
+    let cls = "att-day";
+    if (isToday) cls += " today";
+    else if (status === "present") cls += " present";
+    else if (status === "absent") cls += " absent";
+    else cls += " rest";
+
+    return `
+      <div class="${cls}">
+        <span>${dayNames[i]}</span>
+        <span class="day-num">${d.getDate().toString().padStart(2, "0")}</span>
+      </div>
+    `;
+  }).join("");
+
+  const attMonthLabel = document.getElementById("att-month-label");
+  attMonthLabel.textContent = `${today.toLocaleDateString("en-IN", { month: "long", year: "numeric" })} — Weekly View`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────────────────────
+function showSection(id, linkEl) {
+  document.querySelectorAll(".db-section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+  document.getElementById("sec-" + id).classList.add("active");
+  if (linkEl) linkEl.classList.add("active");
+  const titles = { home:"Home", progress:"Progress", workout:"Workout Plan", diet:"Diet Plan", attendance:"Attendance", trainer:"My Trainer" };
+  document.getElementById("topbar-title").textContent = titles[id] || id;
+}
+
+// ─────────────────────────────────────────────────────────────
+// LOGOUT
+// ─────────────────────────────────────────────────────────────
+async function logout() {
+  await db.auth.signOut();
+  localStorage.removeItem("userId");
+  window.location.href = "login.html";
+}
+
+// ─────────────────────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────────────────────
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val ?? "—";
+}
+
+function capitalize(str) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : "—";
+}
+
+function setDate() {
+  const d = new Date();
+  document.getElementById("topbar-date").textContent =
+    d.toLocaleDateString("en-IN", { weekday:"short", day:"numeric", month:"short", year:"numeric" });
+}
+
+function showToast(msg) {
+  const toast = document.createElement("div");
+  toast.style.cssText = `position:fixed;bottom:28px;right:28px;z-index:9999;background:#ae0001;color:#fff;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:2px;box-shadow:0 4px 24px rgba(0,0,0,0.5);`;
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+// ─────────────────────────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

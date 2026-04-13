@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en" style="cursor: none !important;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>Built 2 Fly – Premium Coaching</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css">   <!-- NEW -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+<div id="loader">
+  <div id="loaderGlow"></div> 
+  <img src="Assets/Logo/B2F_logo.png" id="loaderLogo">
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<div id="navbar"></div>
+<div class="nav-overlay"></div>
+
+<!-- ─── HERO ─── -->
+<section id="hero" style="min-height: 100vh; height: 100vh; max-height: 100vh; overflow: hidden; display: flex; align-items: center; box-sizing: border-box; padding-top: 70px; padding-bottom: 20px;">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content reveal" style="width: 100%; max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; justify-content: space-between;">
+    <div class="hero-left" style="flex: 1 1 320px; min-width: 0;">
+      <div class="hero-eyebrow">Strength · Mobility · Prehab · Performance</div>
+      <h1 class="hero-heading" style="margin-bottom: 12px;">
+        <span class="line1">UNLOCK SKILLS</span><br>
+        <span class="line2">YOU ONCE</span><br>
+        <span class="line1">THOUGHT WERE</span><br>
+        <span class="line2">IMPOSSIBLE.</span>
+      </h1>
+      <p class="hero-sub" style="margin-bottom: 20px;">
+        No matter your age or starting point — <strong>if one human can do it, you can too.</strong> Learn strength, mobility, and calisthenics step-by-step.
+      </p>
+       <div class="hero-cta">
+        <a href="apply.html" class="btn-primary">
+          Start Your Transformation ↗
+        </a>
+        <a href="#proof" class="btn-outline">See Results</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">150<span>+</span></div>
+          <div class="hero-stat-label">Lives Transformed</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">6<span>+</span></div>
+          <div class="hero-stat-label">Years of Expertise</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">0</span></div>
+          <div class="hero-stat-label">Excuses Allowed</div>
+        </div>
+      </div>
+    </div>
+    <!-- ─── HERO RIGHT: Logo ─── -->
+    <div class="hero-right" style="flex: 0 1 520px; display: flex; justify-content: center; align-items: center;">
+      <div class="hero-logo-wrap" style="position: relative; width: 100%; max-width: 520px;">
+        <div class="hero-logo-glow"></div>
+        <img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly" style="width: 100%; max-width: 520px; height: auto; object-fit: contain; display: block; margin: 0 auto;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HERO RESPONSIVE FIX ─── -->
+<style>
+  /* Ensure heading doesn't overflow on smaller screens */
+  #hero .hero-heading { line-height: 1.0; }
+  @media (max-height: 750px) {
+    #hero { padding-top: 60px !important; }
+    #hero .hero-heading { font-size: clamp(36px, 6vw, 64px) !important; }
+    #hero .hero-sub { font-size: 14px !important; margin-bottom: 14px !important; }
+    #hero .hero-stats { gap: 16px !important; }
+    #hero .hero-stat-num { font-size: 28px !important; }
+  }
+  @media (max-width: 768px) {
+    #hero { 
+      height: auto !important; 
+      max-height: none !important; 
+      overflow: visible !important; 
+      min-height: 100svh !important; 
+      padding-top: 80px !important; 
+      padding-bottom: 30px !important; 
+    }
+    #hero .hero-content { flex-direction: column !important; text-align: center !important; justify-content: center !important; gap: 16px !important; }
+    #hero .hero-left { flex: 1 1 100% !important; display: flex; flex-direction: column; align-items: center; }
+    #hero .hero-right { flex: 0 1 180px !important; max-width: 180px !important; margin: 0 auto !important; }
+    #hero .hero-stats { justify-content: center !important; }
+    #hero .hero-cta { justify-content: center !important; flex-wrap: wrap !important; }
+    #hero .hero-sub { font-size: 14px !important; margin-bottom: 14px !important; }
+    #hero .hero-heading { font-size: clamp(32px, 9vw, 52px) !important; }
+  }
+</style>
+
+<!-- ─── WHAT YOU CAN ACHIEVE ─── -->
+<section id="achievements" style="background: var(--dark, #000000); padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 2px solid rgba(255,255,255,0.06);">
+  <div class="container">
+    <div class="reveal" style="text-align: center; margin-bottom: 52px;">
+      <div class="tag" style="display: inline-block; margin-bottom: 16px;">Your Potential</div>
+      <h2 class="section-title">WHAT YOU CAN<br><span class="red">ACHIEVE.</span></h2>
+    </div>
+    <div class="reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto;">
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 32px 24px; text-align: center; transition: border-color 0.3s, transform 0.3s;" onmouseover="this.style.borderColor='#AE0001';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='translateY(0)'">
+        <div style="font-size: 36px; margin-bottom: 14px;">🏃</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px;">Stamina & Running</div>
+        <div style="font-size: 14px; color: #aaa; font-weight: 300; line-height: 1.6;">Improve endurance and running efficiency at any level</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 32px 24px; text-align: center; transition: border-color 0.3s, transform 0.3s;" onmouseover="this.style.borderColor='#AE0001';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='translateY(0)'">
+        <div style="font-size: 36px; margin-bottom: 14px;">💪</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px;">Strength & Muscle</div>
+        <div style="font-size: 14px; color: #aaa; font-weight: 300; line-height: 1.6;">Build real, functional strength and visible muscle</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 32px 24px; text-align: center; transition: border-color 0.3s, transform 0.3s;" onmouseover="this.style.borderColor='#AE0001';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='translateY(0)'">
+        <div style="font-size: 36px; margin-bottom: 14px;">🧘</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px;">Flexibility & Mobility</div>
+        <div style="font-size: 14px; color: #aaa; font-weight: 300; line-height: 1.6;">Improve mobility, reduce stiffness, and move freely with better control and range</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 32px 24px; text-align: center; transition: border-color 0.3s, transform 0.3s;" onmouseover="this.style.borderColor='#AE0001';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='translateY(0)'">
+        <div style="font-size: 36px; margin-bottom: 14px;">🤸</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px;">Calisthenics Skills</div>
+        <div style="font-size: 14px; color: #aaa; font-weight: 300; line-height: 1.6;">Learn muscle-ups, handstands, flips — step by step</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-bar reveal">
+  <div class="marquee-track">
+    <span class="marquee-item">GROUP TRAINING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PERSONAL TRAINING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">ONLINE COACHING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">FAT LOSS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">STRENGTH BUILDING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">KIDS FITNESS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PREMIUM RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Calisthenics</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Flips and Tricks</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Parkour</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item">GROUP TRAINING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PERSONAL TRAINING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">ONLINE COACHING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">FAT LOSS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">STRENGTH BUILDING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">KIDS FITNESS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PREMIUM RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Calisthenics</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Flips and Tricks</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Parkour</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ─── NOT FOR YOU SECTION ─── -->
+<section id="not-for-you" style="background: var(--dark, #0a0a0a); padding: 80px 0;">
+  <div class="container">
+    <div class="reveal" style="max-width: 760px; margin: 0 auto; text-align: center;">
+      <div class="tag" style="display: inline-block; margin-bottom: 20px;">Sound Familiar?</div>
+      <h2 class="section-title" style="margin-bottom: 40px;">FEEL LIKE THIS IS<br><span class="red">NOT FOR YOU?</span></h2>
+      <ul style="list-style: none; padding: 0; margin: 0 0 40px 0; text-align: left; display: inline-block;">
+        <li style="font-size: 17px; color: var(--ash, #aaa); font-weight: 400; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: flex-start; gap: 14px;">
+          <span style="color: var(--red, #AE0001); font-size: 20px; line-height: 1.4;">✦</span>
+          You think calisthenics or flips are not for your age
+        </li>
+        <li style="font-size: 17px; color: var(--ash, #aaa); font-weight: 400; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: flex-start; gap: 14px;">
+          <span style="color: var(--red, #AE0001); font-size: 20px; line-height: 1.4;">✦</span>
+          You've tried but never made real progress
+        </li>
+        <li style="font-size: 17px; color: var(--ash, #aaa); font-weight: 400; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: flex-start; gap: 14px;">
+          <span style="color: var(--red, #AE0001); font-size: 20px; line-height: 1.4;">✦</span>
+          You have injuries or pain holding you back
+        </li>
+        <li style="font-size: 17px; color: var(--ash, #aaa); font-weight: 400; padding: 12px 0; display: flex; align-items: flex-start; gap: 14px;">
+          <span style="color: var(--red, #AE0001); font-size: 20px; line-height: 1.4;">✦</span>
+          You feel stuck or inconsistent
+        </li>
+      </ul>
+      <p style="font-size: 20px; font-weight: 600; color: #fff; line-height: 1.6; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.02em;">
+        You're not incapable — you just haven't been shown <span class="red">the right way yet.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-card-main">
+          <div class="about-badge">The B2F Philosophy</div>
+          <div class="about-quote">"YOUR BODY IS A MACHINE. WE JUST TUNE IT RIGHT."</div>
+          <p class="about-quote-sub">Every rep, every session, every decision you make in this gym is an investment. We make sure it pays off.</p>
+        </div>
+        <div class="about-card-float">
+          <div class="about-card-float-num">150+</div>
+          <div class="about-card-float-label">Clients Transformed</div>
+        </div>
+      </div>
+      <div class="about-text reveal" style="transition-delay: 0.15s;">
+        <div class="tag">Who We Are</div>
+        <h2 class="section-title">BUILT FROM<br><span class="red">STRUGGLE.</span></h2>
+        <p>Built 2 Fly was created from struggle — not comfort. I started late, trained without proper space, and travelled miles just to learn.</p>
+        <p>That's why Built 2 Fly exists today — to give you what I never had: a <strong>safe, structured way</strong> to build strength, recover from injuries, and unlock skills step-by-step.</p>
+        <p>Whether you're a beginner or someone who thinks <strong>"this isn't for me"</strong> — this is for you.</p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">🏋️</div>
+            <div class="pillar-title">Expert Coaching</div>
+            <div class="pillar-text">Certified coaches with proven methodology</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">📊</div>
+            <div class="pillar-title">Data Driven</div>
+            <div class="pillar-text">Track every session, every milestone</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🎯</div>
+            <div class="pillar-title">Goal Focused</div>
+            <div class="pillar-text">Plans built around your specific targets</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🔥</div>
+            <div class="pillar-title">Premium System</div>
+            <div class="pillar-text">Luxury experience, elite-level results</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="container">
+    <div class="services-header reveal">
+  <div class="services-header-left">
+    <div class="tag">What We Offer</div>
+    <h2 class="section-title">
+      OUR<br><span class="red">PROGRAMS.</span>
+    </h2>
+  </div>
+
+  <div class="services-header-right">
+    <p>
+      Three premium training tracks, one mission: to transform your body and mind.
+    </p>
+
+    <p class="services-subtext">
+      This isn't just training. This is skill-based transformation.
+      <span class="red">Fat loss and muscle gain are just byproducts.</span>
+    </p>
+  </div>
+</div>  
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-icon">👥</div>
+        <div class="service-name">GROUP<br>TRAINING</div>
+        <p class="service-desc">High-energy group sessions designed for maximum results. Train alongside a community that pushes you to your limit.</p>
+        <ul class="service-features">
+          <li>Structured group workouts</li>
+          <li>Expert trainer supervision</li>
+          <li>Daily session scheduling</li>
+          <li>Attendance tracking</li>
+          <li>Community motivation</li>
+        </ul>
+
+        </ul>
+        <a href="group-training.html" class="btn-outline">
+          Learn More →
+        </a>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.1s;">
+        <div class="service-num">02</div>
+        <div class="service-icon">⚡</div>
+        <div class="service-name">PERSONAL<br>TRAINING</div>
+        <p class="service-desc">1-on-1 sessions tailored entirely to you. Every workout, every rep, every meal plan — built around your specific goals.</p>
+        <ul class="service-features">
+          <li>Fully customised programming</li>
+          <li>Dedicated coach</li>
+          <li>Nutrition guidance</li>
+          <li>Weekly progress reviews</li>
+          <li>Priority scheduling</li>
+        </ul>
+        </ul>
+<a href="personal-training.html" class="btn-outline">
+  Learn More →
+</a>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.2s;">
+        <div class="service-num">03</div>
+        <div class="service-icon">📱</div>
+        <div class="service-name">ONLINE<br>COACHING</div>
+        <p class="service-desc">Premium coaching, anywhere in the world. Transform your body without leaving your city — or your country.</p>
+        <ul class="service-features">
+          <li>Custom workout plans</li>
+          <li>Video form checks</li>
+          <li>Nutrition & meal plans</li>
+          <li>24/7 coach access</li>
+          <li>Monthly strategy calls</li>
+        </ul>
+        </ul>
+<a href="online-coaching.html" class="btn-outline">
+  Learn More →
+</a>
+      </div>
+  
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results-cta">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      REAL RESULTS.<br><span class="red">REAL PEOPLE.</span>
+    </h2>
+
+    <p class="reveal" style="transition-delay: 0.1s;">
+      Want to see what’s possible?
+    </p>
+
+    <a href="results.html" class="btn-primary reveal" style="transition-delay: 0.2s;">
+      View Transformations →
+    </a>
+
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing">
+  <div class="container">
+    <div class="pricing-header reveal">
+      <div class="tag">Invest In Yourself</div>
+      <h2 class="section-title">CHOOSE YOUR<br><span class="red">PLAN.</span></h2>
+      <p>Premium coaching shouldn't be complicated. Pick what fits, start immediately.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Group -->
+      <div class="pricing-card reveal">
+        <div class="pricing-plan-name">Group Training</div>
+        <div class="pricing-price"><sup>₹</sup>3,999</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li class="included"><span class="feat-check">✓</span> Unlimited group sessions</li>
+          <li class="included"><span class="feat-check">✓</span> Expert trainer supervision</li>
+          <li class="included"><span class="feat-check">✓</span> Attendance tracking</li>
+          <li class="included"><span class="feat-check">✓</span> Progress dashboard</li>
+          <li class="included"><span class="feat-check">✓</span> Community access</li>
+          <li><span class="feat-cross">✗</span> 1-on-1 coaching</li>
+          <li><span class="feat-cross">✗</span> Custom meal plan</li>
+        </ul>
+        <a href="apply.html" class="btn-outline"> Get Started </a>
+        </div>
+      <!-- Personal -->
+      <div class="pricing-card featured reveal" style="transition-delay: 0.1s;">
+        <div class="pricing-plan-name">Personal Training</div>
+        <div class="pricing-price"><sup>₹</sup>18,000</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li class="included"><span class="feat-check">✓</span> 12 personal sessions / month</li>
+          <li class="included"><span class="feat-check">✓</span> Dedicated coach</li>
+          <li class="included"><span class="feat-check">✓</span> Custom workout program</li>
+          <li class="included"><span class="feat-check">✓</span> Nutrition & meal plan</li>
+          <li class="included"><span class="feat-check">✓</span> Weekly progress reviews</li>
+          <li class="included"><span class="feat-check">✓</span> Priority scheduling</li>
+          <li class="included"><span class="feat-check">✓</span> Progress dashboard</li>
+        </ul>
+        <a href="apply.html" class="btn-outline"> Start Training </a>
+      </div>
+      <!-- Online -->
+      <div class="pricing-card reveal" style="transition-delay: 0.2s;">
+        <div class="pricing-plan-name">Online Coaching</div>
+        <div class="pricing-price"><sup>₹</sup>5,999</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li class="included"><span class="feat-check">✓</span> Custom workout plan</li>
+          <li class="included"><span class="feat-check">✓</span> Nutrition plan</li>
+          <li class="included"><span class="feat-check">✓</span> Video form checks</li>
+          <li class="included"><span class="feat-check">✓</span> 24/7 WhatsApp support</li>
+          <li class="included"><span class="feat-check">✓</span> Monthly strategy call</li>
+          <li class="included"><span class="feat-check">✓</span> Progress tracking app</li>
+          <li><span class="feat-cross">✗</span> In-person sessions</li>
+        </ul>
+        <a href="apply.html" class="btn-outline"> Join Online </a>
+      </div>
+    </div>
+    <p style="text-align: center; font-size: 13px; color: var(--ash); margin-top: 32px;">All plans include mandatory onboarding, consent form, and access to the B2F client dashboard.</p>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="process-header reveal">
+  <div class="tag">Your Journey</div>
+
+  <h2 class="section-title">
+    FROM START TO<br><span class="red">UNSTOPPABLE.</span>
+  </h2>
+</div>
+
+    <div class="process-steps">
+
+      <div class="process-step reveal">
+        <div class="step-circle">01</div>
+        <div class="step-label">Assess</div>
+        <div class="step-desc">
+          We understand your body, goals, and starting point
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay: 0.1s;">
+        <div class="step-circle">02</div>
+        <div class="step-label">Plan</div>
+        <div class="step-desc">
+          Choose your program and get a structured roadmap
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay: 0.2s;">
+        <div class="step-circle">03</div>
+        <div class="step-label">Start</div>
+        <div class="step-desc">
+          Complete onboarding and begin your training journey
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay: 0.3s;">
+        <div class="step-circle">04</div>
+        <div class="step-label">Progress</div>
+        <div class="step-desc">
+          Track performance, stay consistent, and level up
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay: 0.4s;">
+        <div class="step-circle">05</div>
+        <div class="step-label">Unlock</div>
+        <div class="step-desc">
+          Achieve skills you once thought were impossible
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA BAND ─── -->
+<section id="cta-band">
+  <div class="container reveal" style="position: relative; z-index: 1;">
+    <h2 class="cta-band-title">STOP DOUBTING.<br>START UNLOCKING.</h2>
+    <p class="cta-band-sub">If one human can do it — so can you.</p>
+    <a href="#" class="btn-primary" style="font-size: 15px; padding: 18px 44px;" onclick="openBookingModal(event)">Book Your Trial Session ↗</a>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <div class="tag">Questions</div>
+      <h2 class="section-title">GOT<br><span class="red">QUESTIONS?</span></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Am I too out of shape to join? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">Absolutely not. B2F is specifically built for beginners and fat loss clients. Every program is scaled to your current fitness level. You don't need to be fit to start — you just need to start.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay: 0.05s;" onclick="this.classList.toggle('open')">
+        <div class="faq-q">What is the consent form? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">It's a mandatory digital form completed during onboarding. It covers a liability waiver, medical declaration, payment policy, attendance rules, and optional media consent. It must be completed before accessing the dashboard.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay: 0.1s;" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Can I switch between plans? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">Yes. You can upgrade or change your plan at any time. Contact your trainer or reach out via the dashboard and we'll sort it out instantly.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay: 0.15s;" onclick="this.classList.toggle('open')">
+        <div class="faq-q">How does online coaching work? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">You receive custom workout and nutrition plans via the client dashboard. Your coach checks in regularly, reviews your form via video, and adjusts your program monthly based on your progress.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay: 0.2s;" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Do you offer programs for kids? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">Yes. We offer age-appropriate group training programs for kids with specialised trainers. These are structured, fun, and designed to build lifelong healthy habits.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay: 0.25s;" onclick="this.classList.toggle('open')">
+        <div class="faq-q">What payment methods are accepted? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">We use Razorpay for all payments — supporting UPI, cards, net banking, and wallets. Payments are fully secure and processed instantly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+      </div>
+      <p class="footer-desc">Premium coaching system built for real transformation. Group training, personal coaching, and online programs — all under one powerful brand.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">in</a>
+        <a href="#" class="social-icon">ig</a>
+        <a href="#" class="social-icon">yt</a>
+        <a href="#" class="social-icon">wa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="group-training.html">Group Training</a></li>
+        <li><a href="personal-training.html">Personal Training</a></li>
+        <li><a href="online-coaching.html">Online Coaching</a></li>
+        <li><a href="#">Kids Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About B2F</a></li>
+        <li><a href="#">Our Trainers</a></li>
+        <li><a href="results.html">Transformations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+        <li><a href="consent-form.html">Consent Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.</div>
+    <div class="footer-copy">Powered by passion. Backed by results.</div>
+  </div>
+</footer>
+
+
+<!-- ─── FLOATING CTA BUTTON (PREMIUM – BRAND MATCHED) ─── -->
+<button
+  id="floating-cta"
+  onclick="openBookingModal(event)"
+  aria-label="Book your assessment"
+  style="
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    background: #AE0001;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 26px;
+    border-radius: 0;
+    border: none;
+    /*border-bottom: 3px solid #cf122177;*/
+    box-shadow: 4px 4px 0px #cf122177, 0 8px 32px rgba(230,57,70,0.35);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    clip-path: none;
+  "
+  onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='6px 6px 0px #cf122177, 0 12px 40px rgba(230,57,70,0.5)'"
+  onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='4px 4px 0px #cf122177, 0 8px 32px rgba(230,57,70,0.35)'"
+>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+    <rect x="1" y="3" width="12" height="10" rx="0" stroke="white" stroke-width="1.5"/>
+    <path d="M4 1V4M10 1V4" stroke="white" stroke-width="1.5" stroke-linecap="square"/>
+    <path d="M1 6H13" stroke="white" stroke-width="1.5"/>
+  </svg>
+  Book Your Free Trial
+</button>
+
+<!-- ─── BOOKING MODAL ─── -->
+<div id="booking-modal" style="
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+" onclick="handleModalBackdropClick(event)">
+  <div id="booking-modal-box" style="
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /*border-top: 3px solid #AE0001;*/
+    max-width: 480px;
+    width: 100%;
+    padding: 40px 36px 36px;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7), 4px 4px 0 #AE0001;
+    transform: scale(0.94) translateY(12px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    opacity: 0;
+  ">
+    <!-- Close Button -->
+    <button onclick="closeBookingModal()" aria-label="Close modal" style="
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #aaa;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 0;
+      transition: background 0.2s, color 0.2s;
+    " onmouseover="this.style.background='rgba(174,0,1,0.15)';this.style.color='#AE0001'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='#AE0001'">×</button>
+
+    <!-- Modal Header -->
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #AE0001; margin-bottom: 10px;">Free Assessment</div>
+      <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.04em; color: #fff; margin: 0; line-height: 1.1;">BOOK YOUR TRIAL<br><span style="color: #AE0001;">SESSION</span></h2>
+      <p style="font-size: 13px; color: #888; margin: 10px 0 0; font-weight: 300; line-height: 1.6;">Tell us about yourself and we'll reach out within 24 hours to confirm your slot.</p>
+    </div>
+
+    <!-- Form -->
+    <!-- NOTE: id="b2f-booking-form" — connect to Supabase by intercepting this form's submit event -->
+    <div id="b2f-booking-form">
+      <!-- Name -->
+      <div style="margin-bottom: 16px;">
+        <label style="display:block; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px;">Full Name *</label>
+        <input
+          id="modal-name"
+          type="text"
+          placeholder="Your name"
+          required
+          style="
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0;
+            padding: 12px 14px;
+            color: #fff;
+            font-family: 'Barlow', sans-serif;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+          "
+          onfocus="this.style.borderColor='#AE0001'"
+          onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+        >
+      </div>
+      <!-- Phone -->
+      <div style="margin-bottom: 16px;">
+        <label style="display:block; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px;">Phone Number *</label>
+        <input
+          id="modal-phone"
+          type="tel"
+          placeholder="+91 XXXXX XXXXX"
+          required
+          style="
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0;
+            padding: 12px 14px;
+            color: #fff;
+            font-family: 'Barlow', sans-serif;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+          "
+          onfocus="this.style.borderColor='#AE0001'"
+          onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+        >
+      </div>
+      <!-- Goal -->
+      <div style="margin-bottom: 16px;">
+        <label style="display:block; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px;">Your Goal *</label>
+        <div style="position: relative;">
+          <select
+            id="modal-goal"
+            required
+            style="
+              width: 100%;
+              background: rgba(255,255,255,0.04);
+              border: 1px solid rgba(255,255,255,0.1);
+              border-radius: 0;
+              padding: 12px 14px;
+              color: #fff;
+              font-family: 'Barlow', sans-serif;
+              font-size: 14px;
+              outline: none;
+              box-sizing: border-box;
+              appearance: none;
+              -webkit-appearance: none;
+              cursor: pointer;
+              transition: border-color 0.2s;
+            "
+            onfocus="this.style.borderColor='#AE0001'"
+            onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+          >
+            <option value="" disabled selected style="background:#111; color:#666;">Select your primary goal</option>
+            <option value="fat_loss" style="background:#111;">Fat Loss</option>
+            <option value="muscle_gain" style="background:#111;">Muscle Gain &amp; Strength</option>
+            <option value="calisthenics" style="background:#111;">Calisthenics &amp; Skills</option>
+            <option value="prehab" style="background:#111;">Injury Recovery (Prehab)</option>
+            <option value="stamina" style="background:#111;">Stamina &amp; Running</option>
+            <option value="kids" style="background:#111;">Kids Fitness Program</option>
+            <option value="online" style="background:#111;">Online Coaching</option>
+          </select>
+          <div style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#666; font-size:10px;">▼</div>
+        </div>
+      </div>
+      <!-- Experience -->
+      <div style="margin-bottom: 24px;">
+        <label style="display:block; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 10px;">Experience Level *</label>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <label id="exp-beginner" style="flex:1; min-width: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #aaa; font-family: 'Barlow', sans-serif; transition: border-color 0.2s, background 0.2s;" onclick="selectExperience('beginner')">
+            <span id="exp-dot-beginner" style="width:10px;height:10px;border:1.5px solid #555;border-radius:50%;flex-shrink:0;transition:background 0.2s,border-color 0.2s;"></span> Beginner
+          </label>
+          <label id="exp-intermediate" style="flex:1; min-width: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #aaa; font-family: 'Barlow', sans-serif; transition: border-color 0.2s, background 0.2s;" onclick="selectExperience('intermediate')">
+            <span id="exp-dot-intermediate" style="width:10px;height:10px;border:1.5px solid #555;border-radius:50%;flex-shrink:0;transition:background 0.2s,border-color 0.2s;"></span> Intermediate
+          </label>
+          <label id="exp-advanced" style="flex:1; min-width: 100px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #aaa; font-family: 'Barlow', sans-serif; transition: border-color 0.2s, background 0.2s;" onclick="selectExperience('advanced')">
+            <span id="exp-dot-advanced" style="width:10px;height:10px;border:1.5px solid #555;border-radius:50%;flex-shrink:0;transition:background 0.2s,border-color 0.2s;"></span> Advanced
+          </label>
+        </div>
+        <input type="hidden" id="modal-experience" value="">
+      </div>
+      <!-- Submit -->
+      <button
+        onclick="submitBookingForm()"
+        style="
+          width: 100%;
+          background: #AE0001;
+          color: #fff;
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          padding: 16px;
+          border: none;
+          /*border-bottom: 3px solid #cf122177;*/
+          border-radius: 0;
+          cursor: pointer;
+          box-shadow: 4px 4px 0 #cf122177;
+          transition: transform 0.15s, box-shadow 0.15s;
+        "
+        onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='5px 5px 0 #a8232e'"
+        onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='4px 4px 0 #a8232e'"
+        id="modal-submit-btn"
+      >
+        Request My Trial Session ↗
+      </button>
+      <p style="text-align:center; font-size:11px; color:#555; margin: 12px 0 0; font-weight:300;">We'll contact you within 24 hours. No spam, ever.</p>
+    </div>
+
+    <!-- Success State (hidden by default) -->
+    <div id="b2f-booking-success" style="display:none; text-align:center; padding: 20px 0;">
+      <div style="font-size: 40px; margin-bottom: 16px;">✅</div>
+      <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; color:#fff; letter-spacing:0.04em; margin: 0 0 10px;">YOU'RE IN!</h3>
+      <p style="font-size: 14px; color: #888; font-weight:300; line-height:1.6;">We've received your request and will reach out within 24 hours to book your trial session.</p>
+      <button onclick="closeBookingModal()" style="margin-top:20px; background:transparent; border:1px solid rgba(255,255,255,0.15); color:#aaa; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:10px 24px; cursor:pointer; border-radius:0; transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='#AE0001';this.style.color='#AE0001'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='#aaa'">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MODAL + FLOATING BUTTON JAVASCRIPT ─── -->
+<style>
+  /* Suppress placeholder color in modal inputs */
+  #booking-modal input::placeholder,
+  #booking-modal select::placeholder { color: #444; }
+  #booking-modal select option { background: #111; color: #fff; }
+  /* Prevent body scroll when modal open */
+  body.modal-open { overflow: hidden; }
+</style>
+<script>
+  /* ── Floating button: show only after loader finishes ── */
+  (function() {
+    var btn = document.getElementById('floating-cta');
+    if (!btn) return;
+
+    function showFloatingBtn() {
+      btn.style.display = 'flex';
+      // Small delay so display:flex has time to paint before opacity transition
+      setTimeout(function() { btn.style.opacity = '1'; }, 80);
+    }
+
+    // Listen for the loader to hide (watch for #loader display:none or opacity 0)
+    // The loader.js typically adds a class or sets display:none on #loader
+    // We use a MutationObserver + fallback timeout
+    var loader = document.getElementById('loader');
+    if (loader) {
+      var observer = new MutationObserver(function() {
+        var s = window.getComputedStyle(loader);
+        if (s.display === 'none' || s.opacity === '0' || loader.classList.contains('hidden')) {
+          showFloatingBtn();
+          observer.disconnect();
+        }
+      });
+      observer.observe(loader, { attributes: true, attributeFilter: ['style', 'class'] });
+      // Fallback: if loader is gone after 4s, show button anyway
+      setTimeout(function() { showFloatingBtn(); observer.disconnect(); }, 4200);
+    } else {
+      // No loader found – show after short delay
+      setTimeout(showFloatingBtn, 800);
+    }
+  })();
+
+  /* ── Selected experience level ── */
+  var _selectedExp = '';
+  function selectExperience(level) {
+    _selectedExp = level;
+    document.getElementById('modal-experience').value = level;
+    var levels = ['beginner','intermediate','advanced'];
+    levels.forEach(function(l) {
+      var label = document.getElementById('exp-' + l);
+      var dot   = document.getElementById('exp-dot-' + l);
+      if (l === level) {
+        label.style.borderColor = '#AE0001';
+        label.style.background  = 'rgba(174,0,1,0.08)';
+        label.style.color       = '#fff';
+        dot.style.background    = '#AE0001';
+        dot.style.borderColor   = '#AE0001';
+      } else {
+        label.style.borderColor = 'rgba(255,255,255,0.1)';
+        label.style.background  = 'rgba(255,255,255,0.04)';
+        label.style.color       = '#aaa';
+        dot.style.background    = 'transparent';
+        dot.style.borderColor   = '#555';
+      }
+    });
+  }
+
+  /* ── Open modal ── */
+  function openBookingModal(e) {
+    if (e) e.preventDefault();
+    var modal = document.getElementById('booking-modal');
+    var box   = document.getElementById('booking-modal-box');
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open');
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        modal.style.opacity = '1';
+        box.style.transform = 'scale(1) translateY(0)';
+        box.style.opacity   = '1';
+      });
+    });
+  }
+
+  /* ── Close modal ── */
+  function closeBookingModal() {
+    var modal = document.getElementById('booking-modal');
+    var box   = document.getElementById('booking-modal-box');
+    modal.style.opacity = '0';
+    box.style.transform = 'scale(0.94) translateY(12px)';
+    box.style.opacity   = '0';
+    setTimeout(function() {
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }, 320);
+  }
+
+  /* ── Close on backdrop click ── */
+  function handleModalBackdropClick(e) {
+    if (e.target === document.getElementById('booking-modal')) {
+      closeBookingModal();
+    }
+  }
+
+  /* ── Close on Escape key ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeBookingModal();
+  });
+
+  /* ── Form submission ──
+     TO CONNECT TO SUPABASE:
+     Replace the setTimeout below with a fetch() to your Supabase endpoint.
+     The data object is already structured for you.
+  */
+  function submitBookingForm() {
+    var name  = (document.getElementById('modal-name').value || '').trim();
+    var phone = (document.getElementById('modal-phone').value || '').trim();
+    var goal  = document.getElementById('modal-goal').value;
+    var exp   = document.getElementById('modal-experience').value;
+
+    // Basic validation
+    if (!name)  { flashField('modal-name',  'Name is required'); return; }
+    if (!phone) { flashField('modal-phone', 'Phone is required'); return; }
+    if (!goal)  { alert('Please select your goal.'); return; }
+    if (!exp)   { alert('Please select your experience level.'); return; }
+
+    var submitBtn = document.getElementById('modal-submit-btn');
+    submitBtn.textContent = 'Submitting…';
+    submitBtn.disabled = true;
+
+    /* ── SUPABASE HOOK: Replace this block ──
+    var data = { name: name, phone: phone, goal: goal, experience: exp };
+    fetch('https://YOUR_SUPABASE_URL/rest/v1/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': 'YOUR_ANON_KEY', 'Authorization': 'Bearer YOUR_ANON_KEY' },
+      body: JSON.stringify(data)
+    }).then(...).catch(...);
+    */
+
+    // Simulated success for now
+    setTimeout(function() {
+      document.getElementById('b2f-booking-form').style.display = 'none';
+      document.getElementById('b2f-booking-success').style.display = 'block';
+    }, 900);
+  }
+
+  function flashField(id, msg) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.style.borderColor = '#AE0001';
+    el.style.boxShadow   = '0 0 0 2px rgba(174,0,1,0.25)';
+    el.placeholder = msg;
+    el.focus();
+    setTimeout(function() {
+      el.style.boxShadow = 'none';
+      el.placeholder = '';
+    }, 2000);
+  }
+</script>
+
+<!-- ─── NAVBAR TRANSFORMATIONS LINK PATCH ─── -->
+<script>
+  // Patch navbar Transformations link once navbar loads
+  document.addEventListener('DOMContentLoaded', function() {
+    var checkNavbar = setInterval(function() {
+      var links = document.querySelectorAll('#navbar a, .nav-links a, nav a');
+      links.forEach(function(link) {
+        if (link.textContent.trim().toLowerCase() === 'transformations') {
+          link.href = 'results.html';
+        }
+      });
+      if (links.length > 0) clearInterval(checkNavbar);
+    }, 200);
+  });
+</script>
+
+</body>
+
+<!-- ─── Scripts ─── -->
+ 
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/loader.js"></script>   <!-- NEW -->
+
+</html>

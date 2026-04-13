@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>Online Coaching – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .inner-hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+  .inner-hero .hero-bg {
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, #1a0000 0%, #000 70%);
+  }
+  .inner-hero .hero-content {
+    grid-template-columns: 1fr;
+    max-width: 860px;
+  }
+
+  .prog-section { padding: 100px 0; }
+  .prog-section:nth-child(even) { background: #050505; }
+  .prog-section:nth-child(odd)  { background: #000; }
+
+  .prog-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .prog-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 56px; }
+
+  .prog-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 36px 30px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .prog-card:hover { border-color: var(--red-dark); }
+  .prog-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .prog-card:hover::after { transform: scaleX(1); }
+  .prog-card-icon { font-size: 32px; margin-bottom: 18px; display: block; }
+  .prog-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; color: var(--white); margin-bottom: 12px; }
+  .prog-card p { font-size: 14px; color: var(--ash); line-height: 1.7; font-weight: 300; }
+
+  .prog-text h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 5vw, 68px); line-height: 0.9; margin-bottom: 24px; }
+  .prog-text p { font-size: 15px; color: var(--ash); line-height: 1.8; font-weight: 300; margin-bottom: 18px; }
+  .prog-text p strong { color: var(--white); font-weight: 500; }
+
+  .prog-visual {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 44px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .prog-stat { display: flex; align-items: center; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .prog-stat:last-child { border-bottom: none; padding-bottom: 0; }
+  .prog-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--red); line-height: 1; flex-shrink: 0; }
+  .prog-stat-label { font-size: 13px; color: var(--ash); line-height: 1.5; }
+  .prog-stat-label strong { display: block; color: var(--white); font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+
+  /* How it works - numbered steps */
+  .how-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 780px;
+    margin: 56px auto 0;
+  }
+  .how-step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+    overflow: hidden;
+  }
+  .how-step:hover { border-color: var(--red-dark); }
+  .how-step-num {
+    background: rgba(174,0,1,0.08);
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--red);
+  }
+  .how-step-body { padding: 24px 28px; }
+  .how-step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .how-step-desc { font-size: 14px; color: var(--ash); line-height: 1.7; font-weight: 300; }
+
+  /* Check-ins grid */
+  .checkin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .checkin-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 28px 28px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .checkin-card:hover { border-color: var(--red-dark); }
+  .checkin-icon { font-size: 24px; flex-shrink: 0; }
+  .checkin-title { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--white); margin-bottom: 6px; }
+  .checkin-desc { font-size: 13px; color: var(--ash); line-height: 1.6; font-weight: 300; }
+
+  .for-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+  .for-list li { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--ash); font-weight: 300; line-height: 1.6; }
+  .for-list li::before { content: '✦'; color: var(--red); flex-shrink: 0; margin-top: 2px; font-size: 11px; }
+  .for-list li strong { color: var(--white); font-weight: 500; }
+
+  .other-programs { padding: 80px 0; background: var(--card-bg); border-top: 1px solid var(--border); }
+  .other-programs-header { text-align: center; margin-bottom: 36px; }
+  .other-programs-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 1px; }
+  .other-programs-header p { font-size: 14px; color: var(--ash); margin-top: 8px; }
+  .other-prog-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; max-width: 760px; margin: 0 auto; }
+  .other-prog-card {
+    background: #000;
+    border: 1px solid var(--border);
+    padding: 30px 28px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .other-prog-card:hover { border-color: var(--red-dark); transform: translateX(4px); }
+  .other-prog-card-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+  .other-prog-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--white); letter-spacing: 1px; }
+  .other-prog-card-arrow { color: var(--red); font-size: 20px; flex-shrink: 0; }
+
+  .prog-cta { padding: 100px 0; background: var(--red-dark); position: relative; overflow: hidden; text-align: center; }
+  .prog-cta::before {
+    content: 'B2F';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 300px;
+    color: rgba(0,0,0,0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: 10px;
+  }
+  .prog-cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); line-height: 0.9; color: var(--white); margin-bottom: 20px; position: relative; }
+  .prog-cta-sub { font-size: 17px; color: rgba(247,246,246,0.7); font-weight: 300; margin-bottom: 40px; position: relative; }
+
+  @media (max-width: 900px) {
+    .prog-grid-2 { grid-template-columns: 1fr; gap: 40px; }
+    .prog-grid-3 { grid-template-columns: 1fr; }
+    .checkin-grid { grid-template-columns: 1fr; }
+    .other-prog-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <img id="loaderLogo" src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<div id="navbar"></div>
+<div class="nav-overlay"></div>
+
+<!-- ─── HERO ─── -->
+<section id="hero" class="inner-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content reveal">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Online Coaching</div>
+      <h1 class="hero-heading">
+        <span class="line1">ONLINE COACHING.</span><br>
+        <span class="line2">ANYWHERE.</span><br>
+        <span class="line2">ANYTIME.</span>
+      </h1>
+      <p class="hero-sub">
+        Elite coaching system without location limits. <strong>The same discipline, the same results</strong> — delivered directly to you, wherever you train.
+      </p>
+      <div class="hero-cta">
+        <a href="apply.html" class="btn-primary">Join Online ↗</a>
+        <a href="#how-it-works" class="btn-outline">How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">₹5<span>k</span></div>
+          <div class="hero-stat-label">Per Month</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">24<span>/7</span></div>
+          <div class="hero-stat-label">Coach Access</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">100<span>%</span></div>
+          <div class="hero-stat-label">Remote. No Gym Required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-bar reveal">
+  <div class="marquee-track">
+    <span class="marquee-item">CUSTOM WORKOUT PLANS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">NUTRITION INCLUDED</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">VIDEO FORM CHECKS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">24/7 WHATSAPP SUPPORT</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">MONTHLY STRATEGY CALLS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PROGRESS TRACKING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">CUSTOM WORKOUT PLANS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">NUTRITION INCLUDED</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">VIDEO FORM CHECKS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">24/7 WHATSAPP SUPPORT</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">MONTHLY STRATEGY CALLS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PROGRESS TRACKING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how-it-works" class="prog-section">
+  <div class="container">
+    <div style="text-align:center;" class="reveal">
+      <div class="tag">The System</div>
+      <h2 class="section-title">HOW IT<br><span class="red">WORKS.</span></h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-step-num">01</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Apply & Onboard</div>
+          <div class="how-step-desc">You fill out your application, complete onboarding, and get access to the B2F client dashboard. Your coach reviews your full profile — fitness history, goals, equipment access, and schedule.</div>
+        </div>
+      </div>
+      <div class="how-step reveal" style="transition-delay:0.08s;">
+        <div class="how-step-num">02</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Receive Your Custom Plan</div>
+          <div class="how-step-desc">Your training and nutrition plan is built from scratch and delivered to your dashboard within 48 hours of onboarding. No templates. No guesswork. Every set, rep, and meal intentional.</div>
+        </div>
+      </div>
+      <div class="how-step reveal" style="transition-delay:0.16s;">
+        <div class="how-step-num">03</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Train, Log & Submit</div>
+          <div class="how-step-desc">Follow your program. Log your sessions in the dashboard. Submit form videos for your coach to review. Every week, your data builds a clearer picture of your progress.</div>
+        </div>
+      </div>
+      <div class="how-step reveal" style="transition-delay:0.24s;">
+        <div class="how-step-num">04</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Weekly Check-In & Adjustment</div>
+          <div class="how-step-desc">Your coach reviews your logs, form videos, and metrics every week. The plan is adjusted based on what the data shows — not assumptions. You're never on a static program for long.</div>
+        </div>
+      </div>
+      <div class="how-step reveal" style="transition-delay:0.32s;">
+        <div class="how-step-num">05</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Monthly Strategy Call</div>
+          <div class="how-step-desc">A full review call with your coach every month. Body composition update, goal realignment, and a roadmap for the month ahead. You always know where you're going and why.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRACKING & CHECK-INS ─── -->
+<section class="prog-section">
+  <div class="container">
+    <div class="prog-grid-2">
+      <div class="prog-text reveal">
+        <div class="tag">Accountability System</div>
+        <h2>TRACKED.<br><span class="red">EVERY STEP.</span></h2>
+        <p>Online coaching only works when the system is tight. At B2F, <strong>nothing falls through the cracks.</strong> Your coach is watching the data, and the data doesn't lie.</p>
+        <p>Between sessions, you have direct WhatsApp access to your coach — for form questions, motivation, nutrition clarity, or anything that comes up. You're never training blind.</p>
+        <p>Every month, your body composition is reviewed. <strong>If the numbers aren't moving, the plan changes.</strong> Guaranteed.</p>
+        <a href="apply.html" class="btn-primary" style="margin-top:8px;">Join Online ↗</a>
+      </div>
+      <div class="checkin-grid reveal" style="transition-delay:0.12s;">
+        <div class="checkin-card">
+          <div class="checkin-icon">📊</div>
+          <div>
+            <div class="checkin-title">Weekly Log Reviews</div>
+            <div class="checkin-desc">Your coach analyses every training session you log — volume, effort, output. Nothing goes unreviewed.</div>
+          </div>
+        </div>
+        <div class="checkin-card">
+          <div class="checkin-icon">🎥</div>
+          <div>
+            <div class="checkin-title">Video Form Checks</div>
+            <div class="checkin-desc">Record your key lifts or movements. Your coach gives specific, actionable feedback on technique.</div>
+          </div>
+        </div>
+        <div class="checkin-card">
+          <div class="checkin-icon">💬</div>
+          <div>
+            <div class="checkin-title">24/7 WhatsApp Access</div>
+            <div class="checkin-desc">Direct line to your coach. Questions answered fast — no waiting for the next session.</div>
+          </div>
+        </div>
+        <div class="checkin-card">
+          <div class="checkin-icon">📅</div>
+          <div>
+            <div class="checkin-title">Monthly Strategy Call</div>
+            <div class="checkin-desc">Live 1-on-1 call to review progress, adjust the plan, and set the agenda for the month ahead.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NUTRITION + TRAINING ─── -->
+<section class="prog-section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:56px;" class="reveal">
+      <div class="tag">The Full System</div>
+      <h2 class="section-title">TRAINING +<br><span class="red">NUTRITION.</span></h2>
+    </div>
+    <div class="prog-grid-3">
+      <div class="prog-card reveal">
+        <span class="prog-card-icon">💪</span>
+        <h3>Custom Training Plan</h3>
+        <p>Built around your equipment, schedule, and goal. Whether you're training in a gym, at home, or outdoors — your program is designed for your reality, not a fantasy setup.</p>
+      </div>
+      <div class="prog-card reveal" style="transition-delay:0.1s;">
+        <span class="prog-card-icon">🥗</span>
+        <h3>Nutrition Framework</h3>
+        <p>Not a rigid meal plan — a sustainable framework. Your coach designs macros and meal structures that align with your goal and your lifestyle. Practical. Effective. Liveable.</p>
+      </div>
+      <div class="prog-card reveal" style="transition-delay:0.2s;">
+        <span class="prog-card-icon">🔄</span>
+        <h3>Monthly Plan Revisions</h3>
+        <p>Programmes evolve. As you adapt, your plan adapts. Every month, training volume, exercise selection, and nutrition targets are reviewed and refined based on your results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHO IT'S FOR ─── -->
+<section class="prog-section">
+  <div class="container">
+    <div class="prog-grid-2">
+      <div class="prog-text reveal">
+        <div class="tag">Who It's For</div>
+        <h2>BUILT FOR<br><span class="red">THE SERIOUS.</span></h2>
+        <p>Online coaching isn't for people who want to dabble. It's for people who are <strong>committed to the process</strong> and just need the right system and support to execute.</p>
+        <ul class="for-list">
+          <li>You're <strong>outside Mumbai</strong> or can't train in person regularly.</li>
+          <li>You want <strong>professional coaching</strong> without the cost of personal training.</li>
+          <li>You're self-disciplined but need <strong>a structured system</strong> and accountability.</li>
+          <li>You've tried generic programs and got <strong>zero results.</strong></li>
+          <li>You want to <strong>train on your own schedule</strong> with a coach guiding every step.</li>
+          <li>You're serious about <strong>fat loss, strength, or body composition</strong> change.</li>
+        </ul>
+      </div>
+      <div class="prog-visual reveal" style="transition-delay:0.12s;">
+        <div class="prog-stat">
+          <div class="prog-stat-num">₹5,999</div>
+          <div class="prog-stat-label"><strong>Per Month</strong>Full custom plan + coaching for less than the cost of a PT session per week.</div>
+        </div>
+        <div class="prog-stat">
+          <div class="prog-stat-num">48hr</div>
+          <div class="prog-stat-label"><strong>Plan Delivery</strong>Your custom program lands in your dashboard within 48 hours of onboarding.</div>
+        </div>
+        <div class="prog-stat">
+          <div class="prog-stat-num">∞</div>
+          <div class="prog-stat-label"><strong>No Location Limit</strong>Train anywhere in the world. Your coach travels with you digitally.</div>
+        </div>
+        <a href="apply.html" class="btn-primary" style="justify-content:center;">I'm In. Apply Now ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="prog-cta">
+  <div class="container reveal" style="position:relative; z-index:1;">
+    <h2 class="prog-cta-title">YOUR LOCATION<br>IS NOT AN EXCUSE.</h2>
+    <p class="prog-cta-sub">Elite coaching. Anywhere. The only requirement is that you show up.</p>
+    <a href="apply.html" class="btn-primary" style="font-size:15px; padding:18px 44px; background:var(--black);">Apply for Online Coaching ↗</a>
+  </div>
+</section>
+
+<!-- ─── OTHER PROGRAMS ─── -->
+<section class="other-programs">
+  <div class="container">
+    <div class="other-programs-header reveal">
+      <div class="tag">Explore More</div>
+      <h2>OTHER PROGRAMS</h2>
+      <p>Want to train in person? B2F has you covered.</p>
+    </div>
+    <div class="other-prog-cards reveal" style="transition-delay:0.1s;">
+      <a href="group-training.html" class="other-prog-card">
+        <div>
+          <div class="other-prog-card-label">Train Together</div>
+          <div class="other-prog-card-name">Group Training</div>
+        </div>
+        <div class="other-prog-card-arrow">↗</div>
+      </a>
+      <a href="personal-training.html" class="other-prog-card">
+        <div>
+          <div class="other-prog-card-label">1-on-1 Coaching</div>
+          <div class="other-prog-card-name">Personal Training</div>
+        </div>
+        <div class="other-prog-card-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly"></div>
+      <p class="footer-desc">Premium coaching system built for real transformation. Group training, personal coaching, and online programs — all under one powerful brand.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">in</a>
+        <a href="#" class="social-icon">ig</a>
+        <a href="#" class="social-icon">yt</a>
+        <a href="#" class="social-icon">wa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="group-training.html">Group Training</a></li>
+        <li><a href="personal-training.html">Personal Training</a></li>
+        <li><a href="online-coaching.html">Online Coaching</a></li>
+        <li><a href="#">Kids Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About B2F</a></li>
+        <li><a href="index.html#proof">Transformations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+        <li><a href="consent-form.html">Consent Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.</div>
+    <div class="footer-copy">Powered by passion. Backed by results.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/loader.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy – Built 2 Fly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:    #AE0001;
+    --dark:   #0a0a0a;
+    --surface:#111111;
+    --border: rgba(255,255,255,0.08);
+    --ash:    #aaaaaa;
+    --white:  #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .top-bar-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .brand span { color: var(--red); }
+  .back-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ash);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--red); }
+
+  /* ── Hero strip ── */
+  .page-hero {
+    background: var(--surface);
+    border-bottom: 3px solid var(--red);
+    padding: 60px 32px 48px;
+    text-align: center;
+  }
+  .page-hero .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+  .page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 6vw, 68px);
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .page-hero .meta {
+    font-size: 13px;
+    color: var(--ash);
+    font-weight: 300;
+  }
+
+  /* ── Layout ── */
+  .doc-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 28px 32px;
+    margin-bottom: 56px;
+  }
+  .toc-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+  .toc ol {
+    list-style: decimal;
+    padding-left: 20px;
+  }
+  .toc li { margin-bottom: 6px; }
+  .toc a {
+    color: var(--ash);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--red); }
+
+  /* ── Sections ── */
+  .doc-section {
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-section:last-child { border-bottom: none; }
+
+  .section-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .doc-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .doc-section h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin: 28px 0 10px;
+  }
+  .doc-section p {
+    color: var(--ash);
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+  .doc-section ul, .doc-section ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+  .doc-section li {
+    color: var(--ash);
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .doc-section strong { color: var(--white); font-weight: 600; }
+
+  /* ── Callout box ── */
+  .callout {
+    background: rgba(230, 57, 70, 0.07);
+    border: 1px solid rgba(230, 57, 70, 0.25);
+    border-left: 3px solid var(--red);
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.7;
+  }
+
+  /* ── Contact box ── */
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    margin-top: 20px;
+  }
+  .contact-box p { margin-bottom: 6px; font-size: 14px; }
+
+  /* ── Footer ── */
+  .doc-footer {
+    text-align: center;
+    padding: 40px 32px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: #555;
+  }
+  .doc-footer span { color: var(--red); }
+
+  @media (max-width: 600px) {
+    .doc-wrap { padding: 40px 20px 80px; }
+    .top-bar-inner { padding: 0 20px; }
+    .page-hero { padding: 40px 20px 32px; }
+    .toc { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="index.html" class="brand">BUILT 2 <span>FLY</span></a>
+    <a href="index.html" class="back-link">&#8592; Back to Site</a>
+  </div>
+</div>
+
+<div class="page-hero">
+  <div class="eyebrow">Legal Documentation</div>
+  <h1>Privacy Policy</h1>
+  <p class="meta">Built 2 Fly &nbsp;|&nbsp; Effective Date: 1 January 2025 &nbsp;|&nbsp; Last Updated: April 2025</p>
+</div>
+
+<div class="doc-wrap">
+
+  <div class="callout">
+    This Privacy Policy describes how Built 2 Fly ("we," "us," or "our") collects, uses, stores, and protects the personal information you provide when using our website, programs, and coaching services. By accessing our platform or enrolling in any program, you acknowledge that you have read, understood, and agreed to this policy.
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#s1">Who We Are</a></li>
+      <li><a href="#s2">Information We Collect</a></li>
+      <li><a href="#s3">How We Use Your Information</a></li>
+      <li><a href="#s4">Legal Basis for Processing</a></li>
+      <li><a href="#s5">Data Sharing and Third Parties</a></li>
+      <li><a href="#s6">Payment Processing</a></li>
+      <li><a href="#s7">Cookies and Tracking Technologies</a></li>
+      <li><a href="#s8">Data Retention</a></li>
+      <li><a href="#s9">Data Security</a></li>
+      <li><a href="#s10">Your Rights</a></li>
+      <li><a href="#s11">Children's Privacy</a></li>
+      <li><a href="#s12">Changes to This Policy</a></li>
+      <li><a href="#s13">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="doc-section" id="s1">
+    <div class="section-num">Section 01</div>
+    <h2>Who We Are</h2>
+    <p>Built 2 Fly is a premium fitness coaching brand operating in India, offering group training, personal training, online coaching, and skill-based athletic development programs including calisthenics, mobility training, and injury prevention (prehab) services.</p>
+    <p>Our website is located at [your-domain.com]. We are the data controller responsible for the personal information collected through our platform and services.</p>
+    <p>For any privacy-related concerns, you may contact us at <strong>privacy@built2fly.com</strong>.</p>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="doc-section" id="s2">
+    <div class="section-num">Section 02</div>
+    <h2>Information We Collect</h2>
+    <p>We collect information that is necessary to provide our services, manage your account, and ensure your safety during training. We collect information in the following categories:</p>
+
+    <h3>2.1 Information You Provide Directly</h3>
+    <ul>
+      <li><strong>Identity information:</strong> Full name, date of birth, gender</li>
+      <li><strong>Contact information:</strong> Email address, phone number, residential city</li>
+      <li><strong>Health and fitness data:</strong> Current fitness level, known injuries or medical conditions, physical limitations, dietary preferences, training history</li>
+      <li><strong>Emergency contact:</strong> Name and phone number of a designated emergency contact</li>
+      <li><strong>Payment information:</strong> Billing name and address (payment card details are processed directly by our payment gateway and are not stored by us)</li>
+      <li><strong>Media consent:</strong> Your decision regarding whether your photographs or videos may be used for promotional purposes</li>
+      <li><strong>Communications:</strong> Messages sent to us via contact forms, email, or WhatsApp</li>
+    </ul>
+
+    <h3>2.2 Information Collected Automatically</h3>
+    <ul>
+      <li><strong>Device and browser data:</strong> IP address, browser type, operating system, device identifiers</li>
+      <li><strong>Usage data:</strong> Pages visited, time spent on site, referring URLs, click paths</li>
+      <li><strong>Cookie data:</strong> Session tokens, preference settings (see Section 7)</li>
+    </ul>
+
+    <h3>2.3 Information from Third Parties</h3>
+    <p>If you register or log in using a third-party service, we may receive basic profile information from that service (such as name and email). We do not purchase personal data from data brokers.</p>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="doc-section" id="s3">
+    <div class="section-num">Section 03</div>
+    <h2>How We Use Your Information</h2>
+    <p>We use your personal information solely for legitimate business purposes, including:</p>
+    <ul>
+      <li>Creating and managing your client account and dashboard</li>
+      <li>Delivering training programs, workout plans, nutrition guidance, and coaching services</li>
+      <li>Processing payments and maintaining financial records as required by law</li>
+      <li>Communicating with you about your program, session schedules, and progress</li>
+      <li>Personalising your training experience based on your fitness level, goals, and medical history</li>
+      <li>Ensuring your safety during physical training by understanding pre-existing conditions</li>
+      <li>Sending service-related notifications, program updates, and account information</li>
+      <li>Responding to your queries and support requests</li>
+      <li>Sending promotional communications (only with your explicit consent, and you may opt out at any time)</li>
+      <li>Complying with applicable laws and legal obligations</li>
+      <li>Preventing fraud, enforcing our terms, and protecting the rights of clients and the business</li>
+    </ul>
+    <p>We do not sell, rent, or trade your personal information to any third party for their marketing purposes.</p>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="doc-section" id="s4">
+    <div class="section-num">Section 04</div>
+    <h2>Legal Basis for Processing</h2>
+    <p>Where applicable under the Digital Personal Data Protection Act, 2023 (India) and international frameworks, we process your personal data on the following legal grounds:</p>
+    <ul>
+      <li><strong>Consent:</strong> Where you have given explicit consent (e.g., marketing communications, media use)</li>
+      <li><strong>Contractual necessity:</strong> To fulfil our obligations to you as a paying client</li>
+      <li><strong>Legitimate interests:</strong> For improving our services, maintaining security, and communicating about your program</li>
+      <li><strong>Legal obligation:</strong> Where required by Indian law or regulatory authorities</li>
+    </ul>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="doc-section" id="s5">
+    <div class="section-num">Section 05</div>
+    <h2>Data Sharing and Third Parties</h2>
+    <p>We may share your information with trusted third parties only to the extent necessary to deliver our services:</p>
+    <ul>
+      <li><strong>Payment processors:</strong> Razorpay for secure payment transactions (see Section 6)</li>
+      <li><strong>Communication tools:</strong> WhatsApp Business (Meta Platforms) for coach-client communication</li>
+      <li><strong>Analytics:</strong> Google Analytics for website usage analysis (anonymised data)</li>
+      <li><strong>Cloud hosting:</strong> Supabase or equivalent providers for secure data storage</li>
+      <li><strong>Legal authorities:</strong> When required by court order, law enforcement, or applicable law</li>
+    </ul>
+    <p>All third-party service providers are required to handle your data securely and only for the purposes for which it was shared. We do not grant third parties the right to use your information for their own independent marketing or commercial purposes.</p>
+  </div>
+
+  <!-- Section 6 -->
+  <div class="doc-section" id="s6">
+    <div class="section-num">Section 06</div>
+    <h2>Payment Processing</h2>
+    <p>All payments on the Built 2 Fly platform are processed by <strong>Razorpay Software Private Limited</strong>, a PCI-DSS compliant payment gateway licensed by the Reserve Bank of India. When you make a payment:</p>
+    <ul>
+      <li>Your card or bank details are entered directly on Razorpay's secure servers</li>
+      <li>Built 2 Fly does not receive, store, or have access to your full card number, CVV, or banking credentials</li>
+      <li>Razorpay's own privacy policy governs the processing of your payment data</li>
+      <li>We retain transaction records (amount, date, reference ID) for accounting and dispute resolution purposes</li>
+    </ul>
+    <p>Razorpay's privacy policy can be reviewed at razorpay.com/privacy.</p>
+  </div>
+
+  <!-- Section 7 -->
+  <div class="doc-section" id="s7">
+    <div class="section-num">Section 07</div>
+    <h2>Cookies and Tracking Technologies</h2>
+    <p>Our website uses cookies and similar tracking technologies to improve your experience. Cookies are small text files stored on your device.</p>
+
+    <h3>Types of Cookies We Use</h3>
+    <ul>
+      <li><strong>Essential cookies:</strong> Required for the website to function (session management, security)</li>
+      <li><strong>Preference cookies:</strong> Remember your settings and choices</li>
+      <li><strong>Analytics cookies:</strong> Collect anonymised data about how visitors use the site (Google Analytics)</li>
+      <li><strong>Marketing cookies:</strong> Used only with your consent to deliver relevant promotions</li>
+    </ul>
+    <p>You may disable cookies through your browser settings at any time. Disabling essential cookies may affect website functionality. Most browsers allow you to refuse new cookies, delete existing ones, or receive a warning before a cookie is set.</p>
+  </div>
+
+  <!-- Section 8 -->
+  <div class="doc-section" id="s8">
+    <div class="section-num">Section 08</div>
+    <h2>Data Retention</h2>
+    <p>We retain your personal information for as long as necessary to fulfil the purposes outlined in this policy, or as required by law:</p>
+    <ul>
+      <li><strong>Active client data:</strong> Retained for the duration of your engagement with us</li>
+      <li><strong>Financial records:</strong> Retained for a minimum of 7 years in accordance with Indian accounting and tax laws</li>
+      <li><strong>Health and fitness data:</strong> Retained for 3 years after your last active session</li>
+      <li><strong>Marketing consent records:</strong> Retained until you withdraw consent</li>
+      <li><strong>Legal claims:</strong> Data may be retained longer if required for ongoing or potential legal proceedings</li>
+    </ul>
+    <p>When data is no longer required, we securely delete or anonymise it in a manner that prevents reconstruction.</p>
+  </div>
+
+  <!-- Section 9 -->
+  <div class="doc-section" id="s9">
+    <div class="section-num">Section 09</div>
+    <h2>Data Security</h2>
+    <p>We implement industry-standard technical and organisational measures to protect your personal data against unauthorised access, disclosure, alteration, or destruction. These include:</p>
+    <ul>
+      <li>SSL/TLS encryption for all data transmitted over our website</li>
+      <li>Access controls ensuring only authorised personnel can access client data</li>
+      <li>Secure cloud infrastructure with encrypted databases</li>
+      <li>Regular security reviews of our systems and third-party integrations</li>
+    </ul>
+    <div class="callout">
+      No method of data transmission over the internet or electronic storage is 100% secure. While we take every reasonable precaution, we cannot guarantee absolute security. In the event of a data breach that is likely to affect your rights, we will notify you promptly in accordance with applicable law.
+    </div>
+  </div>
+
+  <!-- Section 10 -->
+  <div class="doc-section" id="s10">
+    <div class="section-num">Section 10</div>
+    <h2>Your Rights</h2>
+    <p>Subject to applicable law, you have the following rights with respect to your personal data:</p>
+    <ul>
+      <li><strong>Right to access:</strong> Request a copy of the personal data we hold about you</li>
+      <li><strong>Right to correction:</strong> Request correction of inaccurate or incomplete data</li>
+      <li><strong>Right to erasure:</strong> Request deletion of your data where it is no longer needed, subject to legal retention requirements</li>
+      <li><strong>Right to restrict processing:</strong> Request that we limit how we use your data in certain circumstances</li>
+      <li><strong>Right to data portability:</strong> Request your data in a structured, machine-readable format</li>
+      <li><strong>Right to withdraw consent:</strong> Withdraw consent for marketing or media use at any time, without affecting the lawfulness of prior processing</li>
+      <li><strong>Right to object:</strong> Object to processing based on legitimate interests</li>
+    </ul>
+    <p>To exercise any of these rights, please contact us at <strong>privacy@built2fly.com</strong>. We will respond within 30 days. We may need to verify your identity before processing certain requests.</p>
+  </div>
+
+  <!-- Section 11 -->
+  <div class="doc-section" id="s11">
+    <div class="section-num">Section 11</div>
+    <h2>Children's Privacy</h2>
+    <p>Built 2 Fly offers fitness programs for minors (under 18 years of age) as part of its Kids Fitness program. For any minor enrolled in our services:</p>
+    <ul>
+      <li>A parent or legal guardian must provide consent on behalf of the minor</li>
+      <li>All personal data relating to the minor is collected with parental consent</li>
+      <li>We do not knowingly collect data from children without verified parental authorisation</li>
+      <li>Parents may request access to, correction of, or deletion of their child's data at any time</li>
+    </ul>
+    <p>If you believe we have collected data from a minor without appropriate consent, please contact us immediately at <strong>privacy@built2fly.com</strong>.</p>
+  </div>
+
+  <!-- Section 12 -->
+  <div class="doc-section" id="s12">
+    <div class="section-num">Section 12</div>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time to reflect changes in our practices, services, or legal requirements. When we make material changes, we will:</p>
+    <ul>
+      <li>Update the "Last Updated" date at the top of this page</li>
+      <li>Notify active clients via email or dashboard notification</li>
+      <li>Where required by law, obtain fresh consent</li>
+    </ul>
+    <p>Your continued use of our services after the effective date of the revised policy constitutes acceptance of the updated terms.</p>
+  </div>
+
+  <!-- Section 13 -->
+  <div class="doc-section" id="s13">
+    <div class="section-num">Section 13</div>
+    <h2>Contact Us</h2>
+    <p>For any questions, concerns, or requests regarding this Privacy Policy or your personal data, please contact our privacy team:</p>
+    <div class="contact-box">
+      <p><strong>Built 2 Fly</strong></p>
+      <p>Email: privacy@built2fly.com</p>
+      <p>Phone: [Your Contact Number]</p>
+      <p>Address: [Your Business Address], India</p>
+      <p>Response time: Within 30 business days</p>
+    </div>
+    <p style="margin-top:20px;">If you are not satisfied with our response, you have the right to lodge a complaint with the relevant data protection authority under the Digital Personal Data Protection Act, 2023 (India).</p>
+  </div>
+
+</div>
+
+<div class="doc-footer">
+  &copy; 2025 <span>Built 2 Fly</span>. All rights reserved. &nbsp;|&nbsp; This policy is legally binding upon use of our services.
+</div>
+
+</body>
+</html>

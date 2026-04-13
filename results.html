@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>Transformations – Built 2 Fly</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────────────────
+   results.html — PAGE-SCOPED ADDITIONS ONLY
+   All base tokens (--red, --ash, --card-bg, etc.), 
+   .btn-primary, .btn-outline, .tag, .section-title,
+   .reveal/.in-view, nav, footer, marquee, proof-card,
+   faq-item patterns are already in style.css / animations.css.
+   Everything below is NET-NEW for this page only.
+───────────────────────────────────────────────────── */
+
+/* ── LOADER (identical to index.html) ── */
+#loader {
+  position: fixed; inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#loaderLogo {
+  width: 500px;
+  filter: drop-shadow(0 0 20px rgba(174,0,1,0.4));
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+/* ── INNER HERO ── */
+.results-hero {
+  position: relative;
+  min-height: 82vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 80px;
+}
+.results-hero .hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 65% at 50% 45%, #1a0000 0%, #000 70%);
+}
+.results-hero .hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(174,0,1,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(174,0,1,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.results-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px 60px;
+  text-align: center;
+}
+.results-hero-inner .hero-eyebrow {
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.results-hero-inner .hero-heading {
+  font-size: clamp(64px, 10vw, 130px);
+  margin-bottom: 24px;
+}
+.results-hero-sub {
+  font-size: 18px;
+  color: var(--ash);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+.results-hero-sub strong { color: var(--white); font-weight: 500; }
+
+/* ── TRANSFORMATION GALLERY ── */
+#transformations {
+  padding: 120px 0;
+  background: #050505;
+}
+.proof-header {          /* reuses existing proof-header pattern */
+  text-align: center;
+  margin-bottom: 64px;
+}
+.proof-header p {
+  font-size: 16px;
+  color: var(--ash);
+  font-weight: 300;
+  margin-top: 12px;
+}
+
+/* Before/After grid */
+.ba-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.ba-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.25s;
+}
+.ba-card:hover { border-color: var(--red-dark); }
+
+/* image strip */
+.ba-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  position: relative;
+}
+.ba-img {
+  aspect-ratio: 3/4;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.ba-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* placeholder when no real image */
+.ba-img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%; height: 100%;
+  color: rgba(145,136,136,0.3);
+}
+.ba-img-placeholder span {
+  font-size: 32px;
+  opacity: 0.4;
+}
+.ba-img-placeholder p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(145,136,136,0.4);
+}
+/* BEFORE / AFTER labels */
+.ba-label {
+  position: absolute;
+  top: 10px; left: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 1px;
+  z-index: 2;
+}
+.ba-label.before {
+  background: rgba(145,136,136,0.25);
+  color: var(--ash);
+  border: 1px solid rgba(145,136,136,0.2);
+}
+.ba-label.after {
+  background: rgba(174,0,1,0.2);
+  color: var(--red);
+  border: 1px solid rgba(174,0,1,0.3);
+}
+/* centre divider line */
+.ba-divider {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; width: 2px;
+  background: var(--red);
+  transform: translateX(-50%);
+  z-index: 3;
+}
+.ba-divider::before {
+  content: '↔';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: var(--red);
+  background: var(--card-bg);
+  padding: 4px 6px;
+  border: 1px solid var(--red-dark);
+  border-radius: 2px;
+}
+
+/* card meta */
+.ba-meta {
+  padding: 20px 22px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ba-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.ba-program {
+  font-size: 12px;
+  color: var(--ash);
+  margin-top: 2px;
+}
+.ba-result {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--red);
+  letter-spacing: 1px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── CLIENT STORIES ── */
+#stories {
+  padding: 120px 0;
+  background: #000;
+}
+/* reuse .proof-card, .proof-stars, .proof-result, .proof-text,
+   .proof-person, .proof-avatar, .proof-name, .proof-label
+   — all already in style.css */
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  margin-top: 56px;
+}
+/* featured story spans full width */
+.story-featured {
+  grid-column: 1 / -1;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--red);
+  padding: 44px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  transition: border-color 0.2s;
+}
+.story-featured:hover { border-color: var(--red-dark); }
+.story-featured-quote {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+  position: relative;
+}
+.story-featured-quote::before {
+  content: '"';
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 100px;
+  color: rgba(174,0,1,0.1);
+  position: absolute;
+  top: -20px; left: -12px;
+  line-height: 1;
+  pointer-events: none;
+}
+.story-featured-right {}
+.story-featured-result {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.story-featured-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.story-featured-label {
+  font-size: 12px;
+  color: var(--ash);
+  margin-bottom: 24px;
+}
+
+/* ── STATS SECTION ── */
+#results-stats {
+  padding: 120px 0;
+  background: var(--red-dark);
+  position: relative;
+  overflow: hidden;
+}
+#results-stats::before {
+  content: 'B2F';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 380px;
+  color: rgba(0,0,0,0.12);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  letter-spacing: 10px;
+  white-space: nowrap;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+.stat-block {
+  text-align: center;
+  padding: 48px 24px;
+  border-right: 1px solid rgba(0,0,0,0.15);
+}
+.stat-block:last-child { border-right: none; }
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 6vw, 84px);
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.stat-number .stat-suffix {
+  font-size: 0.55em;
+  color: rgba(247,246,246,0.6);
+}
+.stat-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(247,246,246,0.65);
+  margin-top: 8px;
+}
+.stat-sub {
+  font-size: 12px;
+  color: rgba(247,246,246,0.4);
+  font-weight: 300;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* counter animation hook */
+.stat-number[data-target] { cursor: default; }
+
+/* ── VIDEO / PROOF SECTION ── */
+#video-proof {
+  padding: 120px 0;
+  background: #050505;
+}
+.video-intro {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.video-thumb {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  aspect-ratio: 9/16;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+.video-thumb:hover { border-color: var(--red-dark); }
+.video-thumb:hover .video-play { transform: scale(1.1); background: var(--red-dark); }
+/* background glow bleed */
+.video-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(174,0,1,0.06) 0%, transparent 70%);
+}
+.video-play {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s, background 0.2s;
+}
+.video-play svg {
+  width: 22px; height: 22px;
+  fill: var(--white);
+  margin-left: 3px;
+}
+.video-thumb-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ash);
+  position: relative;
+  z-index: 1;
+}
+.video-thumb-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1px solid var(--red-dark);
+  background: rgba(174,0,1,0.08);
+  padding: 4px 10px;
+  border-radius: 1px;
+  z-index: 2;
+}
+
+/* ── FINAL CTA ── */
+#results-cta {
+  padding: 120px 0;
+  background: #000;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.results-cta-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 70% at 50% 100%, rgba(174,0,1,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.results-cta-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.results-cta-eyebrow::before,
+.results-cta-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--red);
+}
+.results-cta-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 9vw, 116px);
+  line-height: 0.88;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+.results-cta-sub {
+  font-size: 17px;
+  color: var(--ash);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 48px;
+  position: relative;
+  z-index: 1;
+}
+.results-cta-sub strong { color: var(--white); font-weight: 500; }
+.results-cta-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.results-cta-note {
+  margin-top: 24px;
+  font-size: 12px;
+  color: rgba(145,136,136,0.6);
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .ba-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-block { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.15); }
+  .stat-block:nth-child(3),
+  .stat-block:last-child { border-bottom: none; }
+  .stories-grid { grid-template-columns: 1fr; }
+  .story-featured { grid-template-columns: 1fr; gap: 28px; }
+  .video-grid { grid-template-columns: 1fr 1fr; }
+  .results-hero-inner { padding: 80px 24px 60px; }
+}
+@media (max-width: 640px) {
+  .ba-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
+  .stat-block { border-bottom: 1px solid rgba(0,0,0,0.15); }
+  .stat-block:last-child { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── LOADER ─── -->
+<div id="loader">
+  <img id="loaderLogo" src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#services">Training</a></li>
+    <li><a href="results.html" style="color:var(--white);">Transformations</a></li>
+    <li><a href="index.html#pricing">Pricing</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="nav-login">Login</a>
+    <a href="apply.html" class="btn-primary" style="padding: 11px 22px; font-size: 12px;">Start Now</a>
+  </div>
+  <div class="hamburger" onclick="this.classList.toggle('active')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     1. HERO
+═══════════════════════════════════════════ -->
+<section class="results-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="results-hero-inner reveal">
+    <div class="hero-eyebrow">Real People. Real Results.</div>
+    <h1 class="hero-heading">
+      <span class="line1">PROOF IN</span><br>
+      <span class="line2">EVERY REP.</span>
+    </h1>
+    <p class="results-hero-sub">
+      No filters. No staging. No borrowed before-and-afters.<br>
+      <strong>Every result on this page was earned inside the B2F system.</strong>
+    </p>
+    <div class="hero-cta" style="justify-content:center;">
+      <a href="apply.html" class="btn-primary">Start Your Transformation ↗</a>
+      <a href="#transformations" class="btn-outline">See the Results</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-bar reveal">
+  <div class="marquee-track">
+    <span class="marquee-item">500+ LIVES CHANGED</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">REAL RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">NO FILTERS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">FAT LOSS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">STRENGTH GAINS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">TOTAL TRANSFORMATION</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">98% SUCCESS RATE</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">8 YEARS PROVEN</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">500+ LIVES CHANGED</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">REAL RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">NO FILTERS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">FAT LOSS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">STRENGTH GAINS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">TOTAL TRANSFORMATION</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">98% SUCCESS RATE</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">8 YEARS PROVEN</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     2. TRANSFORMATION GALLERY
+═══════════════════════════════════════════ -->
+<section id="transformations">
+  <div class="container">
+    <div class="proof-header reveal">
+      <div class="tag">Before & After</div>
+      <h2 class="section-title">THE<br><span class="red">GALLERY.</span></h2>
+      <p>Replace placeholders with real client images — same structure, instant credibility.</p>
+    </div>
+
+    <div class="ba-grid">
+
+      <!-- Card 1 -->
+      <div class="ba-card reveal">
+        <div class="ba-images">
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🏋️</span><p>Before</p></div>
+            <div class="ba-label before">Before</div>
+          </div>
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🔥</span><p>After</p></div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-meta">
+          <div>
+            <div class="ba-name">Rohan K.</div>
+            <div class="ba-program">Group Training · 6 months</div>
+          </div>
+          <div class="ba-result">−18kg</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="ba-card reveal" style="transition-delay:0.08s;">
+        <div class="ba-images">
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🏋️</span><p>Before</p></div>
+            <div class="ba-label before">Before</div>
+          </div>
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🔥</span><p>After</p></div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-meta">
+          <div>
+            <div class="ba-name">Aditya S.</div>
+            <div class="ba-program">Personal Training · 8 months</div>
+          </div>
+          <div class="ba-result">+12kg</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="ba-card reveal" style="transition-delay:0.16s;">
+        <div class="ba-images">
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🏋️</span><p>Before</p></div>
+            <div class="ba-label before">Before</div>
+          </div>
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🔥</span><p>After</p></div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-meta">
+          <div>
+            <div class="ba-name">Priya M.</div>
+            <div class="ba-program">Online Coaching · 4 months</div>
+          </div>
+          <div class="ba-result">−10kg</div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="ba-card reveal" style="transition-delay:0.08s;">
+        <div class="ba-images">
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🏋️</span><p>Before</p></div>
+            <div class="ba-label before">Before</div>
+          </div>
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🔥</span><p>After</p></div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-meta">
+          <div>
+            <div class="ba-name">Sneha R.</div>
+            <div class="ba-program">Personal Training · 5 months</div>
+          </div>
+          <div class="ba-result">−14kg</div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="ba-card reveal" style="transition-delay:0.16s;">
+        <div class="ba-images">
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🏋️</span><p>Before</p></div>
+            <div class="ba-label before">Before</div>
+          </div>
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🔥</span><p>After</p></div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-meta">
+          <div>
+            <div class="ba-name">Mihir T.</div>
+            <div class="ba-program">Group Training · 3 months</div>
+          </div>
+          <div class="ba-result">−8kg</div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="ba-card reveal" style="transition-delay:0.24s;">
+        <div class="ba-images">
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🏋️</span><p>Before</p></div>
+            <div class="ba-label before">Before</div>
+          </div>
+          <div class="ba-img">
+            <div class="ba-img-placeholder"><span>🔥</span><p>After</p></div>
+            <div class="ba-label after">After</div>
+          </div>
+          <div class="ba-divider"></div>
+        </div>
+        <div class="ba-meta">
+          <div>
+            <div class="ba-name">Kavya D.</div>
+            <div class="ba-program">Online Coaching · 6 months</div>
+          </div>
+          <div class="ba-result">−22kg</div>
+        </div>
+      </div>
+
+    </div><!-- /ba-grid -->
+
+    <div style="text-align:center; margin-top:40px;" class="reveal">
+      <a href="apply.html" class="btn-primary">I Want Results Like These ↗</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     3. CLIENT STORIES
+═══════════════════════════════════════════ -->
+<section id="stories">
+  <div class="container">
+    <div class="proof-header reveal">
+      <div class="tag">Client Stories</div>
+      <h2 class="section-title">THEIR WORDS.<br><span class="red">OUR PROOF.</span></h2>
+      <p>The numbers are real. But the stories behind them are what matter.</p>
+    </div>
+
+    <div class="stories-grid">
+
+      <!-- Featured story (full width) -->
+      <div class="story-featured reveal">
+        <div class="story-featured-quote">
+          I'd wasted two years gym-hopping and following random YouTube plans. Within my first month at B2F, I had more structure, more accountability, and more visible progress than I'd seen in those entire two years combined. This isn't a gym. It's a system.
+        </div>
+        <div class="story-featured-right">
+          <div class="story-featured-result">−22kg</div>
+          <div class="story-featured-name">Kavya D.</div>
+          <div class="story-featured-label">Online Coaching · 6 months</div>
+          <div class="proof-stars" style="font-size: 18px;">★★★★★</div>
+        </div>
+      </div>
+
+      <!-- Proof cards — reusing existing .proof-card class from style.css -->
+      <div class="proof-card reveal" style="transition-delay:0.08s;">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-result">−18kg in 24 weeks</div>
+        <p class="proof-text">"I'd tried everything before B2F. Six months in and I'm down 18 kilos. The structure, the accountability, the coaches — this is a completely different level. I don't miss sessions because I actually look forward to them."</p>
+        <div class="proof-person">
+          <div class="proof-avatar">RK</div>
+          <div>
+            <div class="proof-name">Rohan K.</div>
+            <div class="proof-label">Group Training · 6 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal" style="transition-delay:0.16s;">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-result">+12kg muscle · 8 months</div>
+        <p class="proof-text">"I was a complete beginner. Didn't know a deadlift from a curl. Now I'm lifting numbers I never thought possible. The coach doesn't just count reps — they teach you how your body actually works."</p>
+        <div class="proof-person">
+          <div class="proof-avatar">AS</div>
+          <div>
+            <div class="proof-name">Aditya S.</div>
+            <div class="proof-label">Personal Training · 8 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal" style="transition-delay:0.08s;">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-result">−10kg · Work from home</div>
+        <p class="proof-text">"Was genuinely sceptical about online coaching. But the custom plan, the weekly check-ins, the form video reviews — it felt more personal than any gym I'd ever been to. Lost 10kg while working from home."</p>
+        <div class="proof-person">
+          <div class="proof-avatar">PM</div>
+          <div>
+            <div class="proof-name">Priya M.</div>
+            <div class="proof-label">Online Coaching · 4 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal" style="transition-delay:0.16s;">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-result">−14kg · Postnatal comeback</div>
+        <p class="proof-text">"After my second child, I thought my body was gone forever. B2F rebuilt me from the ground up. Not just physically — mentally. I'm stronger now than I was at 25. The team understood my journey and met me where I was."</p>
+        <div class="proof-person">
+          <div class="proof-avatar">SR</div>
+          <div>
+            <div class="proof-name">Sneha R.</div>
+            <div class="proof-label">Personal Training · 5 months</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /stories-grid -->
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     4. STATS
+═══════════════════════════════════════════ -->
+<section id="results-stats">
+  <div class="container">
+    <div class="stats-grid">
+
+      <div class="stat-block reveal">
+        <div class="stat-number">
+          <span class="stat-counter" data-target="500">0</span><span class="stat-suffix">+</span>
+        </div>
+        <div class="stat-label">Clients Transformed</div>
+        <div class="stat-sub">Real people. Documented results.</div>
+      </div>
+
+      <div class="stat-block reveal" style="transition-delay:0.1s;">
+        <div class="stat-number">
+          <span class="stat-counter" data-target="12">0</span><span class="stat-suffix">kg</span>
+        </div>
+        <div class="stat-label">Avg Fat Loss</div>
+        <div class="stat-sub">Across all fat-loss programs.</div>
+      </div>
+
+      <div class="stat-block reveal" style="transition-delay:0.2s;">
+        <div class="stat-number">
+          <span class="stat-counter" data-target="98">0</span><span class="stat-suffix">%</span>
+        </div>
+        <div class="stat-label">Client Retention</div>
+        <div class="stat-sub">When results happen, people stay.</div>
+      </div>
+
+      <div class="stat-block reveal" style="transition-delay:0.3s;">
+        <div class="stat-number">
+          <span class="stat-counter" data-target="8">0</span><span class="stat-suffix">yr</span>
+        </div>
+        <div class="stat-label">Years of Expertise</div>
+        <div class="stat-sub">Every drill refined over a decade.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     5. VIDEO / PROOF
+═══════════════════════════════════════════ -->
+<section id="video-proof">
+  <div class="container">
+    <div class="video-intro reveal">
+      <div class="tag">In Action</div>
+      <h2 class="section-title">SEE IT<br><span class="red">HAPPEN.</span></h2>
+      <p style="font-size:15px; color:var(--ash); font-weight:300; margin-top:12px; max-width:420px; margin-left:auto; margin-right:auto; line-height:1.7;">
+        Training sessions, transformation reels, and client journeys — raw and unfiltered.
+      </p>
+    </div>
+
+    <div class="video-grid">
+
+      <div class="video-thumb reveal">
+        <div class="video-thumb-tag">Reel</div>
+        <div class="video-play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="video-thumb-label">Group Session Highlights</div>
+      </div>
+
+      <div class="video-thumb reveal" style="transition-delay:0.1s;">
+        <div class="video-thumb-tag">Transformation</div>
+        <div class="video-play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="video-thumb-label">Client Journey — 6 Months</div>
+      </div>
+
+      <div class="video-thumb reveal" style="transition-delay:0.2s;">
+        <div class="video-thumb-tag">Reel</div>
+        <div class="video-play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="video-thumb-label">Calisthenics Training</div>
+      </div>
+
+    </div>
+
+    <p style="text-align:center; margin-top:28px; font-size:13px; color:var(--ash);" class="reveal">
+      Replace placeholders with your Instagram/YouTube embed or <code style="color:var(--red); font-size:12px;">&lt;video&gt;</code> tags.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     6. FINAL CTA
+═══════════════════════════════════════════ -->
+<section id="results-cta">
+  <div class="results-cta-glow"></div>
+  <div class="container reveal" style="position:relative; z-index:1;">
+    <div class="results-cta-eyebrow">The decision is yours</div>
+    <h2 class="results-cta-heading">
+      <span style="color:var(--white);">YOUR NAME</span><br>
+      <span class="red">GOES HERE.</span>
+    </h2>
+    <p class="results-cta-sub">
+      Every person on this page made one decision.<br>
+      <strong>They applied.</strong> That's where it started.
+    </p>
+    <div class="results-cta-btns">
+      <a href="apply.html" class="btn-primary" style="font-size:15px; padding:18px 44px;">Start Your Transformation ↗</a>
+      <a href="contact.html" class="btn-outline" style="font-size:15px; padding:18px 44px;">Talk to Us First</a>
+    </div>
+    <p class="results-cta-note">No commitment. No pressure. Just a conversation.</p>
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+      </div>
+      <p class="footer-desc">Premium coaching system built for real transformation. Group training, personal coaching, and online programs — all under one powerful brand.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">in</a>
+        <a href="#" class="social-icon">ig</a>
+        <a href="#" class="social-icon">yt</a>
+        <a href="#" class="social-icon">wa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="group-training.html">Group Training</a></li>
+        <li><a href="personal-training.html">Personal Training</a></li>
+        <li><a href="online-coaching.html">Online Coaching</a></li>
+        <li><a href="#">Kids Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About B2F</a></li>
+        <li><a href="results.html">Transformations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Consent Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.</div>
+    <div class="footer-copy">Powered by passion. Backed by results.</div>
+  </div>
+</footer>
+
+
+<!-- ─── Scripts (unchanged from index.html) ─── -->
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/loader.js"></script>
+
+<script>
+/* ── STAT COUNTER ──
+   Triggers when each stat block enters the viewport.
+   Uses IntersectionObserver (same pattern as animations.js reveal).
+   Runs once per element, eases out over ~1.6s.
+*/
+(function () {
+  const counters = document.querySelectorAll('.stat-counter');
+  if (!counters.length) return;
+
+  const ease = (t) => 1 - Math.pow(1 - t, 3); // cubic ease-out
+
+  function runCounter(el) {
+    const target = +el.dataset.target;
+    const duration = 1600;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      el.textContent = Math.round(ease(progress) * target);
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        runCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach((el) => observer.observe(el));
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" style="cursor: none !important;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>About – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 55% 40%, #1a0000 0%, #000 65%);
+  }
+  .page-hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(174,0,1,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(174,0,1,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 80px;
+  }
+  .page-hero-left h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 9vw, 110px);
+    line-height: 0.88;
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+  }
+  .page-hero-left p {
+    font-size: 17px;
+    color: var(--ash);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 440px;
+  }
+  .page-hero-left p strong { color: var(--white); font-weight: 500; }
+  .page-hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-quote-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 40px 36px;
+    position: relative;
+  }
+  .hero-quote-box::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: rgba(174,0,1,0.12);
+    position: absolute;
+    top: -20px; left: 16px;
+    line-height: 1;
+  }
+  .hero-quote-box blockquote {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--white);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-quote-source {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  /* ─── MARQUEE ─── */
+
+  /* ─── BRAND STORY ─── */
+  #brand-story {
+    padding: 120px 0;
+    background: #000;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .story-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 0.9;
+    margin-bottom: 28px;
+  }
+  .story-text p {
+    font-size: 15px;
+    color: var(--ash);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .story-text p strong { color: var(--white); font-weight: 500; }
+  .story-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .story-stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    transition: border-color 0.2s;
+  }
+  .story-stat-card:hover { border-color: var(--red-dark); }
+  .story-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .story-stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .story-stat-sub {
+    font-size: 12px;
+    color: var(--ash);
+    line-height: 1.5;
+  }
+
+  /* ─── MISSION ─── */
+  #mission {
+    padding: 120px 0;
+    background: #050505;
+    position: relative;
+    overflow: hidden;
+  }
+  #mission::before {
+    content: 'MISSION';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 240px;
+    color: rgba(174,0,1,0.04);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: 10px;
+    white-space: nowrap;
+  }
+  .mission-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .mission-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .mission-pillar {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 48px 36px;
+    position: relative;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+  .mission-pillar:hover { border-color: var(--red-dark); }
+  .mission-pillar::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .mission-pillar:hover::before { transform: scaleX(1); }
+  .mission-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .mission-pillar h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    color: var(--white);
+  }
+  .mission-pillar p {
+    font-size: 14px;
+    color: var(--ash);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ─── TRAINER ─── */
+  #trainer {
+    padding: 120px 0;
+    background: #000;
+  }
+  .trainer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .trainer-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .trainer-card-visual {
+    background: linear-gradient(160deg, #1a0000 0%, #0d0d0d 100%);
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .trainer-card-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center bottom, rgba(174,0,1,0.2) 0%, transparent 70%);
+  }
+  .trainer-logo-placeholder {
+    width: 140px;
+    height: auto;
+    opacity: 0.6;
+    position: relative;
+    z-index: 1;
+  }
+  .trainer-card-meta {
+    padding: 24px 28px;
+    border-top: 1px solid var(--border);
+  }
+  .trainer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .trainer-role {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .trainer-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 0.9;
+    margin-bottom: 24px;
+  }
+  .trainer-info p {
+    font-size: 15px;
+    color: var(--ash);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .trainer-info p strong { color: var(--white); font-weight: 500; }
+  .trainer-credentials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .cred-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  /* ─── CTA ─── */
+  #about-cta {
+    padding: 100px 0;
+    background: var(--red-dark);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  #about-cta::before {
+    content: 'B2F';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 300px;
+    color: rgba(0,0,0,0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: 10px;
+  }
+  .about-cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .about-cta-sub {
+    font-size: 17px;
+    color: rgba(247,246,246,0.7);
+    font-weight: 300;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  @media (max-width: 900px) {
+    .page-hero-inner { grid-template-columns: 1fr; padding: 80px 24px 60px; }
+    .page-hero-right { display: none; }
+    .story-grid { grid-template-columns: 1fr; gap: 48px; }
+    .mission-pillars { grid-template-columns: 1fr; }
+    .trainer-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+
+ <div id="loader">
+  <img id="loaderLogo" src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<div id="navbar"></div>
+<div class="nav-overlay"></div>
+
+<!-- ─── PAGE HERO ─── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-left reveal">
+      <div class="hero-eyebrow">Our Story</div>
+      <h1>BUILT FOR <span class="red">GREATNESS.</span></h1>
+      <p>Built 2 Fly wasn't created in a boardroom. It was built in a gym, one rep at a time — by a coach who refused to accept average, for people who deserve <strong>extraordinary results.</strong></p>
+      <div class="hero-cta" style="margin-top: 36px;">
+        <a href="apply.html" class="btn-primary">Start Your Journey ↗</a>
+        <a href="contact.html" class="btn-outline">Talk to Us</a>
+      </div>
+    </div>
+    <div class="page-hero-right reveal" style="transition-delay: 0.15s;">
+      <div class="hero-quote-box">
+        <blockquote>"Your body is a machine. We just tune it right."</blockquote>
+        <div class="hero-quote-source">— The B2F Philosophy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-bar reveal">
+  <div class="marquee-track">
+    <span class="marquee-item">BUILT WITH PURPOSE</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">DRIVEN BY RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">TRUSTED BY 500+ CLIENTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">8 YEARS OF EXPERTISE</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PREMIUM COACHING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">BUILT WITH PURPOSE</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">DRIVEN BY RESULTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">TRUSTED BY 500+ CLIENTS</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">8 YEARS OF EXPERTISE</span>
+    <span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">PREMIUM COACHING</span>
+    <span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- ─── BRAND STORY ─── -->
+<section id="brand-story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <div class="tag">The Origin</div>
+        <h2>WHERE IT<br><span class="red">BEGAN.</span></h2>
+        <p>Built 2 Fly started with a simple belief: <strong>everyone has the potential to transform</strong> — they just need the right system, the right coach, and the right environment to unlock it.</p>
+        <p>What began as one-on-one personal training grew into something much bigger: a complete coaching ecosystem serving beginners, fat loss clients, kids, and performance athletes — all under one roof, one philosophy.</p>
+        <p>Today, Built 2 Fly is one of the most trusted fitness brands in the city — not because we shout the loudest, but because our <strong>results speak for themselves.</strong></p>
+      </div>
+      <div class="story-visual reveal" style="transition-delay: 0.15s;">
+        <div class="story-stat-card">
+          <div class="story-stat-num">500<span style="color:var(--ash);font-size:32px;">+</span></div>
+          <div>
+            <div class="story-stat-label">Lives Transformed</div>
+            <div class="story-stat-sub">Real clients, real results. No filter, no fluff.</div>
+          </div>
+        </div>
+        <div class="story-stat-card">
+          <div class="story-stat-num">8<span style="color:var(--ash);font-size:32px;">yr</span></div>
+          <div>
+            <div class="story-stat-label">Years of Expertise</div>
+            <div class="story-stat-sub">A decade's worth of systems, knowledge, and refinement.</div>
+          </div>
+        </div>
+        <div class="story-stat-card">
+          <div class="story-stat-num">98<span style="color:var(--ash);font-size:32px;">%</span></div>
+          <div>
+            <div class="story-stat-label">Client Retention Rate</div>
+            <div class="story-stat-sub">Clients stay because they get results. It's that simple.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MISSION ─── -->
+<section id="mission">
+  <div class="container" style="position: relative; z-index: 1;">
+    <div class="mission-header reveal">
+      <div class="tag">What We Stand For</div>
+      <h2 class="section-title">OUR <span class="red">MISSION.</span></h2>
+    </div>
+    <div class="mission-pillars">
+      <div class="mission-pillar reveal">
+        <span class="mission-icon">🔥</span>
+        <h3>IGNITE POTENTIAL</h3>
+        <p>We believe every person who walks through our doors has untapped potential. Our mission is to find it, fuel it, and turn it into undeniable results.</p>
+      </div>
+      <div class="mission-pillar reveal" style="transition-delay: 0.1s;">
+        <span class="mission-icon">🎯</span>
+        <h3>PRECISION COACHING</h3>
+        <p>No generic plans. No one-size-fits-all programs. Every system is designed around your specific body, your specific goals, your specific life.</p>
+      </div>
+      <div class="mission-pillar reveal" style="transition-delay: 0.2s;">
+        <span class="mission-icon">🦅</span>
+        <h3>BUILD TO FLY</h3>
+        <p>The name says it all. We don't just build bodies — we build confidence, discipline, and the belief that you're capable of far more than you ever thought.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRAINER ─── -->
+<section id="trainer">
+  <div class="container">
+    <div class="trainer-grid">
+      <div class="trainer-card reveal">
+        <div class="trainer-card-visual">
+          <img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly" class="trainer-logo-placeholder">
+        </div>
+        <div class="trainer-card-meta">
+          <div class="trainer-name">Head Coach — B2F</div>
+          <div class="trainer-role">Founder & Lead Trainer</div>
+        </div>
+      </div>
+      <div class="trainer-info reveal" style="transition-delay: 0.15s;">
+        <div class="tag">The Trainer</div>
+        <h2>THE FORCE BEHIND<br><span class="red">B2F.</span></h2>
+        <p>With over <strong>8 years of hands-on coaching experience</strong>, the founder of Built 2 Fly has dedicated their career to mastering one thing: human transformation.</p>
+        <p>From competitive calisthenics to parkour, from fat loss protocols to youth fitness — the B2F methodology was forged through thousands of hours of real coaching, real setbacks, and real breakthroughs.</p>
+        <p>The result is a system that's both <strong>science-backed and battle-tested</strong> — and a coaching style that meets every client exactly where they are.</p>
+        <div class="trainer-credentials">
+          <div class="cred-badge">🏋️ Certified Coach</div>
+          <div class="cred-badge">⚡ Calisthenics Expert</div>
+          <div class="cred-badge">🦅 Parkour Specialist</div>
+          <div class="cred-badge">📊 Nutrition Advisor</div>
+          <div class="cred-badge">🌟 Youth Trainer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT CTA ─── -->
+<section id="about-cta">
+  <div class="container reveal" style="position: relative; z-index: 1;">
+    <h2 class="about-cta-title">READY TO<br>START?</h2>
+    <p class="about-cta-sub">Your transformation is one decision away. Make it today.</p>
+    <a href="apply.html" class="btn-primary" style="font-size: 15px; padding: 18px 44px; background: var(--black);">Apply Now ↗</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly"></div>
+      <p class="footer-desc">Premium coaching system built for real transformation. Group training, personal coaching, and online programs — all under one powerful brand.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">in</a>
+        <a href="#" class="social-icon">ig</a>
+        <a href="#" class="social-icon">yt</a>
+        <a href="#" class="social-icon">wa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="group-training.html">Group Training</a></li>
+        <li><a href="personal-training.html">Personal Training</a></li>
+        <li><a href="online-coaching.html">Online Coaching</a></li>
+        <li><a href="#">Kids Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About B2F</a></li>
+        <li><a href="index.html#proof">Transformations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+        <li><a href="consent-form.html">Consent Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.</div>
+    <div class="footer-copy">Powered by passion. Backed by results.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/loader.js"></script>
+
+</body>
+</html>

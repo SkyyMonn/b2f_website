@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>Login – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html, body { height: 100%; }
+  .login-page { min-height:100vh; display:flex; flex-direction:column; background:#000; position:relative; overflow:hidden; }
+  .login-bg { position:fixed; inset:0; background:radial-gradient(ellipse 60% 60% at 50% 40%, #120000 0%, #000 70%); pointer-events:none; z-index:0; }
+  .login-grid { position:fixed; inset:0; background-image:linear-gradient(rgba(174,0,1,0.03) 1px, transparent 1px),linear-gradient(90deg, rgba(174,0,1,0.03) 1px, transparent 1px); background-size:60px 60px; pointer-events:none; z-index:0; }
+  .login-center { flex:1; display:flex; align-items:center; justify-content:center; padding:100px 24px 60px; position:relative; z-index:1; }
+  .login-card { width:100%; max-width:420px; }
+  .login-logo { text-align:center; margin-bottom:40px; }
+  .login-logo img { height:72px; width:auto; filter:drop-shadow(0 0 20px rgba(174,0,1,0.3)); }
+  .login-box { background:var(--card-bg); border:1px solid var(--border); position:relative; padding:44px 40px 40px; }
+  .login-box::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--red); }
+  .login-box h1 { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:1.5px; color:var(--white); margin-bottom:6px; line-height:1; }
+  .login-box .login-sub { font-size:13px; color:var(--ash); font-weight:300; margin-bottom:32px; line-height:1.5; }
+  .login-field { margin-bottom:18px; }
+  .login-field label { display:block; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ash); margin-bottom:8px; }
+  .login-field input { width:100%; padding:14px 16px; background:#0a0a0a; border:1px solid rgba(145,136,136,0.25); border-radius:2px; color:var(--white); font-family:'Barlow',sans-serif; font-size:15px; font-weight:400; transition:border-color 0.2s, box-shadow 0.2s; outline:none; box-sizing:border-box; }
+  .login-field input:focus { border-color:var(--red); box-shadow:0 0 0 2px rgba(174,0,1,0.15); }
+  .login-field input::placeholder { color:rgba(145,136,136,0.5); }
+  .login-field input.error-field { border-color:#e53e3e; box-shadow:0 0 0 2px rgba(229,62,62,0.15); }
+  .login-forgot { text-align:right; margin-top:-8px; margin-bottom:24px; }
+  .login-forgot a { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--ash); text-decoration:none; transition:color 0.2s; }
+  .login-forgot a:hover { color:var(--white); }
+  .login-error { background:rgba(174,0,1,0.1); border:1px solid rgba(174,0,1,0.3); border-radius:2px; padding:12px 16px; margin-bottom:20px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.5px; color:#ff6b6b; display:none; }
+  .login-submit { width:100%; padding:16px; background:var(--red); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; border:none; border-radius:2px; cursor:pointer; transition:background 0.2s, transform 0.15s; }
+  .login-submit:hover:not(:disabled) { background:var(--red-dark); transform:scale(1.01); }
+  .login-submit:disabled { opacity:0.7; cursor:not-allowed; }
+  .login-note { margin-top:24px; padding:16px 18px; background:rgba(174,0,1,0.05); border:1px solid rgba(174,0,1,0.15); border-radius:2px; font-size:12px; color:var(--ash); line-height:1.6; text-align:center; }
+  .login-note a { color:var(--red); text-decoration:none; font-weight:500; }
+  .login-note a:hover { text-decoration:underline; }
+  .login-divider { display:flex; align-items:center; gap:16px; margin:28px 0 24px; }
+  .login-divider::before,.login-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+  .login-divider span { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--ash); white-space:nowrap; }
+  .login-apply { display:block; width:100%; padding:14px; background:transparent; border:1px solid rgba(145,136,136,0.3); border-radius:2px; color:var(--ash); font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; text-decoration:none; text-align:center; cursor:pointer; transition:border-color 0.2s,color 0.2s; }
+  .login-apply:hover { border-color:var(--white); color:var(--white); }
+  .login-back { text-align:center; margin-top:28px; }
+  .login-back a { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--ash); text-decoration:none; transition:color 0.2s; display:inline-flex; align-items:center; gap:8px; }
+  .login-back a:hover { color:var(--white); }
+  .login-back a::before { content:'←'; }
+  .login-footer { position:relative; z-index:1; text-align:center; padding:20px 24px 32px; border-top:1px solid var(--border); }
+  .login-footer-copy { font-size:12px; color:var(--ash); }
+  .login-footer-copy .footer-red { color:var(--red); }
+  @media (max-width:480px) { .login-box { padding:32px 24px 28px; } }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <img id="loaderLogo" src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+</div>
+
+<div class="login-page">
+  <div class="login-bg"></div>
+  <div class="login-grid"></div>
+
+  <div id="navbar"></div>
+  <div class="nav-overlay"></div>
+
+  <div class="login-center">
+    <div class="login-card">
+
+      <div class="login-logo">
+        <img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+      </div>
+
+      <div class="login-box">
+        <h1>CLIENT <span class="red">LOGIN</span></h1>
+        <p class="login-sub">Access your dashboard, training plan, and progress — all in one place.</p>
+
+        <!-- Error display -->
+        <div class="login-error" id="login-error"></div>
+
+        <div class="login-field">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" placeholder="you@email.com" autocomplete="email"
+            onkeydown="if(event.key==='Enter') loginUser()">
+        </div>
+
+        <div class="login-field">
+          <label for="login-pass">Password</label>
+          <input type="password" id="login-pass" placeholder="••••••••••••" autocomplete="current-password"
+            onkeydown="if(event.key==='Enter') loginUser()">
+        </div>
+
+        <div class="login-forgot">
+          <a href="#" onclick="handleForgotPassword(event)">Forgot password?</a>
+        </div>
+
+        <button class="login-submit" id="login-btn" onclick="loginUser()">LOGIN TO DASHBOARD</button>
+
+        <div class="login-note">
+          Access is provided after enrollment. Don't have an account?<br>
+          <a href="apply.html">Apply to join Built 2 Fly →</a>
+        </div>
+
+        <div class="login-divider"><span>New to B2F?</span></div>
+        <a href="apply.html" class="login-apply">Apply for a Program ↗</a>
+      </div>
+
+      <div class="login-back">
+        <a href="index.html">Back to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="login-footer">
+    <div class="login-footer-copy">
+      © 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.
+      &nbsp;·&nbsp;
+      <a href="privacy-policy.html" style="color:var(--ash);text-decoration:none;">Privacy Policy</a>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+const SUPABASE_URL = "https://bxlsgweqeomejjxeisai.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4bHNnd2VxZW9tZWpqeGVpc2FpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyODM2MDYsImV4cCI6MjA5MDg1OTYwNn0.PXs3MZkmrIZ-aMRmZyy0C4Eh_bKOx0Q1J1E0FZqF_EM";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── If already logged in, redirect immediately ──
+(async function checkExistingSession() {
+  const { data: { session } } = await db.auth.getSession();
+  if (session) {
+    await redirectByRole(session.user.id);
+  }
+})();
+
+// ── ROLE → PAGE MAP ──
+const ROLE_REDIRECT = {
+  admin:     "dashboard.html",
+  trainer:   "trainer.html",
+  client:    "client.html",
+  sales:     "dashboard.html",
+  frontdesk: "dashboard.html"
+};
+
+async function redirectByRole(userId) {
+  const { data: profile, error } = await db
+    .from("profiles")
+    .select("role")
+    .eq("id", userId)
+    .single();
+
+  if (error || !profile) {
+    showError("Your account profile is not set up. Please contact support.");
+    return;
+  }
+
+  const role = profile.role || "client";
+  const page = ROLE_REDIRECT[role] || "index.html";
+  window.location.href = page;
+}
+
+// ── MAIN LOGIN ──
+async function loginUser() {
+  const emailInput = document.getElementById("login-email");
+  const passInput  = document.getElementById("login-pass");
+  const btn        = document.getElementById("login-btn");
+  const email      = emailInput.value.trim();
+  const password   = passInput.value;
+
+  hideError();
+
+  // Basic client-side validation
+  if (!email) {
+    emailInput.classList.add("error-field");
+    showError("Please enter your email address.");
+    emailInput.focus();
+    return;
+  }
+  if (!password) {
+    passInput.classList.add("error-field");
+    showError("Please enter your password.");
+    passInput.focus();
+    return;
+  }
+
+  emailInput.classList.remove("error-field");
+  passInput.classList.remove("error-field");
+
+  btn.textContent = "Logging in...";
+  btn.disabled = true;
+
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    btn.textContent = "LOGIN TO DASHBOARD";
+    btn.disabled = false;
+
+    // User-friendly error messages
+    const msg = error.message || "";
+    if (msg.includes("Invalid login credentials") || msg.includes("invalid_credentials")) {
+      showError("Incorrect email or password. Please try again.");
+    } else if (msg.includes("Email not confirmed")) {
+      showError("Please confirm your email before logging in. Check your inbox.");
+    } else if (msg.includes("Too many requests")) {
+      showError("Too many attempts. Please wait a few minutes and try again.");
+    } else {
+      showError(msg || "Login failed. Please try again.");
+    }
+    return;
+  }
+
+  if (!data.user) {
+    showError("Login failed. Please try again.");
+    btn.textContent = "LOGIN TO DASHBOARD";
+    btn.disabled = false;
+    return;
+  }
+
+  // Store userId for legacy support
+  localStorage.setItem("userId", data.user.id);
+
+  await redirectByRole(data.user.id);
+}
+
+// ── FORGOT PASSWORD ──
+async function handleForgotPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById("login-email").value.trim();
+
+  if (!email) {
+    showError("Enter your email address first, then click 'Forgot password?'");
+    document.getElementById("login-email").focus();
+    return;
+  }
+
+  const { error } = await db.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + "/login.html"
+  });
+
+  if (error) {
+    showError("Failed to send reset email. Check the address and try again.");
+  } else {
+    hideError();
+    showSuccess("Password reset email sent! Check your inbox.");
+  }
+}
+
+// ── UI HELPERS ──
+function showError(msg) {
+  const el = document.getElementById("login-error");
+  el.textContent = "⚠ " + msg;
+  el.style.display = "block";
+}
+
+function hideError() {
+  const el = document.getElementById("login-error");
+  el.style.display = "none";
+  el.textContent = "";
+}
+
+function showSuccess(msg) {
+  const el = document.getElementById("login-error");
+  el.style.background = "rgba(34,197,94,0.1)";
+  el.style.borderColor = "rgba(34,197,94,0.3)";
+  el.style.color = "#4ade80";
+  el.textContent = "✓ " + msg;
+  el.style.display = "block";
+}
+</script>
+
+<script src="js/loader.js"></script>
+</body>
+</html>

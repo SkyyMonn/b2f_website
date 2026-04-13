@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/cursor.js"></script>
+<title>FAQ – Built 2 Fly</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loader.css"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    position: relative;
+    padding: 160px 40px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 0%, #1a0000 0%, #000 65%);
+  }
+  .page-hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(174,0,1,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(174,0,1,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 9vw, 110px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .page-hero p {
+    font-size: 17px;
+    color: var(--ash);
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ─── FAQ SECTION ─── */
+  #faq-full {
+    padding: 100px 0 120px;
+    background: #050505;
+  }
+  .faq-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Category filter */
+  .faq-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 52px;
+    justify-content: center;
+  }
+  .faq-filter-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ash);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 9px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .faq-filter-btn:hover,
+  .faq-filter-btn.active {
+    border-color: var(--red);
+    color: var(--white);
+    background: rgba(174,0,1,0.08);
+  }
+
+  /* FAQ category group */
+  .faq-category {
+    margin-bottom: 16px;
+  }
+  .faq-category-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+    padding-left: 2px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .faq-category-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(174,0,1,0.2);
+  }
+
+  /* Accordion items */
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 36px;
+  }
+  .acc-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    overflow: hidden;
+  }
+  .acc-item:hover { border-color: rgba(174,0,1,0.4); }
+  .acc-item.open { border-color: var(--red-dark); }
+  .acc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    user-select: none;
+  }
+  .acc-q {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--white);
+    line-height: 1.3;
+  }
+  .acc-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: transform 0.3s, border-color 0.2s;
+  }
+  .acc-item.open .acc-icon { transform: rotate(45deg); border-color: var(--red-dark); }
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .acc-item.open .acc-body { max-height: 400px; }
+  .acc-a {
+    font-size: 14px;
+    color: var(--ash);
+    line-height: 1.8;
+    padding: 0 28px 24px;
+    font-weight: 300;
+  }
+  .acc-a strong { color: var(--white); font-weight: 500; }
+  .acc-a a { color: var(--red); text-decoration: none; }
+  .acc-a a:hover { text-decoration: underline; }
+
+  /* Still have questions CTA */
+  .still-questions {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    margin-top: 56px;
+  }
+  .still-questions::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+  }
+  .still-questions h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .still-questions p {
+    font-size: 15px;
+    color: var(--ash);
+    font-weight: 300;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .still-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* hidden state for category filtering */
+  .faq-category.hidden { display: none; }
+
+  @media (max-width: 600px) {
+    .page-hero { padding: 140px 24px 60px; }
+    .acc-header { padding: 20px 20px; }
+    .acc-a { padding: 0 20px 20px; }
+    .still-questions { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="loader">
+  <img id="loaderLogo" src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly">
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<div id="navbar"></div>
+<div class="nav-overlay"></div>
+
+<!-- ─── PAGE HERO ─── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content reveal">
+    <div class="tag">Questions Answered</div>
+    <h1>GOT <span class="red">QUESTIONS?</span></h1>
+    <p>Everything you need to know about our programs, pricing, and how it all works — right here.</p>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq-full">
+  <div class="faq-wrap">
+
+    <!-- Filter Buttons -->
+    <div class="faq-filters reveal">
+      <button class="faq-filter-btn active" onclick="filterFaq('all', this)">All</button>
+      <button class="faq-filter-btn" onclick="filterFaq('getting-started', this)">Getting Started</button>
+      <button class="faq-filter-btn" onclick="filterFaq('programs', this)">Programs</button>
+      <button class="faq-filter-btn" onclick="filterFaq('pricing', this)">Pricing</button>
+      <button class="faq-filter-btn" onclick="filterFaq('online', this)">Online Coaching</button>
+      <button class="faq-filter-btn" onclick="filterFaq('policies', this)">Policies</button>
+    </div>
+
+    <!-- Category: Getting Started -->
+    <div class="faq-category reveal" data-category="getting-started">
+      <div class="faq-category-label">Getting Started</div>
+      <div class="faq-accordion">
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">Am I too out of shape to join?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Absolutely not. <strong>B2F is specifically built for beginners and fat loss clients.</strong> Every program is scaled to your current fitness level — we assess where you are before designing your plan. You don't need to be fit to start. You just need to start.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">How do I get started?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Simple. <a href="apply.html">Fill out our application form</a>, tell us about your goals, and we'll be in touch within 24 hours. We'll walk you through program options, pricing, and next steps — no pressure, no hard sell.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">What happens during the onboarding process?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Once you choose a plan, you'll complete a <strong>mandatory onboarding form</strong> that covers your fitness history, goals, medical declarations, and consent. After that, your coach will design your custom plan and you'll get access to the B2F client dashboard to begin.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Programs -->
+    <div class="faq-category reveal" data-category="programs">
+      <div class="faq-category-label">Programs</div>
+      <div class="faq-accordion">
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">What programs does Built 2 Fly offer?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">We offer four core programs: <strong>Group Training</strong> (small-group sessions), <strong>Personal Training</strong> (dedicated one-on-one coaching), <strong>Online Coaching</strong> (custom plans with remote support), and <strong>Kids Fitness</strong> (age-appropriate group training for children). We also specialise in calisthenics, parkour, and flips training.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">Do you offer programs for kids?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Yes. Our <strong>Kids Fitness program</strong> offers age-appropriate group training with specialised trainers. These are structured, fun, and designed to build lifelong healthy habits — not just short-term fitness. Sessions are carefully curated to be safe, engaging, and developmentally appropriate.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">Can I switch between programs?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Yes. You can upgrade or change your plan at any time. Simply contact your trainer or use the messaging feature in the B2F dashboard and we'll process the switch quickly — usually within the same week.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Pricing -->
+    <div class="faq-category reveal" data-category="pricing">
+      <div class="faq-category-label">Pricing & Payment</div>
+      <div class="faq-accordion">
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">What payment methods do you accept?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">We use <strong>Razorpay</strong> for all transactions — supporting UPI, debit/credit cards, net banking, and wallets. Payments are fully secure and processed instantly. You'll receive a digital receipt immediately after payment.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">Is there a joining or registration fee?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">No hidden fees. You pay only the monthly plan rate. <strong>Personal Training is ₹8,999/month</strong> and <strong>Online Coaching is ₹5,999/month.</strong> Group Training pricing is provided during consultation based on the session schedule.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">What is your refund policy?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Refunds are subject to our standard policy which is outlined at the time of signup. Generally, <strong>refund requests must be submitted within 3 days</strong> of the billing date, before the training cycle begins. Contact us directly if you have a specific situation and we'll work with you.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Online Coaching -->
+    <div class="faq-category reveal" data-category="online">
+      <div class="faq-category-label">Online Coaching</div>
+      <div class="faq-accordion">
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">How does online coaching actually work?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">You receive <strong>custom workout and nutrition plans</strong> via the B2F client dashboard. Your coach checks in weekly, reviews your form through video submissions, tracks your metrics, and adjusts your program every month based on your progress. You also get <strong>24/7 WhatsApp support</strong> for questions and motivation.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">Do I need equipment for online coaching?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Not necessarily. During onboarding, we assess what you have access to — <strong>gym, home setup, or no equipment at all</strong> — and design your program accordingly. Our calisthenics and bodyweight programs are particularly effective with minimal or no equipment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Policies -->
+    <div class="faq-category reveal" data-category="policies">
+      <div class="faq-category-label">Policies & Consent</div>
+      <div class="faq-accordion">
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">What is the consent form?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">The consent form is a <strong>mandatory digital document</strong> completed during onboarding. It covers a liability waiver, medical declaration, payment policy, attendance rules, and optional media consent. It must be completed in full before you can access the B2F client dashboard and begin training.</div>
+          </div>
+        </div>
+        <div class="acc-item" onclick="toggleAcc(this)">
+          <div class="acc-header">
+            <div class="acc-q">Is my personal data kept private?</div>
+            <div class="acc-icon">+</div>
+          </div>
+          <div class="acc-body">
+            <div class="acc-a">Absolutely. Your data is never shared with third parties. Progress photos and videos are only used (with your explicit consent) for internal coaching review. Media is only posted publicly if you've opted into media consent during onboarding. Read our full <a href="#">Privacy Policy</a> for details.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Still have questions CTA -->
+    <div class="still-questions reveal">
+      <h3>STILL HAVE <span class="red">QUESTIONS?</span></h3>
+      <p>Our team is available Monday to Saturday, 6 AM – 9 PM IST. We usually respond within the hour on WhatsApp.</p>
+      <div class="still-btns">
+        <a href="contact.html" class="btn-outline">Contact Us</a>
+        <a href="https://wa.me/919876543210?text=Hi%20B2F!%20I%20have%20a%20question..." target="_blank" class="btn-primary">WhatsApp Us ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="Assets/Logo/B2F_logo.png" alt="Built 2 Fly"></div>
+      <p class="footer-desc">Premium coaching system built for real transformation. Group training, personal coaching, and online programs — all under one powerful brand.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon">in</a>
+        <a href="#" class="social-icon">ig</a>
+        <a href="#" class="social-icon">yt</a>
+        <a href="#" class="social-icon">wa</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Programs</div>
+      <ul class="footer-links">
+        <li><a href="group-training.html">Group Training</a></li>
+        <li><a href="personal-training.html">Personal Training</a></li>
+        <li><a href="online-coaching.html">Online Coaching</a></li>
+        <li><a href="#">Kids Fitness</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About B2F</a></li>
+        <li><a href="index.html#proof">Transformations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+        <li><a href="consent-form.html">Consent Form</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-red">Built 2 Fly</span>. All rights reserved.</div>
+    <div class="footer-copy">Powered by passion. Backed by results.</div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script>
+  function toggleAcc(el) {
+    const isOpen = el.classList.contains('open');
+    // Close all others in same accordion
+    const siblings = el.closest('.faq-accordion').querySelectorAll('.acc-item');
+    siblings.forEach(s => s.classList.remove('open'));
+    // Toggle this one
+    if (!isOpen) el.classList.add('open');
+  }
+
+  function filterFaq(category, btn) {
+    // Update button states
+    document.querySelectorAll('.faq-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Show/hide categories
+    document.querySelectorAll('.faq-category').forEach(cat => {
+      if (category === 'all' || cat.dataset.category === category) {
+        cat.classList.remove('hidden');
+      } else {
+        cat.classList.add('hidden');
+      }
+    });
+  }
+</script>
+</body>
+
+<script src="js/loader.js"></script>
+
+</html>
